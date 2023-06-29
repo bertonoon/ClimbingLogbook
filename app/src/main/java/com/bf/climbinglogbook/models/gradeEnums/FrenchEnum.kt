@@ -1,6 +1,8 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
-enum class FrenchEnum() {
+import com.bf.climbinglogbook.models.GradeSystem
+
+enum class FrenchEnum {
     ZERO,
     ONE,
     ONE_PLUS,
@@ -45,3 +47,6 @@ enum class FrenchEnum() {
     NINE_C,
     NINE_C_PLUS;
 }
+
+
+

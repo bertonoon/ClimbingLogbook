@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
-import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.models.AscentStyle
+import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
 
 @Entity(tableName = ROUTES_TABLE_NAME)
@@ -26,7 +26,8 @@ data class Ascent (
     var climbingType : ClimbingType? = null,
     var belayer : String? = null,
     var ascentStyle : AscentStyle,
-    var pitches : Int = 1
+    var pitches : Int = 1,
+    var hard : Boolean = false
     ){
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

@@ -1,7 +1,6 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
 enum class KurtykaEnum() {
-    ZERO,
     ONE,
     TWO,
     TWO_PLUS,
@@ -29,11 +28,13 @@ enum class KurtykaEnum() {
     SIX_SEVEN,
     SIX_SEVEN_PLUS,
     SIX_EIGHT,
-    SIX_EIGHT_PLUS;
+    SIX_EIGHT_PLUS,
+    SIX_NINE,
+    SIX_NINE_PLUS,
+    SIX_TEN;
 
     override fun toString(): String {
         return when(this){
-            ZERO -> "0"
             ONE -> "I"
             TWO -> "II"
             TWO_PLUS -> "II+"
@@ -62,6 +63,92 @@ enum class KurtykaEnum() {
             SIX_SEVEN_PLUS -> "VI.7+"
             SIX_EIGHT -> "VI.8"
             SIX_EIGHT_PLUS -> "VI.8+"
+            SIX_NINE -> "VI.9"
+            SIX_NINE_PLUS -> "VI.9+"
+            SIX_TEN -> "VI.10"
+        }
+    }
+
+    companion object {
+        fun gradeToNumber(grade: KurtykaEnum): Int {
+            return when (grade) {
+                ONE -> 2
+                TWO -> 3
+                TWO_PLUS -> 3
+                THREE -> 4
+                THREE_PLUS -> 4
+                FOUR -> 5
+                FOUR_PLUS -> 6
+                FIVE -> 7
+                FIVE_PLUS -> 8
+                SIX_MINUS -> 9
+                SIX -> 10
+                SIX_PLUS -> 11
+                SIX_ONE -> 12
+                SIX_ONE_PLUS -> 13
+                SIX_TWO -> 14
+                SIX_TWO_PLUS -> 15
+                SIX_THREE -> 17
+                SIX_THREE_PLUS -> 19
+                SIX_FOUR -> 20
+                SIX_FOUR_PLUS -> 21
+                SIX_FIVE -> 23
+                SIX_FIVE_PLUS -> 24
+                SIX_SIX -> 25
+                SIX_SIX_PLUS -> 26
+                SIX_SEVEN -> 28
+                SIX_SEVEN_PLUS -> 29
+                SIX_EIGHT -> 30
+                SIX_EIGHT_PLUS -> 31
+                SIX_NINE -> 32
+                SIX_NINE_PLUS -> 33
+                SIX_TEN -> 34
+            }
+        }
+
+        fun numberToGrade(number: Int): Any? {
+            return when (number) {
+                1 -> ONE
+                2 -> ONE
+                3 -> TWO
+                4 -> THREE
+                5 -> FOUR
+                6 -> FOUR_PLUS
+                7 -> FIVE
+                8 -> FIVE_PLUS
+                9 -> SIX_MINUS
+                10 -> SIX
+                11 -> SIX_PLUS
+                12 -> SIX_ONE
+                13 -> SIX_ONE_PLUS
+                14 -> SIX_TWO
+                15 -> SIX_TWO_PLUS
+                16 -> SIX_TWO_PLUS
+                17 -> SIX_THREE
+                18 -> SIX_THREE
+                19 -> SIX_THREE_PLUS
+                20 -> SIX_FOUR
+                21 -> SIX_FOUR_PLUS
+                22 -> SIX_FOUR_PLUS
+                23 -> SIX_FIVE
+                24 -> SIX_FIVE_PLUS
+                25 -> SIX_SIX
+                26 -> SIX_SIX_PLUS
+                27 -> SIX_SIX_PLUS
+                28 -> SIX_SEVEN
+                29 -> SIX_SEVEN_PLUS
+                30 -> SIX_EIGHT
+                31 -> SIX_EIGHT_PLUS
+                32 -> SIX_NINE
+                33 -> SIX_NINE_PLUS
+                34 -> SIX_TEN
+                else -> null
+            }
+        }
+        fun getList(): List<String> {
+            return KurtykaEnum.values().map {
+                it.toString()
+            }
         }
     }
 }
