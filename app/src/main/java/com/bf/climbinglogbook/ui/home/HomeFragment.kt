@@ -1,17 +1,21 @@
 package com.bf.climbinglogbook.ui.home
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.databinding.FragmentHomeBinding
-import com.bf.climbinglogbook.db.Ascent
-import com.bf.climbinglogbook.models.AscentStyle
+import com.bf.climbinglogbook.databinding.ToolbarHomeBinding
 import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,16 +35,14 @@ class HomeFragment : Fragment() {
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
 //        val textView: TextView = binding.textHome
 //        homeViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
-
-
-        return root
+        return binding.root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -51,17 +53,26 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val popUpMenu = PopupMenu(requireContext(), binding.toolbar.ivMenu)
+        popUpMenu.inflate(R.menu.home_fragment_menu)
+
+        binding.toolbar.apply {
+            title.text = getString(R.string.title_home)
+            ivGradeCalc.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_home_to_gradeCalcFragment)
+            }
+            ivMenu.setOnClickListener {
+                popUpMenu.show()
+            }
+        }
+
         val numberOfAscents = mainViewModel.numberOfAscents
-        if (numberOfAscents != null) numberOfAscents.observe(viewLifecycleOwner) {
+        if (numberOfAscents != null) numberOfAscents.observe(viewLifecycleOwner)
+        {
             binding.textHome.text = it.toString()
         } else binding.textHome.text = "Fail"
 
-        mainViewModel.addNewAscent(
-            Ascent(
-                name = "test",
-                ascentStyle = AscentStyle.FLASH,
-            )
-        )
+
     }
 
 
