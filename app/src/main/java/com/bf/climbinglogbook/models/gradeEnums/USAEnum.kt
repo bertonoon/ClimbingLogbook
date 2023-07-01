@@ -1,6 +1,7 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
 
+
 enum class USAEnum {
     FIVE_ZERO,
     FIVE_ONE,

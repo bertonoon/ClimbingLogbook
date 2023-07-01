@@ -1,6 +1,6 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
-enum class KurtykaEnum() {
+enum class KurtykaEnum {
     ONE,
     TWO,
     TWO_PLUS,
@@ -34,7 +34,7 @@ enum class KurtykaEnum() {
     SIX_TEN;
 
     override fun toString(): String {
-        return when(this){
+        return when (this) {
             ONE -> "I"
             TWO -> "II"
             TWO_PLUS -> "II+"
@@ -70,7 +70,7 @@ enum class KurtykaEnum() {
     }
 
     companion object {
-        fun gradeToNumber(grade: KurtykaEnum): Int {
+        fun gradeToNumber(grade: KurtykaEnum, hard: Boolean = false): Int {
             return when (grade) {
                 ONE -> 2
                 TWO -> 3
@@ -87,15 +87,15 @@ enum class KurtykaEnum() {
                 SIX_ONE -> 12
                 SIX_ONE_PLUS -> 13
                 SIX_TWO -> 14
-                SIX_TWO_PLUS -> 15
-                SIX_THREE -> 17
+                SIX_TWO_PLUS -> if (hard) 16 else 15
+                SIX_THREE -> if (hard) 18 else 17
                 SIX_THREE_PLUS -> 19
                 SIX_FOUR -> 20
-                SIX_FOUR_PLUS -> 21
+                SIX_FOUR_PLUS -> if (hard) 22 else 21
                 SIX_FIVE -> 23
                 SIX_FIVE_PLUS -> 24
                 SIX_SIX -> 25
-                SIX_SIX_PLUS -> 26
+                SIX_SIX_PLUS -> if (hard) 27 else 26
                 SIX_SEVEN -> 28
                 SIX_SEVEN_PLUS -> 29
                 SIX_EIGHT -> 30
@@ -106,14 +106,14 @@ enum class KurtykaEnum() {
             }
         }
 
-        fun numberToGrade(number: Int): Any? {
+        fun numberToGrade(number: Int, hard: Boolean = false): KurtykaEnum? {
             return when (number) {
                 1 -> ONE
                 2 -> ONE
-                3 -> TWO
-                4 -> THREE
+                3 -> if (hard) TWO_PLUS else TWO
+                4 -> if (hard) THREE_PLUS else THREE
                 5 -> FOUR
-                6 -> FOUR_PLUS
+                6 -> FIVE
                 7 -> FIVE
                 8 -> FIVE_PLUS
                 9 -> SIX_MINUS
@@ -145,6 +145,7 @@ enum class KurtykaEnum() {
                 else -> null
             }
         }
+
         fun getList(): List<String> {
             return KurtykaEnum.values().map {
                 it.toString()
