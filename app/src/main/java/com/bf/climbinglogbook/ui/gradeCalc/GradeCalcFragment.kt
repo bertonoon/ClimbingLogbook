@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bf.climbinglogbook.databinding.FragmentGradeCalcBinding
-import com.bf.climbinglogbook.models.gradeEnums.KurtykaEnum
-import com.bf.climbinglogbook.models.gradeEnums.USAEnum
+import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
+import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Arrays
-import java.util.EnumMap
 
 @AndroidEntryPoint
 class GradeCalcFragment : Fragment() {
@@ -41,9 +39,10 @@ class GradeCalcFragment : Fragment() {
         binding.sourceNumberPicker.apply {
             minValue = Constants.GRADE_ENUM_MIN
             maxValue = Constants.GRADE_ENUM_MAX
-            displayedValues = USAEnum.getList().toTypedArray()
+            displayedValues = USAGrade.getList().toTypedArray()
+            // TODO ("Testing numberPicker)
             setOnValueChangedListener { _, _, newVal ->
-                binding.textHome.text = KurtykaEnum.numberToGrade(newVal).toString()
+                binding.textHome.text = KurtykaGrade.numberToGrade(newVal).toString()
             }
         }
     }
