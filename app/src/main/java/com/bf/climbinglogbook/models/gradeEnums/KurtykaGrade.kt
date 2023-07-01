@@ -1,6 +1,6 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
-enum class KurtykaEnum {
+enum class KurtykaGrade() {
     ONE,
     TWO,
     TWO_PLUS,
@@ -69,8 +69,8 @@ enum class KurtykaEnum {
         }
     }
 
-    companion object {
-        fun gradeToNumber(grade: KurtykaEnum, hard: Boolean = false): Int {
+    companion object : GradeCompanionInterface<KurtykaGrade> {
+        override fun gradeToNumber(grade: KurtykaGrade, hard: Boolean): Int {
             return when (grade) {
                 ONE -> 2
                 TWO -> 3
@@ -106,7 +106,7 @@ enum class KurtykaEnum {
             }
         }
 
-        fun numberToGrade(number: Int, hard: Boolean = false): KurtykaEnum? {
+        override fun numberToGrade(number: Int, hard: Boolean): KurtykaGrade? {
             return when (number) {
                 1 -> ONE
                 2 -> ONE
@@ -146,10 +146,11 @@ enum class KurtykaEnum {
             }
         }
 
-        fun getList(): List<String> {
-            return KurtykaEnum.values().map {
+        override fun getList(): List<String> {
+            return KurtykaGrade.values().map {
                 it.toString()
             }
         }
     }
+
 }

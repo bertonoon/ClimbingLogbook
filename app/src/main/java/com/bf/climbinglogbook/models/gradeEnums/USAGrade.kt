@@ -1,8 +1,7 @@
 package com.bf.climbinglogbook.models.gradeEnums
 
 
-
-enum class USAEnum {
+enum class USAGrade {
     FIVE_ZERO,
     FIVE_ONE,
     FIVE_TWO,
@@ -39,7 +38,7 @@ enum class USAEnum {
     FIVE_FIFTEEN_D;
 
     override fun toString(): String {
-        return when(this){
+        return when (this) {
             FIVE_ZERO -> "5.0"
             FIVE_ONE -> "5.1"
             FIVE_TWO -> "5.2"
@@ -77,8 +76,8 @@ enum class USAEnum {
         }
     }
 
-    companion object {
-        fun gradeToNumber(grade: USAEnum): Int {
+    companion object : GradeCompanionInterface<USAGrade> {
+        override fun gradeToNumber(grade: USAGrade, hard: Boolean): Int {
             return when (grade) {
                 FIVE_ZERO -> 1
                 FIVE_ONE -> 2
@@ -117,7 +116,7 @@ enum class USAEnum {
             }
         }
 
-        fun numberToGrade(number: Int): USAEnum? {
+        override fun numberToGrade(number: Int, hard: Boolean): USAGrade? {
             return when (number) {
                 1 -> FIVE_ZERO
                 2 -> FIVE_ONE
@@ -157,12 +156,12 @@ enum class USAEnum {
             }
         }
 
-        fun getList(): List<String> {
+        override fun getList(): List<String> {
             return values().map {
                 it.toString()
             }
         }
     }
-
-
 }
+
+
