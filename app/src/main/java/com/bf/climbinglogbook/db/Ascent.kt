@@ -7,7 +7,6 @@ import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.GradeSystem
-import com.bf.climbinglogbook.models.gradeEnums.Grade
 import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
 
 @Entity(tableName = ROUTES_TABLE_NAME)
