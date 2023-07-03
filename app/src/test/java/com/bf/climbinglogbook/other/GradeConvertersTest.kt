@@ -43,6 +43,7 @@ class GradeConvertersTest {
         val usaGrade = GradeConverters().kurtykaToUsa(kurtykaGrade)
         assertEquals(USAGrade.FIVE_ONE, usaGrade)
     }
+
     @Test
     fun kurtykaToFrench_correctValueWithHardParamTrue() {
         val kurtykaGrade = KurtykaGrade.FOUR_PLUS
@@ -117,6 +118,7 @@ class GradeConvertersTest {
         val kurtykaGrade = GradeConverters().usaToKurtyka(usaGrade)
         assertEquals(KurtykaGrade.ONE, kurtykaGrade)
     }
+
     @Test
     fun usaToFrench_correctValueWithHardParamTrue() {
         val usaGrade = USAGrade.FIVE_TWO
@@ -156,6 +158,7 @@ class GradeConvertersTest {
         val frenchGrade = GradeConverters().usaToFrench(usaGrade)
         assertEquals(FrenchGrade.ONE, frenchGrade)
     }
+
     @Test
     fun frenchToUsa_correctValueWithHardParamTrue() {
         val frenchGrade = FrenchGrade.FIVE_C
