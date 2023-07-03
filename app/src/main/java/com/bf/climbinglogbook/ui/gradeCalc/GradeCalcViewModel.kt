@@ -17,6 +17,10 @@ class GradeCalcViewModel(
     private val kurtykaGradesList = KurtykaGrade.getList()
     private val usaGradesList = USAGrade.getList()
 
+    val hardGradeToggle = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
 
     val selectedBaseGradeSystem = MutableLiveData<GradeSystem>().apply {
         value = GradeSystem.KURTYKA
@@ -45,40 +49,40 @@ class GradeCalcViewModel(
     }
 
     fun convertGrade(numberPickerValue: Int) {
+        val hard = hardGradeToggle.value ?: false
         when (selectedBaseGradeSystem.value) {
-            GradeSystem.FRENCH -> calculateFromFrenchGrade(numberPickerValue)
-            GradeSystem.KURTYKA -> calculateFromKurtykaGrade(numberPickerValue)
-            GradeSystem.USA -> calculateFromUsaGrade(numberPickerValue)
+            GradeSystem.FRENCH -> calculateFromFrenchGrade(numberPickerValue, hard)
+            GradeSystem.KURTYKA -> calculateFromKurtykaGrade(numberPickerValue, hard)
+            GradeSystem.USA -> calculateFromUsaGrade(numberPickerValue, hard)
             null -> {
                 _gradesMap.value = mapOf()
             }
         }
-        Log.i("GradeConv", _gradesMap.value?.entries!!.joinToString())
     }
 
-    private fun calculateFromUsaGrade(numberPickerValue: Int) {
+    private fun calculateFromUsaGrade(numberPickerValue: Int, hard: Boolean) {
         val usaGrade = USAGrade.values()[numberPickerValue]
         _gradesMap.value = mapOf(
             GradeSystem.USA to usaGrade.toString(),
-            GradeSystem.KURTYKA to GradeConverters().usaToKurtyka(usaGrade).toString(),
-            GradeSystem.FRENCH to GradeConverters().usaToFrench(usaGrade).toString()
+            GradeSystem.KURTYKA to GradeConverters().usaToKurtyka(usaGrade, hard).toString(),
+            GradeSystem.FRENCH to GradeConverters().usaToFrench(usaGrade, hard).toString()
         )
     }
 
-    private fun calculateFromKurtykaGrade(numberPickerValue: Int) {
+    private fun calculateFromKurtykaGrade(numberPickerValue: Int, hard: Boolean) {
         val kurtykaGrade = KurtykaGrade.values()[numberPickerValue]
         _gradesMap.value = mapOf(
-            GradeSystem.USA to GradeConverters().kurtykaToUsa(kurtykaGrade).toString(),
+            GradeSystem.USA to GradeConverters().kurtykaToUsa(kurtykaGrade, hard).toString(),
             GradeSystem.KURTYKA to kurtykaGrade.toString(),
-            GradeSystem.FRENCH to GradeConverters().kurtykaToFrench(kurtykaGrade).toString()
+            GradeSystem.FRENCH to GradeConverters().kurtykaToFrench(kurtykaGrade, hard).toString()
         )
     }
 
-    private fun calculateFromFrenchGrade(numberPickerValue: Int) {
+    private fun calculateFromFrenchGrade(numberPickerValue: Int, hard: Boolean) {
         val frenchGrade = FrenchGrade.values()[numberPickerValue]
         _gradesMap.value = mapOf(
-            GradeSystem.USA to GradeConverters().frenchToUsa(frenchGrade).toString(),
-            GradeSystem.KURTYKA to GradeConverters().frenchToKurtyka(frenchGrade).toString(),
+            GradeSystem.USA to GradeConverters().frenchToUsa(frenchGrade, hard).toString(),
+            GradeSystem.KURTYKA to GradeConverters().frenchToKurtyka(frenchGrade, hard).toString(),
             GradeSystem.FRENCH to frenchGrade.toString()
         )
     }

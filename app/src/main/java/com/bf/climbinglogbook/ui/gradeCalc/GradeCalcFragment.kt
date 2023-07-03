@@ -1,6 +1,7 @@
 package com.bf.climbinglogbook.ui.gradeCalc
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,17 +42,27 @@ class GradeCalcFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        gradeCalcViewModel = ViewModelProvider(this)[GradeCalcViewModel::class.java]
         navController = findNavController()
         binding.toolbar.ivArrowBack.setOnClickListener {
             navController.navigateUp()
         }
         binding.toolbar.title.text = getString(R.string.grade_calculator_title)
+
+        gradeCalcViewModel.gradesMap.observe(viewLifecycleOwner){
+            setNewCalcResult(
+                it[GradeSystem.FRENCH] ?: "",
+                it[GradeSystem.KURTYKA] ?: "",
+                it[GradeSystem.USA] ?: ""
+            )
+        }
+
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.grade_systems,
-            android.R.layout.simple_spinner_item
+            R.layout.custom_spinner_item
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.custom_spinner_style)
             binding.spinnerGradeSystem.adapter = adapter
         }
         binding.spinnerGradeSystem.onItemSelectedListener =
@@ -69,30 +80,42 @@ class GradeCalcFragment : Fragment() {
                         else -> GradeSystem.FRENCH
                     }
                     gradeCalcViewModel.setGrades()
-                    initGradesPicker() //TODO ("crash after fast change french->kurtyka->french")
+                    setGradesPicker(gradeCalcViewModel.grades.value)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
 
             }
 
-        gradeCalcViewModel = ViewModelProvider(this)[GradeCalcViewModel::class.java]
-        //initGradesPicker()
+        binding.toggleHard.setOnCheckedChangeListener { _, isChecked ->
+            gradeCalcViewModel.hardGradeToggle.value = isChecked
+            gradeCalcViewModel.convertGrade(binding.sourceNumberPicker.value)
+        }
+
+        gradeCalcViewModel.convertGrade(binding.sourceNumberPicker.value)
+    }
+
+    private fun setGradesPicker(displayedValue: List<String>?) {
+        if (displayedValue.isNullOrEmpty()) return
+
+        val displayedValueArray = displayedValue.toTypedArray()
+
         binding.sourceNumberPicker.apply {
+            displayedValues = null
+            minValue = 0
+            maxValue = displayedValueArray.size-1
+            displayedValues = displayedValueArray
+
             setOnValueChangedListener { _, _, newVal ->
                 gradeCalcViewModel.convertGrade(newVal)
             }
         }
     }
 
-    private fun initGradesPicker() {
-        gradeCalcViewModel.grades.observe(viewLifecycleOwner) {
-            binding.sourceNumberPicker.apply {
-                minValue = 0
-                maxValue = it.size - 1
-                displayedValues = it.toTypedArray()
-            }
-        }
+    private fun setNewCalcResult(french:String,kurtyka:String, usa:String) {
+        binding.tvFrenchResult.text = french
+        binding.tvKurtykaResult.text = kurtyka
+        binding.tvUsaResult.text = usa
     }
 
 

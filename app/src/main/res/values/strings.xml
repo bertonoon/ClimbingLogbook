@@ -9,4 +9,5 @@
     <string name="french_grade_system">French</string>
     <string name="kurtyka_grade_system">Kurtyka</string>
     <string name="usa_grade_system">USA</string>
+    <string name="hard_toggle_desc">Hard</string>
 </resources>

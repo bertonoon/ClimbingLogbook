@@ -16,10 +16,12 @@
 
     <Spinner
         android:id="@+id/spinnerGradeSystem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:background="@null"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -27,42 +29,113 @@
 
     <NumberPicker
         android:id="@+id/sourceNumberPicker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerGradeSystem"
         />
 
-    <TextView
-        android:id="@+id/tvFirstCalcGradeValue"
-        android:layout_width="match_parent"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/toggleHard"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        tools:text="CALC"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/hard_toggle_desc"
+        android:textSize="@dimen/grade_calc_tv_size"
+        android:textColor="#808080"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/sourceNumberPicker"
+        />
 
-    <TextView
-        android:id="@+id/tvSecondCalcGradeValue"
+
+
+    <LinearLayout
+        android:id="@+id/llFrenchGrade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        tools:text="CALC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFirstCalcGradeValue" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/toggleHard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvFrenchResultHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:text="@string/french_grade_system"/>
+        <TextView
+            android:id="@+id/tvFrenchResult"
+            android:layout_width="0dp"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            tools:text="7a"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llKurtykaGrade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/llFrenchGrade"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginVertical="20dp">
+
+        <TextView
+            android:id="@+id/tvKurtykaResultHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:text="@string/kurtyka_grade_system"/>
+        <TextView
+            android:id="@+id/tvKurtykaResult"
+            android:layout_width="0dp"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            tools:text="7a"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llUsaGrade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/llKurtykaGrade"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginVertical="20dp">
+
+        <TextView
+            android:id="@+id/tvUsaResultHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:text="@string/usa_grade_system"/>
+        <TextView
+            android:id="@+id/tvUsaResult"
+            android:layout_width="0dp"
+            android:textSize="@dimen/grade_calc_tv_size"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            tools:text="7a"/>
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
