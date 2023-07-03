@@ -85,7 +85,7 @@ enum class FrenchGrade {
                 FOUR_C -> 6
                 FIVE_A -> 6
                 FIVE_B -> 7
-                FIVE_C -> if(hard) 9 else 8
+                FIVE_C -> if (hard) 9 else 8
                 SIX_A -> 10
                 SIX_A_PLUS -> 11
                 SIX_B -> 12

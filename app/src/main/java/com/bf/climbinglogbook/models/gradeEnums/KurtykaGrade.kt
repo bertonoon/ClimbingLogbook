@@ -147,10 +147,11 @@ enum class KurtykaGrade() {
         }
 
         override fun getList(): List<String> {
-            return KurtykaGrade.values().map {
+            return values().map {
                 it.toString()
             }
         }
+
     }
 
 }

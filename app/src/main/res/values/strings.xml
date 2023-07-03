@@ -4,4 +4,9 @@
     <string name="title_statistics">Statistics</string>
     <string name="title_logbook">Logbook</string>
     <string name="grade_conversion_icon_title">Grade conversion</string>
+    <string name="arrow_back_desc">Go Back</string>
+    <string name="grade_calculator_title">Grade Calculator</string>
+    <string name="french_grade_system">French</string>
+    <string name="kurtyka_grade_system">Kurtyka</string>
+    <string name="usa_grade_system">USA</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="grade_systems">
+        <item>@string/french_grade_system</item>
+        <item>@string/kurtyka_grade_system</item>
+        <item>@string/usa_grade_system</item>
+    </array>
+
+</resources>
