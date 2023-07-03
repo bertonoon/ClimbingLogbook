@@ -191,7 +191,6 @@ class GradeConvertersTest {
         assertEquals(USAGrade.FIVE_ONE, usaGrade)
     }
 
-    //----------
     @Test
     fun frenchToKurtyka_correctValueWithHardParamTrue() {
         val frenchGrade = FrenchGrade.FIVE_C
