@@ -1,6 +1,5 @@
 package com.bf.climbinglogbook.ui.gradeCalc
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,14 +16,16 @@ class GradeCalcViewModel(
     private val kurtykaGradesList = KurtykaGrade.getList()
     private val usaGradesList = USAGrade.getList()
 
-    val hardGradeToggle = MutableLiveData<Boolean>().apply {
+    private val _hardGradeToggle = MutableLiveData<Boolean>().apply {
         value = false
     }
+    val hardGradeToggle : LiveData<Boolean> = _hardGradeToggle
 
 
-    val selectedBaseGradeSystem = MutableLiveData<GradeSystem>().apply {
+    private val _selectedBaseGradeSystem = MutableLiveData<GradeSystem>().apply {
         value = GradeSystem.KURTYKA
     }
+    val selectedBaseGradeSystem : LiveData<GradeSystem> = _selectedBaseGradeSystem
 
     private val _grades = MutableLiveData<List<String>>().apply {
         value = when (selectedBaseGradeSystem.value) {
@@ -39,7 +40,7 @@ class GradeCalcViewModel(
     private val _gradesMap = MutableLiveData<Map<GradeSystem, String>>()
     val gradesMap: LiveData<Map<GradeSystem, String>> = _gradesMap
 
-    fun setGrades() {
+    private fun setGrades() {
         _grades.value = when (selectedBaseGradeSystem.value) {
             GradeSystem.FRENCH -> frenchGradesList
             GradeSystem.KURTYKA -> kurtykaGradesList
@@ -85,6 +86,17 @@ class GradeCalcViewModel(
             GradeSystem.KURTYKA to GradeConverters().frenchToKurtyka(frenchGrade, hard).toString(),
             GradeSystem.FRENCH to frenchGrade.toString()
         )
+    }
+
+    fun setBaseGradeSystem(newBaseGradeSystem: GradeSystem) {
+        if (newBaseGradeSystem == _selectedBaseGradeSystem.value) return
+        _selectedBaseGradeSystem.value = newBaseGradeSystem
+        setGrades()
+    }
+
+    fun setHardGradeToggle(checked: Boolean) {
+        if (checked == _hardGradeToggle.value) return
+        _hardGradeToggle.value = checked
     }
 
 

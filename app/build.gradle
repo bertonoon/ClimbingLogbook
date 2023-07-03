@@ -52,11 +52,27 @@ dependencies {
     // Tests
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation "androidx.test:runner:1.5.2"
+    androidTestImplementation "androidx.test:rules:1.5.0"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.ext:truth:1.5.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:3.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:3.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-web:3.5.1"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:3.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:3.5.1"
+    testImplementation "org.mockito:mockito-core:5.4.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
+    testImplementation "io.mockk:mockk:1.13.5"
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+
 
     // Room
     implementation "androidx.room:room-runtime:2.5.2"
@@ -78,11 +94,11 @@ dependencies {
     // Dagger-hilt
     implementation "com.google.dagger:hilt-android:2.46.1"
     kapt "com.google.dagger:hilt-compiler:2.46.1"
-    implementation group: 'androidx.lifecycle', name:'lifecycle-viewmodel-ktx', version: '2.6.1'
+    implementation group: 'androidx.lifecycle', name: 'lifecycle-viewmodel-ktx', version: '2.6.1'
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
     // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.46.1'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.46.1'
     kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46.1'
 
     // For local unit tests

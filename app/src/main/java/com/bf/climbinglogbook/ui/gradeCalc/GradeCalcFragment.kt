@@ -1,14 +1,13 @@
 package com.bf.climbinglogbook.ui.gradeCalc
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bf.climbinglogbook.R
@@ -21,7 +20,7 @@ class GradeCalcFragment : Fragment() {
 
     private var _binding: FragmentGradeCalcBinding? = null
     private val binding get() = _binding!!
-    private lateinit var gradeCalcViewModel: GradeCalcViewModel
+    private val gradeCalcViewModel: GradeCalcViewModel by viewModels()
     private lateinit var navController: NavController
 
     override fun onCreateView(
@@ -42,7 +41,6 @@ class GradeCalcFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        gradeCalcViewModel = ViewModelProvider(this)[GradeCalcViewModel::class.java]
         navController = findNavController()
         binding.toolbar.ivArrowBack.setOnClickListener {
             navController.navigateUp()
@@ -73,14 +71,16 @@ class GradeCalcFragment : Fragment() {
                     pos: Int,
                     id: Long
                 ) {
-                    gradeCalcViewModel.selectedBaseGradeSystem.value = when (pos) {
+                    val newBaseGradeSystem = when (pos) {
                         0 -> GradeSystem.FRENCH
                         1 -> GradeSystem.KURTYKA
                         2 -> GradeSystem.USA
                         else -> GradeSystem.FRENCH
                     }
-                    gradeCalcViewModel.setGrades()
+                    gradeCalcViewModel.setBaseGradeSystem(newBaseGradeSystem)
                     setGradesPicker(gradeCalcViewModel.grades.value)
+                    gradeCalcViewModel.convertGrade(binding.sourceNumberPicker.value)
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -88,7 +88,7 @@ class GradeCalcFragment : Fragment() {
             }
 
         binding.toggleHard.setOnCheckedChangeListener { _, isChecked ->
-            gradeCalcViewModel.hardGradeToggle.value = isChecked
+            gradeCalcViewModel.setHardGradeToggle(isChecked)
             gradeCalcViewModel.convertGrade(binding.sourceNumberPicker.value)
         }
 
