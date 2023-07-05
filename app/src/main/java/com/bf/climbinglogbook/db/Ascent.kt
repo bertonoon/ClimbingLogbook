@@ -13,11 +13,9 @@ import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
 data class Ascent (
     var name : String,
 
-    var gradeID : Int,
-    var hard : Boolean = false,
-
     var gradeSystem : GradeSystem,
     var gradeOrdinal : Int,
+    var hard : Boolean = false,
 
     var comment : String? = null,
 
