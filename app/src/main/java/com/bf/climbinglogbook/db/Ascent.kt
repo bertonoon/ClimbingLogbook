@@ -12,10 +12,12 @@ import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
 @Entity(tableName = ROUTES_TABLE_NAME)
 data class Ascent (
     var name : String,
-    var grade : Int = 0,
-    var gradeSystem : GradeSystem,
-    var originalGrade : String,
+
+    var gradeID : Int,
     var hard : Boolean = false,
+
+    var gradeSystem : GradeSystem,
+    var gradeOrdinal : Int,
 
     var comment : String? = null,
 
