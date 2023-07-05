@@ -113,7 +113,7 @@ enum class KurtykaGrade() {
                 3 -> if (hard) TWO_PLUS else TWO
                 4 -> if (hard) THREE_PLUS else THREE
                 5 -> FOUR
-                6 -> FIVE
+                6 -> FOUR_PLUS
                 7 -> FIVE
                 8 -> FIVE_PLUS
                 9 -> SIX_MINUS

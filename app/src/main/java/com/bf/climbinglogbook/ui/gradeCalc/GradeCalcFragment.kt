@@ -47,11 +47,12 @@ class GradeCalcFragment : Fragment() {
         }
         binding.toolbar.title.text = getString(R.string.grade_calculator_title)
 
-        gradeCalcViewModel.gradesMap.observe(viewLifecycleOwner){
+        gradeCalcViewModel.gradesMap.observe(viewLifecycleOwner) {
             setNewCalcResult(
                 it[GradeSystem.FRENCH] ?: "",
                 it[GradeSystem.KURTYKA] ?: "",
-                it[GradeSystem.USA] ?: ""
+                it[GradeSystem.USA] ?: "",
+                it[GradeSystem.UIAA] ?: "",
             )
         }
 
@@ -75,6 +76,7 @@ class GradeCalcFragment : Fragment() {
                         0 -> GradeSystem.FRENCH
                         1 -> GradeSystem.KURTYKA
                         2 -> GradeSystem.USA
+                        3 -> GradeSystem.UIAA
                         else -> GradeSystem.FRENCH
                     }
                     gradeCalcViewModel.setBaseGradeSystem(newBaseGradeSystem)
@@ -103,7 +105,7 @@ class GradeCalcFragment : Fragment() {
         binding.sourceNumberPicker.apply {
             displayedValues = null
             minValue = 0
-            maxValue = displayedValueArray.size-1
+            maxValue = displayedValueArray.size - 1
             displayedValues = displayedValueArray
 
             setOnValueChangedListener { _, _, newVal ->
@@ -112,10 +114,11 @@ class GradeCalcFragment : Fragment() {
         }
     }
 
-    private fun setNewCalcResult(french:String,kurtyka:String, usa:String) {
+    private fun setNewCalcResult(french: String, kurtyka: String, usa: String, uiaa: String) {
         binding.tvFrenchResult.text = french
         binding.tvKurtykaResult.text = kurtyka
         binding.tvUsaResult.text = usa
+        binding.tvUiaaResult.text = uiaa
     }
 
 

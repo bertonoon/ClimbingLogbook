@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
+import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.GradeConverters
 
@@ -15,6 +16,7 @@ class GradeCalcViewModel(
     private val frenchGradesList = FrenchGrade.getList()
     private val kurtykaGradesList = KurtykaGrade.getList()
     private val usaGradesList = USAGrade.getList()
+    private val uiaaGradesList = UIAAGrade.getList()
 
     private val _hardGradeToggle = MutableLiveData<Boolean>().apply {
         value = false
@@ -32,6 +34,7 @@ class GradeCalcViewModel(
             GradeSystem.FRENCH -> frenchGradesList
             GradeSystem.KURTYKA -> kurtykaGradesList
             GradeSystem.USA -> usaGradesList
+            GradeSystem.UIAA -> uiaaGradesList
             else -> frenchGradesList
         }
     }
@@ -45,6 +48,7 @@ class GradeCalcViewModel(
             GradeSystem.FRENCH -> frenchGradesList
             GradeSystem.KURTYKA -> kurtykaGradesList
             GradeSystem.USA -> usaGradesList
+            GradeSystem.UIAA -> uiaaGradesList
             else -> frenchGradesList
         }
     }
@@ -55,6 +59,7 @@ class GradeCalcViewModel(
             GradeSystem.FRENCH -> calculateFromFrenchGrade(numberPickerValue, hard)
             GradeSystem.KURTYKA -> calculateFromKurtykaGrade(numberPickerValue, hard)
             GradeSystem.USA -> calculateFromUsaGrade(numberPickerValue, hard)
+            GradeSystem.UIAA -> calculateFromUiaaGrade(numberPickerValue, hard)
             null -> {
                 _gradesMap.value = mapOf()
             }
@@ -66,7 +71,8 @@ class GradeCalcViewModel(
         _gradesMap.value = mapOf(
             GradeSystem.USA to usaGrade.toString(),
             GradeSystem.KURTYKA to GradeConverters().usaToKurtyka(usaGrade, hard).toString(),
-            GradeSystem.FRENCH to GradeConverters().usaToFrench(usaGrade, hard).toString()
+            GradeSystem.FRENCH to GradeConverters().usaToFrench(usaGrade, hard).toString(),
+            GradeSystem.UIAA to GradeConverters().usaToUiaa(usaGrade, hard).toString(),
         )
     }
 
@@ -75,7 +81,8 @@ class GradeCalcViewModel(
         _gradesMap.value = mapOf(
             GradeSystem.USA to GradeConverters().kurtykaToUsa(kurtykaGrade, hard).toString(),
             GradeSystem.KURTYKA to kurtykaGrade.toString(),
-            GradeSystem.FRENCH to GradeConverters().kurtykaToFrench(kurtykaGrade, hard).toString()
+            GradeSystem.FRENCH to GradeConverters().kurtykaToFrench(kurtykaGrade, hard).toString(),
+            GradeSystem.UIAA to GradeConverters().kurtykaToUiaa(kurtykaGrade, hard).toString(),
         )
     }
 
@@ -84,7 +91,18 @@ class GradeCalcViewModel(
         _gradesMap.value = mapOf(
             GradeSystem.USA to GradeConverters().frenchToUsa(frenchGrade, hard).toString(),
             GradeSystem.KURTYKA to GradeConverters().frenchToKurtyka(frenchGrade, hard).toString(),
-            GradeSystem.FRENCH to frenchGrade.toString()
+            GradeSystem.FRENCH to frenchGrade.toString(),
+            GradeSystem.UIAA to GradeConverters().frenchToUiaa(frenchGrade, hard).toString()
+        )
+    }
+
+    private fun calculateFromUiaaGrade(numberPickerValue: Int, hard: Boolean) {
+        val uiaaGrade = UIAAGrade.values()[numberPickerValue]
+        _gradesMap.value = mapOf(
+            GradeSystem.USA to GradeConverters().uiaaToUsa(uiaaGrade, hard).toString(),
+            GradeSystem.KURTYKA to GradeConverters().uiaaToKurtyka(uiaaGrade, hard).toString(),
+            GradeSystem.FRENCH to GradeConverters().uiaaToFrench(uiaaGrade, hard).toString(),
+            GradeSystem.UIAA to uiaaGrade.toString()
         )
     }
 

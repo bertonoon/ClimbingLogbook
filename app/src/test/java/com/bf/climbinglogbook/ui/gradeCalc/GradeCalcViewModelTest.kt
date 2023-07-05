@@ -1,16 +1,15 @@
 package com.bf.climbinglogbook.ui.gradeCalc
 
-import androidx.annotation.NonNull
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
+import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.internal.matchers.Null
 import java.lang.IndexOutOfBoundsException
 
 
@@ -43,6 +42,11 @@ class GradeCalcViewModelTest {
         viewModel.setBaseGradeSystem(GradeSystem.USA)
         assertEquals(GradeSystem.USA,viewModel.selectedBaseGradeSystem.value)
     }
+    @Test
+    fun setBaseSystemToUiaa(){
+        viewModel.setBaseGradeSystem(GradeSystem.UIAA)
+        assertEquals(GradeSystem.UIAA,viewModel.selectedBaseGradeSystem.value)
+    }
 
     @Test(expected = ArrayIndexOutOfBoundsException::class)
     fun setBaseSystemToOverRange(){
@@ -73,6 +77,12 @@ class GradeCalcViewModelTest {
     }
 
     @Test
+    fun setUiaaGradeSystem_returnGradesLiveDataWithUiaaList() {
+        viewModel.setBaseGradeSystem(GradeSystem.UIAA)
+        assertEquals(UIAAGrade.getList(), viewModel.grades.value)
+    }
+
+    @Test
     fun setHardGradeToggleTest_setToTrueFromToggle() {
         viewModel.setHardGradeToggle(true)
         assertEquals(true, viewModel.hardGradeToggle.value)
@@ -93,7 +103,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "7a"),
             Pair(GradeSystem.KURTYKA, "VI.3"),
-            Pair(GradeSystem.USA, "5.11c")
+            Pair(GradeSystem.USA, "5.11c"),
+            Pair(GradeSystem.UIAA, "VIII")
         )
 
         assertEquals(expectedResult, viewModel.gradesMap.value)
@@ -108,7 +119,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "9c"),
             Pair(GradeSystem.KURTYKA, "VI.10"),
-            Pair(GradeSystem.USA, "5.15d")
+            Pair(GradeSystem.USA, "5.15d"),
+            Pair(GradeSystem.UIAA, "XII+")
         )
 
         assertEquals(expectedResult, viewModel.gradesMap.value)
@@ -123,7 +135,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "1"),
             Pair(GradeSystem.KURTYKA, "I"),
-            Pair(GradeSystem.USA, "5.1")
+            Pair(GradeSystem.USA, "5.1"),
+            Pair(GradeSystem.UIAA, "I")
         )
 
         assertEquals(expectedResult, viewModel.gradesMap.value)
@@ -151,7 +164,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "5c"),
             Pair(GradeSystem.KURTYKA, "VI-"),
-            Pair(GradeSystem.USA, "5.8")
+            Pair(GradeSystem.USA, "5.8"),
+            Pair(GradeSystem.UIAA, "VI-")
         )
         assertEquals(expectedResult, viewModel.gradesMap.value)
     }
@@ -165,7 +179,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "5c"),
             Pair(GradeSystem.KURTYKA, "VI-"),
-            Pair(GradeSystem.USA, "5.8")
+            Pair(GradeSystem.USA, "5.8"),
+            Pair(GradeSystem.UIAA, "VI-")
         )
         assertEquals(expectedResult, viewModel.gradesMap.value)
     }
@@ -180,7 +195,8 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "7c"),
             Pair(GradeSystem.KURTYKA, "VI.4+"),
-            Pair(GradeSystem.USA, "5.12d")
+            Pair(GradeSystem.USA, "5.12d"),
+            Pair(GradeSystem.UIAA, "IX")
         )
         assertEquals(expectedResult, viewModel.gradesMap.value)
     }
@@ -195,7 +211,41 @@ class GradeCalcViewModelTest {
         val expectedResult = mapOf(
             Pair(GradeSystem.FRENCH, "7b+"),
             Pair(GradeSystem.KURTYKA, "VI.4+"),
-            Pair(GradeSystem.USA, "5.12c")
+            Pair(GradeSystem.USA, "5.12c"),
+            Pair(GradeSystem.UIAA, "IX")
+        )
+        assertEquals(expectedResult, viewModel.gradesMap.value)
+    }
+
+
+    @Test
+    fun convertGradeTest_fromUiaaWithHardParamTrue() {
+        val numberPickerValue = 25
+        viewModel.setBaseGradeSystem(GradeSystem.UIAA)
+        viewModel.setHardGradeToggle(true)
+        viewModel.convertGrade(numberPickerValue)
+
+        val expectedResult = mapOf(
+            Pair(GradeSystem.FRENCH, "8c+"),
+            Pair(GradeSystem.KURTYKA, "VI.7+"),
+            Pair(GradeSystem.USA, "5.14c"),
+            Pair(GradeSystem.UIAA, "XI-")
+        )
+        assertEquals(expectedResult, viewModel.gradesMap.value)
+    }
+
+    @Test
+    fun convertGradeTest_fromUiaaWithHardParamFalse() {
+        val numberPickerValue = 25
+        viewModel.setBaseGradeSystem(GradeSystem.UIAA)
+        viewModel.setHardGradeToggle(false)
+        viewModel.convertGrade(numberPickerValue)
+
+        val expectedResult = mapOf(
+            Pair(GradeSystem.FRENCH, "8c"),
+            Pair(GradeSystem.KURTYKA, "VI.7"),
+            Pair(GradeSystem.USA, "5.14b"),
+            Pair(GradeSystem.UIAA, "XI-")
         )
         assertEquals(expectedResult, viewModel.gradesMap.value)
     }

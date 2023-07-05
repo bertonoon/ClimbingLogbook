@@ -4,6 +4,7 @@
         <item>@string/french_grade_system</item>
         <item>@string/kurtyka_grade_system</item>
         <item>@string/usa_grade_system</item>
+        <item>@string/uiaa_grade_system</item>
     </array>
 
 </resources>
