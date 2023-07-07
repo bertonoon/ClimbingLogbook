@@ -15,5 +15,6 @@
     <color name="palette_4">#8FE3CF</color>
     <color name="palette_5">#FFB703</color>
     <color name="palette_6">#FB8500</color>
+    <color name="add_ascent_text_color">#808080</color>
 
 </resources>

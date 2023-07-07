@@ -25,9 +25,17 @@
         android:id="@+id/navigation_logbook"
         android:name="com.bf.climbinglogbook.ui.logbook.LogbookFragment"
         android:label="@string/title_logbook"
-        tools:layout="@layout/fragment_logbook" />
+        tools:layout="@layout/fragment_logbook" >
+        <action
+            android:id="@+id/action_navigation_logbook_to_addNewAscent"
+            app:destination="@id/addNewAscent" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_grade_calc"
         android:name="com.bf.climbinglogbook.ui.gradeCalc.GradeCalcFragment"
         android:label="GradeCalcFragment" />
+    <fragment
+        android:id="@+id/addNewAscent"
+        android:name="com.bf.climbinglogbook.ui.addNewAscent.AddNewAscentFragment"
+        android:label="AddNewAscent" />
 </navigation>
