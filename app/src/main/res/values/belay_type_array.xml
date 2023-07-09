@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="belay_type">
+        <item>@string/belay_type_lead</item>
+        <item>@string/belay_top_rope</item>
+        <item>@string/belay_solo_lead</item>
+        <item>@string/belay_solo_top_rope</item>
+        <item>@string/belay_free_solo</item>
+    </array>
+</resources>

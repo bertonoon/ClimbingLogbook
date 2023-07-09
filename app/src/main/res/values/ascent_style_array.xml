@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="ascent_style">
+        <item>@string/ascent_style_onsight</item>
+        <item>@string/ascent_style_redpoint</item>
+        <item>@string/ascent_style_flash</item>
+        <item>@string/ascent_style_pinkpoint</item>
+        <item>@string/ascent_style_greenpoint</item>
+    </array>
+</resources>

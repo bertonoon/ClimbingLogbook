@@ -109,6 +109,21 @@
 
         </LinearLayout>
 
+        <Spinner
+            android:id="@+id/spinnerAscentStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:background="@null"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="@dimen/add_ascent_text_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llGrade" />
+
+
         <EditText
             android:id="@+id/etCountry"
             android:layout_width="match_parent"
@@ -126,17 +141,17 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llGrade" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerAscentStyle" />
 
         <EditText
             android:id="@+id/etRegion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:autofillHints="Poland"
             android:gravity="start"
             android:hint="@string/add_ascent_region_hint"
             android:imeOptions="actionNext"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:maxLength="50"
             android:text="@string/add_ascent_region"
@@ -152,10 +167,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:autofillHints="Elephants Ass"
             android:gravity="start"
             android:hint="@string/add_ascent_rock_hint"
             android:imeOptions="actionNext"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:maxLength="50"
             android:text="@string/add_ascent_rock"
@@ -207,6 +222,109 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llLocation" />
+
+        <EditText
+            android:id="@+id/etMeters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:gravity="start"
+            android:hint="@string/add_ascent_meters_hint"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="50"
+            android:text="@string/add_ascent_meters"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPhoto" />
+
+        <Spinner
+            android:id="@+id/spinnerClimbingStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:background="@null"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="@dimen/add_ascent_text_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etMeters" />
+
+        <Spinner
+            android:id="@+id/spinnerBelayType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:background="@null"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="@dimen/add_ascent_text_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerClimbingStyle" />
+
+        <EditText
+            android:id="@+id/etPitches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:gravity="start"
+            android:hint="@string/add_ascent_pitches_hint"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="50"
+            android:text="@string/add_ascent_pitches"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerBelayType" />
+
+        <EditText
+            android:id="@+id/etBelayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:gravity="start"
+            android:hint="@string/add_ascent_belayer_hint"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="50"
+            android:text="@string/add_ascent_belayer"
+            android:textColor="@color/add_ascent_text_color"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPitches" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:background="@drawable/shape_button_rounded"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/add_ascent_btn_save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/add_ascent_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etBelayer" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

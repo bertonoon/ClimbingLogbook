@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="climbing_style">
+        <item>@string/climbing_style_sport</item>
+        <item>@string/climbing_style_trad</item>
+        <item>@string/climbing_style_bouldering</item>
+        <item>@string/climbing_style_drytooling</item>
+        <item>@string/climbing_style_mix</item>
+        <item>@string/climbing_style_alpine</item>
+        <item>@string/climbing_style_ice</item>
+    </array>
+</resources>
