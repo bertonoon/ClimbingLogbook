@@ -9,14 +9,21 @@ import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
 import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.GradeConverters
+import com.bf.climbinglogbook.repositories.GradesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GradeCalcViewModel(
+@HiltViewModel
+class GradeCalcViewModel @Inject constructor(
+    private val gradeRepo : GradesRepository
 ) : ViewModel() {
 
-    private val frenchGradesList = FrenchGrade.getList()
-    private val kurtykaGradesList = KurtykaGrade.getList()
-    private val usaGradesList = USAGrade.getList()
-    private val uiaaGradesList = UIAAGrade.getList()
+    private val gradesLists = GradesRepository().getGradesMap()
+
+    private val frenchGradesList = gradesLists[GradeSystem.FRENCH]
+    private val kurtykaGradesList = gradesLists[GradeSystem.KURTYKA]
+    private val usaGradesList = gradesLists[GradeSystem.USA]
+    private val uiaaGradesList = gradesLists[GradeSystem.UIAA]
 
     private val _hardGradeToggle = MutableLiveData<Boolean>().apply {
         value = false
@@ -40,8 +47,8 @@ class GradeCalcViewModel(
     }
     val grades: LiveData<List<String>> = _grades
 
-    private val _gradesMap = MutableLiveData<Map<GradeSystem, String>>()
-    val gradesMap: LiveData<Map<GradeSystem, String>> = _gradesMap
+    private val _gradesCalcResult = MutableLiveData<Map<GradeSystem, String>>()
+    val gradesMap: LiveData<Map<GradeSystem, String>> = _gradesCalcResult
 
     private fun setGrades() {
         _grades.value = when (selectedBaseGradeSystem.value) {
@@ -61,14 +68,14 @@ class GradeCalcViewModel(
             GradeSystem.USA -> calculateFromUsaGrade(numberPickerValue, hard)
             GradeSystem.UIAA -> calculateFromUiaaGrade(numberPickerValue, hard)
             null -> {
-                _gradesMap.value = mapOf()
+                _gradesCalcResult.value = mapOf()
             }
         }
     }
 
     private fun calculateFromUsaGrade(numberPickerValue: Int, hard: Boolean) {
         val usaGrade = USAGrade.values()[numberPickerValue]
-        _gradesMap.value = mapOf(
+        _gradesCalcResult.value = mapOf(
             GradeSystem.USA to usaGrade.toString(),
             GradeSystem.KURTYKA to GradeConverters().usaToKurtyka(usaGrade, hard).toString(),
             GradeSystem.FRENCH to GradeConverters().usaToFrench(usaGrade, hard).toString(),
@@ -78,7 +85,7 @@ class GradeCalcViewModel(
 
     private fun calculateFromKurtykaGrade(numberPickerValue: Int, hard: Boolean) {
         val kurtykaGrade = KurtykaGrade.values()[numberPickerValue]
-        _gradesMap.value = mapOf(
+        _gradesCalcResult.value = mapOf(
             GradeSystem.USA to GradeConverters().kurtykaToUsa(kurtykaGrade, hard).toString(),
             GradeSystem.KURTYKA to kurtykaGrade.toString(),
             GradeSystem.FRENCH to GradeConverters().kurtykaToFrench(kurtykaGrade, hard).toString(),
@@ -88,7 +95,7 @@ class GradeCalcViewModel(
 
     private fun calculateFromFrenchGrade(numberPickerValue: Int, hard: Boolean) {
         val frenchGrade = FrenchGrade.values()[numberPickerValue]
-        _gradesMap.value = mapOf(
+        _gradesCalcResult.value = mapOf(
             GradeSystem.USA to GradeConverters().frenchToUsa(frenchGrade, hard).toString(),
             GradeSystem.KURTYKA to GradeConverters().frenchToKurtyka(frenchGrade, hard).toString(),
             GradeSystem.FRENCH to frenchGrade.toString(),
@@ -98,7 +105,7 @@ class GradeCalcViewModel(
 
     private fun calculateFromUiaaGrade(numberPickerValue: Int, hard: Boolean) {
         val uiaaGrade = UIAAGrade.values()[numberPickerValue]
-        _gradesMap.value = mapOf(
+        _gradesCalcResult.value = mapOf(
             GradeSystem.USA to GradeConverters().uiaaToUsa(uiaaGrade, hard).toString(),
             GradeSystem.KURTYKA to GradeConverters().uiaaToKurtyka(uiaaGrade, hard).toString(),
             GradeSystem.FRENCH to GradeConverters().uiaaToFrench(uiaaGrade, hard).toString(),

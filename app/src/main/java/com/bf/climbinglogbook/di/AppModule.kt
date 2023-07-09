@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.bf.climbinglogbook.db.LogbookDatabase
 import com.bf.climbinglogbook.other.Constants
+import com.bf.climbinglogbook.repositories.GradesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +33,8 @@ object AppModule {
     @Provides
     fun provideAscentDao(db : LogbookDatabase) = db.getAscentDao()
 
+    @Singleton
+    @Provides
+    fun provideGradesRepository() = GradesRepository()
 
 }
