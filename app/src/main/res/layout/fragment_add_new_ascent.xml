@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:scrollbars="vertical"
     tools:context=".ui.addNewAscent.AddNewAscentFragment">
 
@@ -19,62 +19,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/llName"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:textColor="@color/add_ascent_text_color"
             android:layout_margin="@dimen/add_ascent_item_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/add_ascent_name"
-                android:textColor="@color/add_ascent_text_color"
-                android:textSize="@dimen/add_ascent_text_size"
-                android:layout_marginEnd="@dimen/add_ascent_header_end_margin"
-                android:visibility="visible" />
-
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="@string/add_ascent_name"
                 android:gravity="start"
-                android:hint="@string/add_ascent_name_hint"
+                android:hint="@string/add_ascent_name"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="50"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etDate"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:autofillHints="2023-12-15"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:gravity="start"
-            android:hint="@string/add_ascent_date_hint"
-            android:imeOptions="actionNext"
-            android:inputType="date"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llName" />
+            app:layout_constraintTop_toBottomOf="@id/tilName">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_date"
+                android:imeOptions="actionNext"
+                android:inputType="none"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <LinearLayout
             android:id="@+id/llGrade"
@@ -84,7 +75,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etDate">
+            app:layout_constraintTop_toBottomOf="@id/tilDate">
 
             <NumberPicker
                 android:id="@+id/numberPickerGrade"
@@ -141,59 +132,77 @@
             app:layout_constraintTop_toBottomOf="@id/llGrade" />
 
 
-        <EditText
-            android:id="@+id/etCountry"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCountry"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:autofillHints="Poland"
-            android:gravity="start"
-            android:hint="@string/add_ascent_country_hint"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerAscentStyle" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerAscentStyle">
 
-        <EditText
-            android:id="@+id/etRegion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/add_ascent_item_margin"
-            android:gravity="start"
-            android:hint="@string/add_ascent_region_hint"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etCountry" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_country"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etRock"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegion"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:gravity="start"
-            android:hint="@string/add_ascent_rock_hint"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etRegion" />
+            app:layout_constraintTop_toBottomOf="@id/tilCountry">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_region"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRock"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilRegion">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etRock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_rock"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout
@@ -203,7 +212,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etRock">
+            app:layout_constraintTop_toBottomOf="@id/tilRock">
 
             <!-- TODO ("Location picker")-->
             <EditText
@@ -236,23 +245,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llLocation" />
 
-        <EditText
-            android:id="@+id/etMeters"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMeters"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:gravity="start"
-            android:hint="@string/add_ascent_meters_hint"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivPhoto" />
+            app:layout_constraintTop_toBottomOf="@id/ivPhoto">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etMeters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_meters"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/spinnerClimbingStyle"
@@ -266,7 +281,7 @@
             android:textSize="@dimen/add_ascent_text_size"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etMeters" />
+            app:layout_constraintTop_toBottomOf="@id/tilMeters" />
 
         <Spinner
             android:id="@+id/spinnerBelayType"
@@ -282,43 +297,55 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinnerClimbingStyle" />
 
-        <EditText
-            android:id="@+id/etPitches"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPitches"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:gravity="start"
-            android:hint="@string/add_ascent_pitches_hint"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerBelayType" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerBelayType">
 
-        <EditText
-            android:id="@+id/etBelayer"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPitches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_pitches"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="3"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBelayer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:gravity="start"
-            android:hint="@string/add_ascent_belayer_hint"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:maxLength="50"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="20sp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPitches" />
+            app:layout_constraintTop_toBottomOf="@id/tilPitches">
 
-        <Button
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBelayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/add_ascent_belayer"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -332,7 +359,7 @@
             android:textSize="@dimen/add_ascent_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etBelayer" />
+            app:layout_constraintTop_toBottomOf="@+id/tilBelayer" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
