@@ -1,19 +1,21 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
+import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.unit.Constraints
+import android.widget.AutoCompleteTextView
+import android.widget.Spinner
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bf.climbinglogbook.R
@@ -21,14 +23,14 @@ import com.bf.climbinglogbook.databinding.FragmentAddNewAscentBinding
 import com.bf.climbinglogbook.models.AddAscentErrors
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants
-import com.bf.climbinglogbook.ui.gradeCalc.GradeCalcViewModel
+import com.bumptech.glide.load.engine.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AddNewAscentFragment : Fragment() {
@@ -102,7 +104,6 @@ class AddNewAscentFragment : Fragment() {
             addNewAscentViewModel.save()
         }
         initCalendar()
-
     }
 
     private fun initCalendar() {
@@ -131,62 +132,38 @@ class AddNewAscentFragment : Fragment() {
         binding.etDate.setText(sdf.format(date).toString())
     }
 
+    private fun setSpinner(arrayTable: Int, spinner: AutoCompleteTextView) {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            arrayTable,
+            R.layout.add_ascent_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.add_ascent_spinner_style)
+            spinner.threshold = 0
+            spinner.setAdapter(adapter)
+            spinner.setOnClickListener { spinner.showDropDown() }
+        }
+    }
+
     private fun setSpinners() {
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.grade_systems,
-            R.layout.add_ascent_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.add_ascent_spinner_style)
-            binding.spinnerGradeSystem.adapter = adapter
-        }
-
-        binding.spinnerGradeSystem.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    pos: Int,
-                    id: Long
-                ) {
-                    val newBaseGradeSystem = when (pos) {
-                        0 -> GradeSystem.FRENCH
-                        1 -> GradeSystem.KURTYKA
-                        2 -> GradeSystem.USA
-                        3 -> GradeSystem.UIAA
-                        else -> GradeSystem.FRENCH
-                    }
-                    addNewAscentViewModel.setBaseGradeSystem(newBaseGradeSystem)
-                    setGradesPicker(addNewAscentViewModel.selectedGradesList.value)
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {}
+        setSpinner(R.array.grade_systems, binding.spinnerGradeSystem)
+        binding.spinnerGradeSystem.setText( resources.getString(R.string.kurtyka_grade_system),false)
+        binding.spinnerGradeSystem.setOnItemClickListener { adapterView, view, i, l ->
+            val newBaseGradeSystem = when (i) {
+                0 -> GradeSystem.FRENCH
+                1 -> GradeSystem.KURTYKA
+                2 -> GradeSystem.USA
+                3 -> GradeSystem.UIAA
+                else -> GradeSystem.FRENCH
             }
+            addNewAscentViewModel.setBaseGradeSystem(newBaseGradeSystem)
+            setGradesPicker(addNewAscentViewModel.selectedGradesList.value)
+        }
 
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.ascent_style,
-            R.layout.add_ascent_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.add_ascent_spinner_style)
-            binding.spinnerAscentStyle.adapter = adapter
-        }
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.belay_type,
-            R.layout.add_ascent_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.add_ascent_spinner_style)
-            binding.spinnerBelayType.adapter = adapter
-        }
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.climbing_style,
-            R.layout.add_ascent_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.add_ascent_spinner_style)
-            binding.spinnerClimbingStyle.adapter = adapter
-        }
+        setSpinner(R.array.ascent_style, binding.spinnerAscentStyle)
+        setSpinner(R.array.belay_type, binding.spinnerBelayType)
+        setSpinner(R.array.climbing_style, binding.spinnerClimbingStyle)
+
     }
 
     private fun setGradesPicker(displayedValue: List<String>?) {
@@ -219,6 +196,4 @@ class AddNewAscentFragment : Fragment() {
             }
         )
     }
-
-
 }

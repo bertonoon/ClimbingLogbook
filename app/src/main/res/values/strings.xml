@@ -53,5 +53,9 @@
     <string name="climbing_style_ice">Ice</string>
     <string name="add_ascent_name_null_or_empty_msg">The route name must have at least one character</string>
     <string name="add_ascent_name_to_long">The route name must be less than 50 characters.</string>
+    <string name="add_ascent_style">Style</string>
+    <string name="add_ascent_grade_system">Grade system</string>
+    <string name="add_ascent_belay_type">Belay type</string>
+    <string name="add_ascent_climbing_style">Climbing style</string>
 
 </resources>

@@ -7,7 +7,6 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:ellipsize="marquee"
-    android:textSize="25sp"
     android:textAlignment="center"
-    android:textColor="#808080"
-    />
+    android:textColor="@color/add_ascent_text_color"
+     />

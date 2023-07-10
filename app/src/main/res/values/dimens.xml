@@ -8,6 +8,9 @@
     <dimen name="button_radius">10dp</dimen>
     <dimen name="add_ascent_header_end_margin">10dp</dimen>
     <dimen name="add_ascent_spinner_text_size">18sp</dimen>
+    <dimen name="add_ascent_field_height">60dp</dimen>
+    <dimen name="add_ascent_field_padding_start">10dp</dimen>
+    <dimen name="add_ascent_field_padding_end">10dp</dimen>
     <item name="add_ascent_header_weight" type="dimen" format="float">0.3</item>
     <item name="add_ascent_edit_text_view_weight" type="dimen" format="float">0.7</item>
 </resources>

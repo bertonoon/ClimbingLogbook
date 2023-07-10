@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
     android:scrollbars="vertical"
     tools:context=".ui.addNewAscent.AddNewAscentFragment">
 
@@ -32,12 +33,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_name"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -56,12 +59,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:focusableInTouchMode="false"
                 android:gravity="start"
                 android:hint="@string/add_ascent_date"
                 android:imeOptions="actionDone"
                 android:inputType="date"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -78,60 +83,84 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilDate">
 
-            <NumberPicker
-                android:id="@+id/numberPickerGrade"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/add_ascent_item_margin"
-                android:layout_weight="0.6"
-                android:textColor="@color/add_ascent_text_color"
-                android:textSize="@dimen/add_ascent_text_size" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4"
+                android:layout_weight="0.6"
                 android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerGradeSystem"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGradeSystem"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="@dimen/add_ascent_item_margin"
-                    android:background="@null"
-                    android:gravity="end"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/add_ascent_text_color"
-                    android:textSize="@dimen/add_ascent_spinner_text_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/add_ascent_item_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llGrade">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/spinnerGradeSystem"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_ascent_field_height"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/add_ascent_grade_system"
+                        android:inputType="none"
+                        android:paddingStart="@dimen/add_ascent_field_padding_start"
+                        android:paddingEnd="@dimen/add_ascent_field_padding_end"
+                        android:textColor="@color/add_ascent_text_color"
+                        android:textSize="@dimen/add_ascent_text_size" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/toggleHard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/add_ascent_item_margin"
+                    android:layout_height="@dimen/add_ascent_field_height"
+                    android:layout_marginVertical="@dimen/add_ascent_item_margin"
                     android:text="@string/add_ascent_hard_toggle_desc"
                     android:textColor="@color/add_ascent_text_color"
                     android:textSize="@dimen/add_ascent_text_size" />
 
             </LinearLayout>
 
+            <NumberPicker
+                android:id="@+id/numberPickerGrade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/add_ascent_item_margin"
+                android:layout_weight="0.4"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size" />
+
 
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinnerAscentStyle"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAscentStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:background="@null"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="@dimen/add_ascent_text_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llGrade" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llGrade">
 
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/spinnerAscentStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_ascent_field_height"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:hint="@string/add_ascent_style"
+                android:inputType="none"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilCountry"
@@ -141,17 +170,19 @@
             android:layout_margin="@dimen/add_ascent_item_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerAscentStyle">
+            app:layout_constraintTop_toBottomOf="@id/tilAscentStyle">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etCountry"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_country"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -170,12 +201,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etRegion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_region"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -194,12 +227,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etRock"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_rock"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -219,7 +254,7 @@
             <EditText
                 android:id="@+id/etLatLng"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:layout_margin="@dimen/add_ascent_item_margin"
                 android:autofillHints="Location"
                 android:gravity="start"
@@ -227,6 +262,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="20sp"
                 android:visibility="visible"
@@ -259,44 +296,69 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMeters"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_meters"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinnerClimbingStyle"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilClimbingStyle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:background="@null"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="@dimen/add_ascent_text_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilMeters" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilMeters">
 
-        <Spinner
-            android:id="@+id/spinnerBelayType"
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/spinnerClimbingStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_ascent_field_height"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:hint="@string/add_ascent_climbing_style"
+                android:inputType="none"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBelayType"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/add_ascent_item_margin"
-            android:background="@null"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/add_ascent_text_color"
-            android:textSize="@dimen/add_ascent_text_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerClimbingStyle" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilClimbingStyle">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/spinnerBelayType"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_ascent_field_height"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:hint="@string/add_ascent_belay_type"
+                android:inputType="none"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
+                android:textColor="@color/add_ascent_text_color"
+                android:textSize="@dimen/add_ascent_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPitches"
@@ -306,17 +368,19 @@
             android:layout_margin="@dimen/add_ascent_item_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerBelayType">
+            app:layout_constraintTop_toBottomOf="@id/tilBelayType">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etPitches"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_pitches"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="3"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />
@@ -335,12 +399,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etBelayer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/add_ascent_field_height"
                 android:gravity="start"
                 android:hint="@string/add_ascent_belayer"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="50"
+                android:paddingStart="@dimen/add_ascent_field_padding_start"
+                android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
                 android:visibility="visible" />

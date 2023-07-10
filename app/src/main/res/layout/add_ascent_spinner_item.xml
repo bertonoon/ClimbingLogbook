@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/spinnerTarget"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="@dimen/add_ascent_text_size"
     android:gravity="center"
+    android:textColor="@color/add_ascent_text_color"
+    tools:text="Selected Option"
     />
