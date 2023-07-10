@@ -15,6 +15,7 @@ import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.repositories.GradesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -45,6 +46,11 @@ class AddNewAscentViewModel @Inject constructor(
 
     private val _failMsg = MutableLiveData<AddAscentErrors>()
     val failMsg: LiveData<AddAscentErrors> = _failMsg
+
+    private val _date = MutableLiveData<Date>().apply {
+        value = Date()
+    }
+    val date : LiveData<Date> = _date
 
     fun setBaseGradeSystem(newBaseGradeSystem: GradeSystem) {
         if (newBaseGradeSystem == _selectedBaseGradeSystem.value) return

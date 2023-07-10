@@ -8,10 +8,12 @@ import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
+import java.util.Date
 
 @Entity(tableName = ROUTES_TABLE_NAME)
 data class Ascent (
     var name : String,
+    var date : Date,
 
     var gradeSystem : GradeSystem,
     var gradeOrdinal : Int,

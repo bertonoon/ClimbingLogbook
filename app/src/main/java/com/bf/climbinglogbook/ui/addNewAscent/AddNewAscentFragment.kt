@@ -1,11 +1,15 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.unit.Constraints
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,9 +20,14 @@ import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.databinding.FragmentAddNewAscentBinding
 import com.bf.climbinglogbook.models.AddAscentErrors
 import com.bf.climbinglogbook.models.GradeSystem
+import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.ui.gradeCalc.GradeCalcViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,6 +37,8 @@ class AddNewAscentFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
     private val addNewAscentViewModel: AddNewAscentViewModel by viewModels()
+    private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+    private val cal = Calendar.getInstance()
 
 
     override fun onCreateView(
@@ -53,19 +64,31 @@ class AddNewAscentFragment : Fragment() {
             navController.navigateUp()
         }
         binding.toolbar.title.text = getString(R.string.add_new_ascent_title)
+
+        initValues()
         setSpinners()
         initObservers()
         initListeners()
     }
 
+    private fun initValues() {
+        binding.etName.setText(addNewAscentViewModel.routeName.value ?: "")
+        binding.etDate.setText(addNewAscentViewModel.date.value.toString())
+    }
+
 
     private fun initObservers() {
-        addNewAscentViewModel.selectedGradesList.observe(viewLifecycleOwner) {
-            setGradesPicker(it)
+        addNewAscentViewModel.apply {
+            selectedGradesList.observe(viewLifecycleOwner) { setGradesPicker(it) }
+            failMsg.observe(viewLifecycleOwner) { showErrorMsg(it) }
+            date.observe(viewLifecycleOwner) { setDateInView(it) }
         }
-        addNewAscentViewModel.failMsg.observe(viewLifecycleOwner) {
-            showErrorMsg(it)
-        }
+    }
+
+    private fun setRouteNameInView(name: String?) {
+        if (name.isNullOrEmpty()) return
+        binding.etName.setText(name.toString()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() })
     }
 
     private fun initListeners() {
@@ -78,6 +101,34 @@ class AddNewAscentFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             addNewAscentViewModel.save()
         }
+        initCalendar()
+
+    }
+
+    private fun initCalendar() {
+        dateSetListener =
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                setDateInView(cal.time)
+            }
+
+        binding.etDate.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                dateSetListener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+    }
+
+    private fun setDateInView(date: Date) {
+        val myFormat = Constants.DATE_FORMAT
+        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+        binding.etDate.setText(sdf.format(date).toString())
     }
 
     private fun setSpinners() {

@@ -8,4 +8,6 @@ object Constants {
     const val GRADE_ENUM_MIN = 1
     const val GRADE_ENUM_MAX = 34
 
+    const val DATE_FORMAT = "yyyy-MM-dd"
+
 }
