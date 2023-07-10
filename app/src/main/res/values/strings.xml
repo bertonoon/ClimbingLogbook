@@ -13,7 +13,7 @@
     <string name="uiaa_grade_system">UIAA</string>
     <string name="fab_desc_add_ascent">Add ascent</string>
     <string name="add_new_ascent_title">Add new ascent</string>
-    <string name="add_ascent_name"><b>Name</b></string>
+    <string name="add_ascent_name">Name</string>
     <string name="add_ascent_date">Date</string>
     <string name="add_ascent_name_hint">Enter route name here</string>
     <string name="add_ascent_date_hint">Enter the ascent date</string>
