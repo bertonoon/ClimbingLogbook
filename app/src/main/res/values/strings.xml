@@ -56,6 +56,9 @@
     <string name="add_ascent_style">Style</string>
     <string name="add_ascent_grade_system">Grade system</string>
     <string name="add_ascent_belay_type">Belay type</string>
-    <string name="add_ascent_climbing_style">Climbing style</string>
+    <string name="add_ascent_climbing_type">Climbing type</string>
+    <string name="request_camera_perm">If you want to add picture from camera, you need to accept this permission</string>
+    <string name="request_read_image_perm">If you want to add your own image from gallery, you need to accept this permission</string>
+    <string name="add_ascent_failed_image_load">Failed to load the image</string>
 
 </resources>

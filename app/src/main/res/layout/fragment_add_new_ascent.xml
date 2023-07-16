@@ -15,10 +15,22 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_default"
+            layout="@layout/toolbar_add_ascent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/add_ascent_item_margin"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:contentDescription="@string/add_ascent_image_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilName"
@@ -28,7 +40,7 @@
             android:layout_margin="@dimen/add_ascent_item_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/ivPhoto">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etName"
@@ -43,7 +55,8 @@
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +82,8 @@
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -110,7 +124,8 @@
                         android:paddingStart="@dimen/add_ascent_field_padding_start"
                         android:paddingEnd="@dimen/add_ascent_field_padding_end"
                         android:textColor="@color/add_ascent_text_color"
-                        android:textSize="@dimen/add_ascent_text_size" />
+                        android:textSize="@dimen/add_ascent_text_size"
+                        tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -132,7 +147,10 @@
                 android:layout_margin="@dimen/add_ascent_item_margin"
                 android:layout_weight="0.4"
                 android:textColor="@color/add_ascent_text_color"
-                android:textSize="@dimen/add_ascent_text_size" />
+                android:textSize="@dimen/add_ascent_text_size"
+                android:descendantFocusability="blocksDescendants"
+
+                />
 
 
         </LinearLayout>
@@ -158,7 +176,8 @@
                 android:paddingStart="@dimen/add_ascent_field_padding_start"
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
-                android:textSize="@dimen/add_ascent_text_size" />
+                android:textSize="@dimen/add_ascent_text_size"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,7 +204,8 @@
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -211,7 +231,8 @@
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -237,7 +258,8 @@
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"
                 android:textColor="@color/add_ascent_text_color"
                 android:textSize="@dimen/add_ascent_text_size"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -272,16 +294,7 @@
                 app:layout_constraintTop_toBottomOf="@id/etRegion" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/add_ascent_item_margin"
-            android:background="@drawable/baseline_image_24"
-            android:contentDescription="@string/add_ascent_image_desc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llLocation" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilMeters"
@@ -291,7 +304,7 @@
             android:layout_margin="@dimen/add_ascent_item_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivPhoto">
+            app:layout_constraintTop_toBottomOf="@id/llLocation">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMeters"
@@ -325,7 +338,7 @@
                 android:layout_height="@dimen/add_ascent_field_height"
                 android:focusableInTouchMode="false"
                 android:gravity="center_vertical"
-                android:hint="@string/add_ascent_climbing_style"
+                android:hint="@string/add_ascent_climbing_type"
                 android:inputType="none"
                 android:paddingStart="@dimen/add_ascent_field_padding_start"
                 android:paddingEnd="@dimen/add_ascent_field_padding_end"

@@ -10,4 +10,9 @@ object Constants {
 
     const val DATE_FORMAT = "yyyy-MM-dd"
 
+    const val REQUEST_CODE_LOCATION_PERMISSION = 0
+    const val REQUEST_CODE_READ_IMAGE_PERMISSION = 1
+    const val REQUEST_CODE_READ_STORAGE_PERMISSION = 2
+
+
 }
