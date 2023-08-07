@@ -3,6 +3,7 @@ package com.bf.climbinglogbook.ui.addNewAscent
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.Bitmap
@@ -39,6 +40,7 @@ import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.other.Permissions
+import com.bf.climbinglogbook.ui.MainViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.Resource
 import com.google.android.material.snackbar.Snackbar
@@ -49,6 +51,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.coroutines.cancellation.CancellationException
 
 
 @AndroidEntryPoint
@@ -58,6 +61,7 @@ class AddNewAscentFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
     private val addNewAscentViewModel: AddNewAscentViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
     private val cal = Calendar.getInstance()
 
@@ -217,28 +221,28 @@ class AddNewAscentFragment : Fragment() {
             addNewAscentViewModel.setAscentStyle(newAscentStyle)
         }
 
-        binding.etCountry.setOnClickListener {
+        binding.etCountry.addTextChangedListener {
             addNewAscentViewModel.setCountry(
                 binding.etCountry.text.toString()
             )
         }
 
-        binding.etRegion.setOnClickListener {
+        binding.etRegion.addTextChangedListener {
             addNewAscentViewModel.setRegion(
                 binding.etRegion.text.toString()
             )
         }
 
-        binding.etRock.setOnClickListener {
+        binding.etRock.addTextChangedListener {
             addNewAscentViewModel.setRockName(
                 binding.etRock.text.toString()
             )
         }
 
-        binding.etMeters.setOnClickListener {
-            addNewAscentViewModel.setMeters(
-                binding.etMeters.text.toString().toInt()
-            )
+        binding.etMeters.addTextChangedListener {
+            val meters = binding.etMeters.text.toString()
+            if (meters.isNotEmpty()) addNewAscentViewModel.setMeters(meters.toInt())
+
         }
 
         binding.spinnerClimbingStyle.setOnItemClickListener { adapterView, view, i, l ->
@@ -267,13 +271,13 @@ class AddNewAscentFragment : Fragment() {
             addNewAscentViewModel.setBelayType(newBelayType)
         }
 
-        binding.etPitches.setOnClickListener {
-            addNewAscentViewModel.setNumberOfPitches(
-                binding.etPitches.text.toString().toInt()
-            )
-        }
+//        binding.etPitches.addTextChangedListener {
+//            addNewAscentViewModel.setNumberOfPitches(
+//                binding.etPitches.text.toString().toInt()
+//            )
+//        }
 
-        binding.etBelayer.setOnClickListener {
+        binding.etBelayer.addTextChangedListener {
             addNewAscentViewModel.setBelayer(
                 binding.etBelayer.text.toString()
             )
@@ -286,7 +290,9 @@ class AddNewAscentFragment : Fragment() {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            setDateInView(cal.time)
+            //setDateInView(cal.time)
+            addNewAscentViewModel.setDate(cal.time)
+
         }
 
         binding.etDate.setOnClickListener {
@@ -354,6 +360,9 @@ class AddNewAscentFragment : Fragment() {
                 AddAscentErrors.NONE -> return
                 AddAscentErrors.NULL_OR_EMPTY_NAME -> getString(R.string.add_ascent_name_null_or_empty_msg)
                 AddAscentErrors.TO_LONG_NAME -> getString(R.string.add_ascent_name_to_long)
+                AddAscentErrors.NULL_DATE -> getString(R.string.add_ascent_date_null_msg)
+                AddAscentErrors.DATE_FROM_FUTURE -> getString(R.string.add_ascent_date_from_future_msg)
+                AddAscentErrors.NULL_GRADE_SYSTEM -> getString(R.string.add_ascent_grade_system_null_msg)
             }
         )
     }
@@ -365,6 +374,8 @@ class AddNewAscentFragment : Fragment() {
                 val imageUri = data?.data
                 if (imageUri != null) {
                     addNewAscentViewModel.setImage(imageUri)
+                    val bitmap = getBitmap(requireContext().contentResolver,imageUri)
+                    if (bitmap != null) addNewAscentViewModel.setBitmap(bitmap)
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -374,6 +385,19 @@ class AddNewAscentFragment : Fragment() {
                 }
             }
         }
+
+    private fun getBitmap(contentResolver: ContentResolver, fileUri: Uri?): Bitmap? {
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, fileUri!!))
+            } else {
+                MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
+            }
+        } catch (e: Exception){
+            null
+        }
+    }
+
 
     private fun choosePhotoFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

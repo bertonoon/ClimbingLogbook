@@ -20,13 +20,6 @@ class MainViewModel @Inject constructor(
     val numberOfAscents = repository.numberOfItemsInDB()
 
 
-    fun addNewAscent(ascent: Ascent): Boolean {
-        var result = false
-        viewModelScope.launch(Dispatchers.IO) {
-            result = repository.insertAscent(ascent)
-        }
-        return result
 
-    }
 
 }

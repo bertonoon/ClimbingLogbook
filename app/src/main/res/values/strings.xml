@@ -60,5 +60,8 @@
     <string name="request_camera_perm">If you want to add picture from camera, you need to accept this permission</string>
     <string name="request_read_image_perm">If you want to add your own image from gallery, you need to accept this permission</string>
     <string name="add_ascent_failed_image_load">Failed to load the image</string>
+    <string name="add_ascent_date_null_msg">"You need to add the date "</string>
+    <string name="add_ascent_date_from_future_msg">The date is from future</string>
+    <string name="add_ascent_grade_system_null_msg">You need to pick grade system from the list</string>
 
 </resources>

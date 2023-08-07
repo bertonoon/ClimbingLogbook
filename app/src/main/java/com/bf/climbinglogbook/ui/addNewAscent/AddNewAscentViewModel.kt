@@ -1,22 +1,37 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.models.AddAscentErrors
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.GradeSystem
+import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.repositories.GradesRepository
+import com.bf.climbinglogbook.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
 class AddNewAscentViewModel @Inject constructor(
-    gradeRepo: GradesRepository
+    gradeRepo: GradesRepository,
+    val mainRepo: MainRepository
 ) : ViewModel() {
 
     private val grades = gradeRepo.getGradesMap()
@@ -49,6 +64,9 @@ class AddNewAscentViewModel @Inject constructor(
 
     private val _image = MutableLiveData<Uri>()
     val image: LiveData<Uri> = _image
+
+    private val _bitmap = MutableLiveData<Bitmap>()
+    val bitmap: LiveData<Bitmap> = _bitmap
 
     private val _selectedGradeOrdinal = MutableLiveData<Int>()
     val selectedGradeOrdinal: LiveData<Int> = _selectedGradeOrdinal
@@ -98,8 +116,14 @@ class AddNewAscentViewModel @Inject constructor(
         setGrades()
     }
 
-    private fun validateRouteName(): Boolean {
+    fun setDate(date: Date) {
+        _date.value = date
+        Log.i("setDate",this.date.toString())
+    }
+
+    private fun validateName(): Boolean {
         val name = routeName.value
+
         if (name.isNullOrEmpty()) {
             _failMsg.value = AddAscentErrors.NULL_OR_EMPTY_NAME
             return false
@@ -111,9 +135,78 @@ class AddNewAscentViewModel @Inject constructor(
         return true
     }
 
-    fun save() {
-        if (!validateRouteName()) return
+    private fun validateDate(): Boolean {
+        val date = date.value
+
+        if (date == null) {
+            _failMsg.value = AddAscentErrors.NULL_DATE
+            return false
+        }
+
+        val sdf = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
+
+        if (date > Date()) {
+            _failMsg.value = AddAscentErrors.DATE_FROM_FUTURE
+            Log.i("DateCheck", "przyszlosc")
+            return false
+        }
+        Log.i("DateCheck", "Po sprawdzeniu")
+        return true
     }
+
+    private fun validateGradeSystem(): Boolean {
+        val system = selectedBaseGradeSystem.value
+
+        if (system == null) {
+            _failMsg.value = AddAscentErrors.NULL_GRADE_SYSTEM
+            return false
+        }
+        return true
+    }
+
+    private fun validate(): Boolean {
+        return validateName() &&
+                validateDate() &&
+                validateGradeSystem()
+    }
+
+
+    fun save(): Boolean {
+
+        if (!validate()) return false
+        return true
+
+        val newAscent = Ascent(
+            name = routeName.value!!,
+            img = bitmap.value,
+            date = date.value!!,
+            gradeSystem = selectedBaseGradeSystem.value!!,
+            hard = hardGradeToggle.value ?: false,
+            gradeOrdinal = selectedGradeOrdinal.value!!,
+            ascentStyle = selectedAscentStyle.value!!,
+            country = country.value,
+            region = region.value,
+            rock = rockName.value,
+            lat = 0L,
+            lng = 0L, //TODO Ascent Localization
+            meters = meters.value ?: 0,
+            climbingType = selectedClimbingType.value,
+            belayType = selectedBelayType.value,
+            pitches = numberOfPitches.value ?: 1,
+            belayer = belayer.value,
+            comment = "" // TODO Comment
+        )
+        return addNewAscentToDB(newAscent)
+    }
+
+    private fun addNewAscentToDB(ascent: Ascent): Boolean {
+        var result = false
+        viewModelScope.launch(Dispatchers.IO) {
+            result = mainRepo.insertAscent(ascent)
+        }
+        return result
+    }
+
 
     fun setRouteName(name: String) {
         if (name.isEmpty()) return
@@ -164,6 +257,10 @@ class AddNewAscentViewModel @Inject constructor(
 
     fun setBelayer(name: String) {
         _belayer.value = name
+    }
+
+    fun setBitmap(bitmap: Bitmap) {
+        _bitmap.value = bitmap
     }
 
 }
