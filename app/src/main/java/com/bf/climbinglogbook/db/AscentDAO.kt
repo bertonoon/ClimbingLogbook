@@ -20,6 +20,9 @@ interface AscentDAO {
     @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY name ASC")
     fun getAllRoutesSortedByNameAsc() : LiveData<List<Ascent>>
 
+    @Query("SELECT TOP(:num) FROM $ROUTES_TABLE_NAME ORDER BY date ASC")
+    fun getLastAscents(num : Int) : LiveData<List<Ascent>>
+
     @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME")
     fun numberOfItemsInDB() : LiveData<Int>
 }

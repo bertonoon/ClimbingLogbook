@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+@Suppress("MemberVisibilityCanBePrivate")
 class MainRepository @Inject constructor(
     val ascentDao: AscentDAO
 ) {
@@ -20,6 +21,15 @@ class MainRepository @Inject constructor(
         return try {
             ascentDao.numberOfItemsInDB()
         } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun lastAscent(num: Int): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getLastAscents(num)
+        } catch (e: Exception){
             Log.e("RoomDb", e.toString())
             null
         }
