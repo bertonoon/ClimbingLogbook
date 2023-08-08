@@ -118,7 +118,7 @@ class AddNewAscentViewModel @Inject constructor(
 
     fun setDate(date: Date) {
         _date.value = date
-        Log.i("setDate",this.date.toString())
+        Log.i("setDate", this.date.toString())
     }
 
     private fun validateName(): Boolean {
@@ -174,7 +174,6 @@ class AddNewAscentViewModel @Inject constructor(
     fun save(): Boolean {
 
         if (!validate()) return false
-        return true
 
         val newAscent = Ascent(
             name = routeName.value!!,

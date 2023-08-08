@@ -18,8 +18,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val numberOfAscents = repository.numberOfItemsInDB()
-
-
-
+    val lastThreeAscents = repository.lastAscent(3)
 
 }

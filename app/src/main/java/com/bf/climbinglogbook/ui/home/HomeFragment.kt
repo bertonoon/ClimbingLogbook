@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bf.climbinglogbook.R
+import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentHomeBinding
 import com.bf.climbinglogbook.databinding.ToolbarHomeBinding
 import com.bf.climbinglogbook.ui.MainViewModel
@@ -25,6 +27,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val mainViewModel: MainViewModel by viewModels()
     private val binding get() = _binding!!
+    private lateinit var ascentAdapter: AscentAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +70,11 @@ class HomeFragment : Fragment() {
             }
         }
 
+        setupRecyclerView()
+        mainViewModel.lastThreeAscents?.observe(viewLifecycleOwner) {
+            ascentAdapter.submitList(it)
+        }
+
         val numberOfAscents = mainViewModel.numberOfAscents
         if (numberOfAscents != null) numberOfAscents.observe(viewLifecycleOwner)
         {
@@ -73,6 +82,12 @@ class HomeFragment : Fragment() {
         } else binding.textHome.text = "Fail"
 
 
+    }
+
+    private fun setupRecyclerView() = binding.rvAscents.apply {
+        ascentAdapter = AscentAdapter()
+        adapter = ascentAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
 
