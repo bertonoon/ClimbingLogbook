@@ -52,7 +52,7 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
 
             holder.binding.apply {
                 tvTitle.text = ascent.name
-                tvSecondTitle.text = ascent.date.toString()
+                tvSecondTitle.text = dateFormat.format(ascent.date)
                 tvGrade.text = grade.toString()
             }
         }

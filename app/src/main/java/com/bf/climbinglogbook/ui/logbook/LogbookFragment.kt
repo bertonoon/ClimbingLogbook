@@ -31,13 +31,11 @@ class LogbookFragment : Fragment() {
             ViewModelProvider(this).get(LogbookViewModel::class.java)
 
         _binding = FragmentLogbookBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        logbookViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+
+        binding.toolbar.title.text = getString(R.string.title_logbook)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
