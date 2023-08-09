@@ -13,6 +13,9 @@
     <dimen name="add_ascent_field_padding_end">10dp</dimen>
     <dimen name="single_ascent_text_size_main">20sp</dimen>
     <dimen name="single_ascent_text_size_second">15sp</dimen>
+    <dimen name="chip_text_size">20sp</dimen>
+    <dimen name="chip_min_height">60dp</dimen>
+    <dimen name="logbook_searchbar_text_size">25sp</dimen>
     <item name="add_ascent_header_weight" type="dimen" format="float">0.3</item>
     <item name="add_ascent_edit_text_view_weight" type="dimen" format="float">0.7</item>
 </resources>

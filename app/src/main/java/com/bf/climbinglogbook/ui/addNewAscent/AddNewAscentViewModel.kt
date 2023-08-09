@@ -68,7 +68,9 @@ class AddNewAscentViewModel @Inject constructor(
     private val _bitmap = MutableLiveData<Bitmap>()
     val bitmap: LiveData<Bitmap> = _bitmap
 
-    private val _selectedGradeOrdinal = MutableLiveData<Int>()
+    private val _selectedGradeOrdinal = MutableLiveData<Int>().apply {
+        value = 0
+    }
     val selectedGradeOrdinal: LiveData<Int> = _selectedGradeOrdinal
 
     private val _selectedAscentStyle = MutableLiveData<AscentStyle>()
@@ -97,6 +99,11 @@ class AddNewAscentViewModel @Inject constructor(
 
     private val _belayer = MutableLiveData<String>()
     val belayer: LiveData<String> = _belayer
+
+    private val _successAdd = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val successAdd: LiveData<Boolean> = _successAdd
 
     fun setGradeOrdinal(grade: Int) {
         if (grade == selectedGradeOrdinal.value) return
@@ -195,15 +202,16 @@ class AddNewAscentViewModel @Inject constructor(
             belayer = belayer.value,
             comment = "" // TODO Comment
         )
-        return addNewAscentToDB(newAscent)
+
+        addNewAscentToDB(newAscent)
+        return true
     }
 
-    private fun addNewAscentToDB(ascent: Ascent): Boolean {
-        var result = false
+    private fun addNewAscentToDB(ascent: Ascent) {
         viewModelScope.launch(Dispatchers.IO) {
-            result = mainRepo.insertAscent(ascent)
+            mainRepo.insertAscent(ascent)
+            _successAdd.postValue(true)
         }
-        return result
     }
 
 

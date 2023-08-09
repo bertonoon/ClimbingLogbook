@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +15,6 @@ import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentLogbookBinding
 import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 
@@ -53,16 +51,9 @@ class LogbookFragment : Fragment() {
         }
 
         setupRecyclerView()
-        mainViewModel.allAscents?.observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty()) {
-                binding.tvNoRecordsInDb.visibility = View.VISIBLE
-                binding.rvAscents.visibility = View.GONE
-            } else {
-                ascentAdapter.submitList(it)
-                binding.tvNoRecordsInDb.visibility = View.INVISIBLE
-                binding.rvAscents.visibility = View.VISIBLE
-            }
-        }
+        initObservers()
+        initListeners()
+
 
     }
 
@@ -75,6 +66,39 @@ class LogbookFragment : Fragment() {
         ascentAdapter = AscentAdapter()
         adapter = ascentAdapter
         layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun initObservers() {
+        mainViewModel.allAscents?.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                binding.tvNoRecordsInDb.visibility = View.VISIBLE
+                binding.rvAscents.visibility = View.GONE
+            } else {
+                ascentAdapter.submitList(it)
+                binding.tvNoRecordsInDb.visibility = View.INVISIBLE
+                binding.rvAscents.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun initListeners() {
+        binding.apply {
+            toolbar.ivSort.setOnClickListener {
+                binding.hsvSortOptions.visibility = when (binding.hsvSortOptions.visibility){
+                    View.VISIBLE -> View.GONE
+                    View.GONE ->View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+            toolbar.ivSearch.setOnClickListener {
+                binding.etSearchBar.visibility = when (binding.etSearchBar.visibility){
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+
+        }
     }
 
 }

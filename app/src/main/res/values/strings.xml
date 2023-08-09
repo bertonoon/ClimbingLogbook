@@ -63,5 +63,13 @@
     <string name="add_ascent_date_null_msg">"You need to add the date "</string>
     <string name="add_ascent_date_from_future_msg">The date is from future</string>
     <string name="add_ascent_grade_system_null_msg">You need to pick grade system from the list</string>
+    <string name="add_new_ascent_save_correct">Ascent added to logbook.</string>
+    <string name="searchbar_hint">Search</string>
+    <string name="logbook_sort_date">Date</string>
+    <string name="logbook_sort_name">Name</string>
+    <string name="logbook_sort_grade">Grade</string>
+    <string name="logbook_sort_style">Style</string>
+    <string name="logbook_sort_meters">Meters</string>
+    <string name="logbook_no_records_in_db">No saved ascents in the logbook</string>
 
 </resources>

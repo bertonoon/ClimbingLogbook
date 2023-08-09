@@ -13,31 +13,113 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <HorizontalScrollView
+        android:id="@+id/hsvSortOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/llSortOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:minHeight="@dimen/chip_min_height"
+                android:text="@string/logbook_sort_date"
+                android:textSize="@dimen/chip_text_size" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:minHeight="@dimen/chip_min_height"
+                android:text="@string/logbook_sort_name"
+                android:textSize="@dimen/chip_text_size" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGrade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:minHeight="@dimen/chip_min_height"
+                android:text="@string/logbook_sort_grade"
+                android:textSize="@dimen/chip_text_size" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:minHeight="@dimen/chip_min_height"
+                android:text="@string/logbook_sort_style"
+                android:textSize="@dimen/chip_text_size" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipMeters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:minHeight="@dimen/chip_min_height"
+                android:text="@string/logbook_sort_meters"
+                android:textSize="@dimen/chip_text_size" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/etSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/searchbar_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="@dimen/logbook_searchbar_text_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hsvSortOptions"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/tvNoRecordsInDb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:text="@string/logbook_no_records_in_db"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/etSearchBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAscents"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
+        android:layout_margin="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
+        app:layout_constraintTop_toBottomOf="@id/etSearchBar"
+        tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewAscent"

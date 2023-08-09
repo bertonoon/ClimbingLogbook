@@ -1,31 +1,22 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
-import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentResolver
 import android.content.Intent
-import android.content.res.TypedArray
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,19 +30,15 @@ import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants
-import com.bf.climbinglogbook.other.Permissions
 import com.bf.climbinglogbook.ui.MainViewModel
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.EasyPermissions
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.coroutines.cancellation.CancellationException
 
 
 @AndroidEntryPoint
@@ -64,7 +51,7 @@ class AddNewAscentFragment : Fragment() {
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
     private val cal = Calendar.getInstance()
-
+    private var correctDataAndClickedSave = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -169,6 +156,13 @@ class AddNewAscentFragment : Fragment() {
                 if (binding.etBelayer.text.toString() != it) binding.etBelayer.setText(it)
             }
 
+            successAdd.observe(viewLifecycleOwner) {
+                if (correctDataAndClickedSave && it) {
+                    showSnackBar(getString(R.string.add_new_ascent_save_correct))
+                    navController.navigateUp()
+                }
+            }
+
         }
     }
 
@@ -188,7 +182,7 @@ class AddNewAscentFragment : Fragment() {
             addNewAscentViewModel.setHardGradeToggle(isChecked)
         }
         binding.btnSave.setOnClickListener {
-            addNewAscentViewModel.save()
+            correctDataAndClickedSave = addNewAscentViewModel.save()
         }
         binding.toolbar.addImage.setOnClickListener {
             choosePhotoFromGallery()
@@ -374,7 +368,7 @@ class AddNewAscentFragment : Fragment() {
                 val imageUri = data?.data
                 if (imageUri != null) {
                     addNewAscentViewModel.setImage(imageUri)
-                    val bitmap = getBitmap(requireContext().contentResolver,imageUri)
+                    val bitmap = getBitmap(requireContext().contentResolver, imageUri)
                     if (bitmap != null) addNewAscentViewModel.setBitmap(bitmap)
                 } else {
                     Toast.makeText(
@@ -393,7 +387,7 @@ class AddNewAscentFragment : Fragment() {
             } else {
                 MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             null
         }
     }
