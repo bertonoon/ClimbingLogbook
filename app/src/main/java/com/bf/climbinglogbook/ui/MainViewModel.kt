@@ -19,5 +19,6 @@ class MainViewModel @Inject constructor(
 
     val numberOfAscents = repository.numberOfItemsInDB()
     val lastThreeAscents = repository.lastAscent(3)
+    val allAscents = repository.getAllAscents()
 
 }

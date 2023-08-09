@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bf.climbinglogbook.R
+import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentLogbookBinding
+import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,7 +24,10 @@ class LogbookFragment : Fragment() {
 
     private var _binding: FragmentLogbookBinding? = null
     private val binding get() = _binding!!
-    private lateinit var navController : NavController
+    private lateinit var navController: NavController
+    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var ascentAdapter: AscentAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,10 +51,30 @@ class LogbookFragment : Fragment() {
         binding.fabNewAscent.setOnClickListener {
             navController.navigate(R.id.action_navigation_logbook_to_addNewAscent)
         }
+
+        setupRecyclerView()
+        mainViewModel.allAscents?.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                binding.tvNoRecordsInDb.visibility = View.VISIBLE
+                binding.rvAscents.visibility = View.GONE
+            } else {
+                ascentAdapter.submitList(it)
+                binding.tvNoRecordsInDb.visibility = View.INVISIBLE
+                binding.rvAscents.visibility = View.VISIBLE
+            }
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun setupRecyclerView() = binding.rvAscents.apply {
+        ascentAdapter = AscentAdapter()
+        adapter = ascentAdapter
+        layoutManager = LinearLayoutManager(requireContext())
+    }
+
 }

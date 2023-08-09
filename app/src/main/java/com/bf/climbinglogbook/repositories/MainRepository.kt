@@ -35,6 +35,15 @@ class MainRepository @Inject constructor(
         }
     }
 
+    fun getAllAscents(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllAscents()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
     fun insertAscent(ascent: Ascent): Boolean {
         return try {
             ascentDao.insertAscent(ascent)

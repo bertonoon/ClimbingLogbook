@@ -25,4 +25,7 @@ interface AscentDAO {
 
     @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME")
     fun numberOfItemsInDB(): LiveData<Int>
+
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY date DESC ")
+    fun getAllAscents(): LiveData<List<Ascent>>
 }
