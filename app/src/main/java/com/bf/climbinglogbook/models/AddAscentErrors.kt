@@ -6,6 +6,7 @@ enum class AddAscentErrors {
     TO_LONG_NAME,
     NULL_DATE,
     DATE_FROM_FUTURE,
-    NULL_GRADE_SYSTEM
-
+    NULL_GRADE_SYSTEM,
+    NULL_ASCENT_STYLE,
+    ERROR_CONV_TO_USA
 }

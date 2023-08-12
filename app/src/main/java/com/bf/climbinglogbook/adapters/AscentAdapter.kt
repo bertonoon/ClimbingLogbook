@@ -48,7 +48,7 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
 
         holder.itemView.apply {
             val dateFormat = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
-            val grade = grades[ascent.gradeSystem]?.get(ascent.gradeOrdinal)
+            val grade = grades[ascent.originalGradeSystem]?.get(ascent.originalGradeOrdinal)
 
             holder.binding.apply {
                 tvTitle.text = ascent.name

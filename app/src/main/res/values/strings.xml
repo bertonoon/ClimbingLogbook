@@ -71,5 +71,7 @@
     <string name="logbook_sort_style">Style</string>
     <string name="logbook_sort_meters">Meters</string>
     <string name="logbook_no_records_in_db">No saved ascents in the logbook</string>
+    <string name="add_ascent_ascent_style_null_msg">You need to pick ascent style from the list</string>
+    <string name="add_ascent_ascent_style_error_usa_conv">Fail with grade conversion. Try again.</string>
 
 </resources>

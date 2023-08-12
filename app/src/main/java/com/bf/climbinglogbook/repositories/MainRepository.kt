@@ -2,12 +2,8 @@ package com.bf.climbinglogbook.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.db.AscentDAO
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -38,6 +34,46 @@ class MainRepository @Inject constructor(
     fun getAllAscents(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllAscents()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+    fun getAllAscentsSortedByDateAsc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByDateAsc()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+    fun getAllAscentsSortedByNameAsc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByNameAsc()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+    fun getAllAscentsSortedByGradeAsc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByGradeAsc()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+    fun getAllAscentsSortedByStyleAsc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByAscentStyleAsc()
+        } catch (e: Exception){
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+    fun getAllAscentsSortedByMetersAsc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByMetersAsc()
         } catch (e: Exception){
             Log.e("RoomDb", e.toString())
             null

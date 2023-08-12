@@ -1,9 +1,11 @@
 package com.bf.climbinglogbook.ui.logbook
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentLogbookBinding
+import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,7 @@ class LogbookFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
     private val mainViewModel: MainViewModel by viewModels()
+    private val logbookViewModel: LogbookViewModel by viewModels()
     private lateinit var ascentAdapter: AscentAdapter
 
 
@@ -69,7 +73,7 @@ class LogbookFragment : Fragment() {
     }
 
     private fun initObservers() {
-        mainViewModel.allAscents?.observe(viewLifecycleOwner) {
+        logbookViewModel.ascents.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {
                 binding.tvNoRecordsInDb.visibility = View.VISIBLE
                 binding.rvAscents.visibility = View.GONE
@@ -79,26 +83,120 @@ class LogbookFragment : Fragment() {
                 binding.rvAscents.visibility = View.VISIBLE
             }
         }
+        logbookViewModel.sortType.observe(viewLifecycleOwner) {
+            setSuitableSortChipColor(it)
+        }
+    }
+
+    private fun setSuitableSortChipColor(sortType: SortType) {
+        setAllChipColorsToDefault()
+        when (sortType) {
+            SortType.DATE -> binding.chipDate.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.palette_4
+                )
+            )
+
+            SortType.NAME -> binding.chipName.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.palette_4
+                )
+            )
+
+            SortType.GRADE -> binding.chipGrade.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.palette_4
+                )
+            )
+
+            SortType.STYLE -> binding.chipStyle.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.palette_4
+                )
+            )
+
+            SortType.METERS -> binding.chipMeters.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.palette_4
+                )
+            )
+        }
+    }
+
+    private fun setAllChipColorsToDefault() {
+        binding.apply {
+            chipDate.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            chipName.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            chipGrade.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            chipStyle.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            chipMeters.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+
+        }
     }
 
     private fun initListeners() {
         binding.apply {
             toolbar.ivSort.setOnClickListener {
-                binding.hsvSortOptions.visibility = when (binding.hsvSortOptions.visibility){
-                    View.VISIBLE -> View.GONE
-                    View.GONE ->View.VISIBLE
-                    else -> View.GONE
-                }
-            }
-            toolbar.ivSearch.setOnClickListener {
-                binding.etSearchBar.visibility = when (binding.etSearchBar.visibility){
+                binding.hsvSortOptions.visibility = when (binding.hsvSortOptions.visibility) {
                     View.VISIBLE -> View.GONE
                     View.GONE -> View.VISIBLE
                     else -> View.GONE
                 }
             }
-
+            toolbar.ivSearch.setOnClickListener {
+                binding.etSearchBar.visibility = when (binding.etSearchBar.visibility) {
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+            chipDate.setOnClickListener {
+                logbookViewModel.sortAscents(SortType.DATE)
+            }
+            chipName.setOnClickListener {
+                logbookViewModel.sortAscents(SortType.NAME)
+            }
+            chipGrade.setOnClickListener {
+                logbookViewModel.sortAscents(SortType.GRADE)
+            }
+            chipMeters.setOnClickListener {
+                logbookViewModel.sortAscents(SortType.METERS)
+            }
+            chipStyle.setOnClickListener {
+                logbookViewModel.sortAscents(SortType.STYLE)
+            }
         }
     }
+
 
 }

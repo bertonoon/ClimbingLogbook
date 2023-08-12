@@ -357,6 +357,8 @@ class AddNewAscentFragment : Fragment() {
                 AddAscentErrors.NULL_DATE -> getString(R.string.add_ascent_date_null_msg)
                 AddAscentErrors.DATE_FROM_FUTURE -> getString(R.string.add_ascent_date_from_future_msg)
                 AddAscentErrors.NULL_GRADE_SYSTEM -> getString(R.string.add_ascent_grade_system_null_msg)
+                AddAscentErrors.NULL_ASCENT_STYLE -> getString(R.string.add_ascent_ascent_style_null_msg)
+                AddAscentErrors.ERROR_CONV_TO_USA -> getString(R.string.add_ascent_ascent_style_error_usa_conv)
             }
         )
     }

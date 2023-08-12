@@ -15,8 +15,9 @@ data class Ascent (
     var name : String,
     var date : Date,
 
-    var gradeSystem : GradeSystem,
-    var gradeOrdinal : Int,
+    var originalGradeSystem : GradeSystem,
+    var originalGradeOrdinal : Int,
+    var usaGradeNumber: Int,
     var hard : Boolean = false,
 
     var comment : String? = null,

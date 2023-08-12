@@ -1,10 +1,7 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +13,12 @@ import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.GradeSystem
+import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
+import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
+import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
+import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.Constants
+import com.bf.climbinglogbook.other.GradeConverters
 import com.bf.climbinglogbook.repositories.GradesRepository
 import com.bf.climbinglogbook.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +27,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -174,7 +175,16 @@ class AddNewAscentViewModel @Inject constructor(
     private fun validate(): Boolean {
         return validateName() &&
                 validateDate() &&
-                validateGradeSystem()
+                validateGradeSystem() &&
+                validateAscentStyle()
+    }
+
+    private fun validateAscentStyle(): Boolean {
+        if (selectedAscentStyle.value == null) {
+            _failMsg.value = AddAscentErrors.NULL_ASCENT_STYLE
+            return false
+        }
+        return true
     }
 
 
@@ -182,13 +192,22 @@ class AddNewAscentViewModel @Inject constructor(
 
         if (!validate()) return false
 
+        val usaGradeNumber = getUsaGradeNumber()
+        if (usaGradeNumber < 0) return false.also {
+            _failMsg.value = AddAscentErrors.ERROR_CONV_TO_USA
+        }
+
+        _failMsg.value = AddAscentErrors.NONE
+
+
         val newAscent = Ascent(
             name = routeName.value!!,
             img = bitmap.value,
             date = date.value!!,
-            gradeSystem = selectedBaseGradeSystem.value!!,
+            originalGradeSystem = selectedBaseGradeSystem.value!!,
             hard = hardGradeToggle.value ?: false,
-            gradeOrdinal = selectedGradeOrdinal.value!!,
+            originalGradeOrdinal = selectedGradeOrdinal.value!!,
+            usaGradeNumber = usaGradeNumber,
             ascentStyle = selectedAscentStyle.value!!,
             country = country.value,
             region = region.value,
@@ -206,6 +225,43 @@ class AddNewAscentViewModel @Inject constructor(
         addNewAscentToDB(newAscent)
         return true
     }
+
+    private fun usaGradeNumberFromFrenchOrdinal(ordinal: Int, hard: Boolean): Int {
+        val gradeNum = if (ordinal == 0) 1 else ordinal
+        val frenchGrade = FrenchGrade.numberToGrade(gradeNum, hard) ?: return -1
+        val usaGrade = GradeConverters().frenchToUsa(frenchGrade, hard) ?: return -1
+        return USAGrade.gradeToNumber(usaGrade, hard)
+    }
+
+    private fun usaGradeNumberFromKurtykaOrdinal(ordinal: Int, hard: Boolean): Int {
+        val gradeNum = if (ordinal == 0) 1 else ordinal
+        val kurtykaGrade = KurtykaGrade.numberToGrade(gradeNum, hard) ?: return -1
+        val usaGrade = GradeConverters().kurtykaToUsa(kurtykaGrade, hard) ?: return -1
+        return USAGrade.gradeToNumber(usaGrade, hard)
+    }
+
+    private fun usaGradeNumberFromUiaaOrdinal(ordinal: Int, hard: Boolean): Int {
+        val gradeNum = if (ordinal == 0) 1 else ordinal
+        val uiaaGrade = UIAAGrade.numberToGrade(gradeNum, hard) ?: return -1
+        val usaGrade = GradeConverters().uiaaToUsa(uiaaGrade, hard) ?: return -1
+        return USAGrade.gradeToNumber(usaGrade, hard)
+    }
+
+    private fun getUsaGradeNumber(): Int {
+        val ordinal = selectedGradeOrdinal.value
+        val hard = hardGradeToggle.value
+
+        if (ordinal == null || ordinal < 0) return -1
+        if (hard == null) return -1
+
+        return when (selectedBaseGradeSystem.value ?: return -1) {
+            GradeSystem.FRENCH -> usaGradeNumberFromFrenchOrdinal(ordinal, hard)
+            GradeSystem.KURTYKA -> usaGradeNumberFromKurtykaOrdinal(ordinal, hard)
+            GradeSystem.USA -> ordinal
+            GradeSystem.UIAA -> usaGradeNumberFromUiaaOrdinal(ordinal, hard)
+        }
+    }
+
 
     private fun addNewAscentToDB(ascent: Ascent) {
         viewModelScope.launch(Dispatchers.IO) {
