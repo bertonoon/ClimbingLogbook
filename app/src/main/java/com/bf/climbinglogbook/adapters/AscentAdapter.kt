@@ -49,11 +49,27 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
         holder.itemView.apply {
             val dateFormat = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
             val grade = grades[ascent.originalGradeSystem]?.get(ascent.originalGradeOrdinal)
+            var secondTitle = ascent.country ?: ""
+            if (!ascent.region.isNullOrEmpty()) {
+                secondTitle += "/${ascent.region}"
+            }
+            if (!ascent.rock.isNullOrEmpty()) {
+                secondTitle += "/${ascent.rock}"
+            }
+            if (secondTitle.startsWith("/")) {
+                secondTitle = secondTitle.removeRange(0..0)
+            }
+            val meters = "${ascent.meters}m"
 
             holder.binding.apply {
                 tvTitle.text = ascent.name
-                tvSecondTitle.text = dateFormat.format(ascent.date)
+                tvSecondTitle.text = secondTitle
+                tvDate.text = dateFormat.format(ascent.date)
                 tvGrade.text = grade.toString()
+                tvStyle.text = ascent.ascentStyle.getShortcut()
+                tvBelayType.text = ascent.belayType?.getLabel(context) ?: ""
+                tvClimbingType.text = ascent.climbingType?.getLabel(context) ?: ""
+                tvMeters.text = meters
             }
         }
     }

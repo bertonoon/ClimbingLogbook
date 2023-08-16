@@ -20,5 +20,15 @@ enum class AscentStyle {
             AscentStyle.GREENPOINT -> context.getString(R.string.ascent_style_greenpoint)
         }
     }
+    
+    fun getShortcut() : String{
+        return when(this){
+            ON_SIGHT -> "OS"
+            REDPOINT -> "RP"
+            FLASH -> "FL"
+            PINKPOINT -> "PP"
+            GREENPOINT -> "GP"
+        }
+    }
 
 }

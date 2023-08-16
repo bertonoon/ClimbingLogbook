@@ -91,7 +91,7 @@
                     android:id="@+id/ivStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_question_mark_24" />
+                    android:src="@drawable/baseline_star_24" />
 
                 <TextView
                     android:id="@+id/tvStyle"
@@ -113,7 +113,7 @@
                     android:id="@+id/ivBelayType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_question_mark_24" />
+                    android:src="@drawable/baseline_arrow_circle_up_24" />
 
                 <TextView
                     android:id="@+id/tvBelayType"
@@ -135,7 +135,7 @@
                     android:id="@+id/ivClimbingType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_question_mark_24" />
+                    android:src="@drawable/baseline_filter_hdr_24" />
 
                 <TextView
                     android:id="@+id/tvClimbingType"
@@ -157,7 +157,7 @@
                     android:id="@+id/ivMeters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_question_mark_24" />
+                    android:src="@drawable/baseline_moving_24" />
 
                 <TextView
                     android:id="@+id/tvMeters"

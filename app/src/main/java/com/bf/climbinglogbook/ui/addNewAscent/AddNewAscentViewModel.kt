@@ -151,14 +151,10 @@ class AddNewAscentViewModel @Inject constructor(
             return false
         }
 
-        val sdf = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
-
         if (date > Date()) {
             _failMsg.value = AddAscentErrors.DATE_FROM_FUTURE
-            Log.i("DateCheck", "przyszlosc")
             return false
         }
-        Log.i("DateCheck", "Po sprawdzeniu")
         return true
     }
 
