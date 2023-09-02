@@ -2,21 +2,26 @@ package com.bf.climbinglogbook.ui.logbook
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentLogbookBinding
+import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.ui.MainViewModel
+import com.bf.climbinglogbook.utils.SwipeToDeleteCallback
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,12 +41,7 @@ class LogbookFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val logbookViewModel =
-            ViewModelProvider(this).get(LogbookViewModel::class.java)
-
         _binding = FragmentLogbookBinding.inflate(inflater, container, false)
-
-
         binding.toolbar.title.text = getString(R.string.title_logbook)
 
         return binding.root
@@ -53,12 +53,9 @@ class LogbookFragment : Fragment() {
         binding.fabNewAscent.setOnClickListener {
             navController.navigate(R.id.action_navigation_logbook_to_addNewAscent)
         }
-
         setupRecyclerView()
         initObservers()
         initListeners()
-
-
     }
 
     override fun onDestroyView() {
@@ -70,6 +67,18 @@ class LogbookFragment : Fragment() {
         ascentAdapter = AscentAdapter()
         adapter = ascentAdapter
         layoutManager = LinearLayoutManager(requireContext())
+
+        val deleteSwipeHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.rvAscents.adapter as AscentAdapter
+                val ascentToDelete = adapter.getItem(viewHolder.adapterPosition)
+                Log.i("RvDelete", ascentToDelete.toString())
+                logbookViewModel.deleteAscent(ascentToDelete)
+            }
+        }
+        val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+        deleteItemTouchHelper.attachToRecyclerView(binding.rvAscents)
+
     }
 
     private fun initObservers() {
@@ -85,6 +94,9 @@ class LogbookFragment : Fragment() {
         }
         logbookViewModel.sortType.observe(viewLifecycleOwner) {
             setSuitableSortChipColor(it)
+        }
+        logbookViewModel.msg.observe(viewLifecycleOwner) {
+            showMsg(it)
         }
     }
 
@@ -196,6 +208,19 @@ class LogbookFragment : Fragment() {
                 logbookViewModel.sortAscents(SortType.STYLE)
             }
         }
+    }
+
+    private fun showSnackBar(msg: String) {
+        Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun showMsg(msg: LogbookMsg) {
+        showSnackBar(
+            when (msg) {
+                LogbookMsg.NONE -> return
+                LogbookMsg.SUCCESSFULLY_DELETE_RECORD -> getString(R.string.logbook_ascent_deleted)
+            }
+        )
     }
 
 

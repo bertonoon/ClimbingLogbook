@@ -4,11 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.db.AscentDAO
+import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,15 +29,13 @@ class LogbookViewModel @Inject constructor(
 
     val ascents = MediatorLiveData<List<Ascent>>()
 
+    private val _msg = MutableLiveData<LogbookMsg>()
+    val msg: LiveData<LogbookMsg> = _msg
+
     private val _sortType = MutableLiveData<SortType>().apply {
         value = SortType.DATE
     }
     val sortType: LiveData<SortType> = _sortType
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
 
     init {
         if (ascentsSortedByDate != null)
@@ -78,6 +80,7 @@ class LogbookViewModel @Inject constructor(
             }
 
     }
+
     fun sortAscents(sortType: SortType) = when (sortType) {
         SortType.DATE -> ascentsSortedByDate?.value?.let { ascents.value = it }
         SortType.NAME -> ascentsSortedByName?.value?.let { ascents.value = it }
@@ -86,5 +89,12 @@ class LogbookViewModel @Inject constructor(
         SortType.METERS -> ascentsSortedByMeters?.value?.let { ascents.value = it }
     }.also {
         _sortType.value = sortType
+    }
+
+    fun deleteAscent(ascent: Ascent) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAscent(ascent)
+            _msg.postValue(LogbookMsg.SUCCESSFULLY_DELETE_RECORD)
+        }
     }
 }

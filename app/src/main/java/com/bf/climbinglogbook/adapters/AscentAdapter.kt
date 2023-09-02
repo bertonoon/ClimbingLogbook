@@ -74,5 +74,8 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
         }
     }
 
+    fun getItem(id: Int) : Ascent {
+        return differ.currentList[id]
+    }
 
 }

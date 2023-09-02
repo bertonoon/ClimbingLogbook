@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.db.AscentDAO
-import java.lang.Exception
 import javax.inject.Inject
+import kotlin.Exception
 
 @Suppress("MemberVisibilityCanBePrivate")
 class MainRepository @Inject constructor(
@@ -25,7 +25,7 @@ class MainRepository @Inject constructor(
     fun lastAscent(num: Int): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getLastAscents(num)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
@@ -34,47 +34,52 @@ class MainRepository @Inject constructor(
     fun getAllAscents(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllAscents()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
     }
+
     fun getAllAscentsSortedByDateAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByDateAsc()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
     }
+
     fun getAllAscentsSortedByNameAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByNameAsc()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
     }
+
     fun getAllAscentsSortedByGradeAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByGradeAsc()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
     }
+
     fun getAllAscentsSortedByStyleAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByAscentStyleAsc()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
     }
+
     fun getAllAscentsSortedByMetersAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByMetersAsc()
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
         }
@@ -89,4 +94,15 @@ class MainRepository @Inject constructor(
             false
         }
     }
+
+    fun deleteAscent(ascent: Ascent): Boolean {
+        return try {
+            ascentDao.deleteAscent(ascent)
+            true
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            false
+        }
+    }
+
 }
