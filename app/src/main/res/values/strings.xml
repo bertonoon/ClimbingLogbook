@@ -74,5 +74,6 @@
     <string name="add_ascent_ascent_style_null_msg">You need to pick ascent style from the list</string>
     <string name="add_ascent_ascent_style_error_usa_conv">Fail with grade conversion. Try again.</string>
     <string name="logbook_ascent_deleted">Ascent deleted from your logbook.</string>
+    <string name="ascent_display_image_desc">Ascent image</string>
 
 </resources>

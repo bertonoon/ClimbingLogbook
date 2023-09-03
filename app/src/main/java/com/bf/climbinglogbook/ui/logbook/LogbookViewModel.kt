@@ -29,7 +29,9 @@ class LogbookViewModel @Inject constructor(
 
     val ascents = MediatorLiveData<List<Ascent>>()
 
-    private val _msg = MutableLiveData<LogbookMsg>()
+    private val _msg = MutableLiveData<LogbookMsg>().apply {
+        value = LogbookMsg.NONE
+    }
     val msg: LiveData<LogbookMsg> = _msg
 
     private val _sortType = MutableLiveData<SortType>().apply {
@@ -96,5 +98,9 @@ class LogbookViewModel @Inject constructor(
             repository.deleteAscent(ascent)
             _msg.postValue(LogbookMsg.SUCCESSFULLY_DELETE_RECORD)
         }
+    }
+
+    fun zeroMsg(){
+        _msg.value = LogbookMsg.NONE
     }
 }

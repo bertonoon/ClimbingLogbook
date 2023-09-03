@@ -16,6 +16,11 @@
     <dimen name="chip_text_size">20sp</dimen>
     <dimen name="chip_min_height">60dp</dimen>
     <dimen name="logbook_searchbar_text_size">25sp</dimen>
+    <dimen name="ascent_display_text_size_main">25sp</dimen>
+    <dimen name="ascent_display_margin_bottom_item">5dp</dimen>
+    <dimen name="ascent_display_item_margin_horizontal">10dp</dimen>
+    <dimen name="ascent_display_text_size_second">20sp</dimen>
+    <dimen name="ascent_display_summary_margin_start">5dp</dimen>
     <item name="add_ascent_header_weight" type="dimen" format="float">0.3</item>
     <item name="add_ascent_edit_text_view_weight" type="dimen" format="float">0.7</item>
 </resources>

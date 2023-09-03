@@ -2,9 +2,11 @@ package com.bf.climbinglogbook.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.databinding.ItemSingleAscentBinding
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.other.Constants
@@ -70,6 +72,9 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
                 tvBelayType.text = ascent.belayType?.getLabel(context) ?: ""
                 tvClimbingType.text = ascent.climbingType?.getLabel(context) ?: ""
                 tvMeters.text = meters
+                cvSingleAscent.setOnClickListener{
+                    findNavController().navigate(R.id.action_navigation_logbook_to_ascentDisplayFragment)
+                }
             }
         }
     }

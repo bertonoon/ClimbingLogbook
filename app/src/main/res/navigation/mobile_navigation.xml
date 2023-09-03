@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_gradeCalcFragment"
             app:destination="@id/navigation_grade_calc" />
+        <action
+            android:id="@+id/action_navigation_home_to_ascentDisplayFragment"
+            app:destination="@id/ascentDisplayFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +32,12 @@
         <action
             android:id="@+id/action_navigation_logbook_to_addNewAscent"
             app:destination="@id/addNewAscent" />
+        <action
+            android:id="@+id/action_navigation_logbook_self"
+            app:destination="@id/navigation_logbook" />
+        <action
+            android:id="@+id/action_navigation_logbook_to_ascentDisplayFragment"
+            app:destination="@id/ascentDisplayFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_grade_calc"
@@ -38,4 +47,8 @@
         android:id="@+id/addNewAscent"
         android:name="com.bf.climbinglogbook.ui.addNewAscent.AddNewAscentFragment"
         android:label="AddNewAscent" />
+    <fragment
+        android:id="@+id/ascentDisplayFragment"
+        android:name="com.bf.climbinglogbook.ui.ascentDisplay.AscentDisplayFragment"
+        android:label="AscentDisplayFragment" />
 </navigation>

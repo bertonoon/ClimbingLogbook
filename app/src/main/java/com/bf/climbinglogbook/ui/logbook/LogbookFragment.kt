@@ -79,6 +79,7 @@ class LogbookFragment : Fragment() {
         val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
         deleteItemTouchHelper.attachToRecyclerView(binding.rvAscents)
 
+
     }
 
     private fun initObservers() {
@@ -220,7 +221,9 @@ class LogbookFragment : Fragment() {
                 LogbookMsg.NONE -> return
                 LogbookMsg.SUCCESSFULLY_DELETE_RECORD -> getString(R.string.logbook_ascent_deleted)
             }
-        )
+        ).also {
+            logbookViewModel.zeroMsg()
+        }
     }
 
 
