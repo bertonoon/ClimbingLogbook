@@ -12,7 +12,6 @@ import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.repositories.GradesRepository
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
@@ -69,7 +68,7 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
                 tvDate.text = dateFormat.format(ascent.date)
                 tvGrade.text = grade.toString()
                 tvStyle.text = ascent.ascentStyle.getShortcut()
-                tvBelayType.text = ascent.belayType?.getLabel(context) ?: ""
+                tvBelayType.text = ascent.belayType?.getShortcut() ?: ""
                 tvClimbingType.text = ascent.climbingType?.getLabel(context) ?: ""
                 tvMeters.text = meters
                 cvSingleAscent.setOnClickListener{
