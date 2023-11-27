@@ -72,7 +72,7 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
                 tvClimbingType.text = ascent.climbingType?.getLabel(context) ?: ""
                 tvMeters.text = meters
                 cvSingleAscent.setOnClickListener{
-                    findNavController().navigate(R.id.action_navigation_logbook_to_ascentDisplayFragment)
+                    findNavController().navigate(R.id.action_global_ascentDisplayFragment)
                 }
             }
         }
