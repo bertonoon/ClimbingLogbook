@@ -1,7 +1,9 @@
 package com.bf.climbinglogbook.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -11,10 +13,13 @@ import com.bf.climbinglogbook.databinding.ItemSingleAscentBinding
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.repositories.GradesRepository
+import com.bf.climbinglogbook.ui.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
+class AscentAdapter(
+    private val mainViewModel: MainViewModel
+) : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
 
     inner class AscentViewHolder(val binding: ItemSingleAscentBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -71,15 +76,19 @@ class AscentAdapter : RecyclerView.Adapter<AscentAdapter.AscentViewHolder>() {
                 tvBelayType.text = ascent.belayType?.getShortcut() ?: ""
                 tvClimbingType.text = ascent.climbingType?.getLabel(context) ?: ""
                 tvMeters.text = meters
-                cvSingleAscent.setOnClickListener{
-                    findNavController().navigate(R.id.action_global_ascentDisplayFragment)
+                cvSingleAscent.setOnClickListener {
+                    if (mainViewModel.setAscentToDisplay(ascent)) {
+                        findNavController().navigate(R.id.action_global_ascentDisplayFragment)
+                    }
                 }
+
             }
         }
     }
 
-    fun getItem(id: Int) : Ascent {
+    fun getItem(id: Int): Ascent {
         return differ.currentList[id]
     }
-
 }
+
+

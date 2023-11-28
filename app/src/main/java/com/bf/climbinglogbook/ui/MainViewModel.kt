@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
+import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,5 +21,14 @@ class MainViewModel @Inject constructor(
     val numberOfAscents = repository.numberOfItemsInDB()
     val lastThreeAscents = repository.lastAscent(3)
     val allAscents = repository.getAllAscents()
+
+    private val _ascentToDisplay = MutableLiveData<Ascent>()
+    val ascentToDisplay: LiveData<Ascent> = _ascentToDisplay
+
+    fun setAscentToDisplay(ascent: Ascent) : Boolean{
+        _ascentToDisplay.postValue(ascent)
+        return true
+    }
+
 
 }

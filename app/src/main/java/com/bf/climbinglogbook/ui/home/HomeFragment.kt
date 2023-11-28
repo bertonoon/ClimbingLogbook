@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private lateinit var ascentAdapter: AscentAdapter
 
@@ -80,7 +81,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.rvAscents.apply {
-        ascentAdapter = AscentAdapter()
+        ascentAdapter = AscentAdapter(mainViewModel)
         adapter = ascentAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }

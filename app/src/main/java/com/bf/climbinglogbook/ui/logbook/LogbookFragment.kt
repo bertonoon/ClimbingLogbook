@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -31,7 +32,7 @@ class LogbookFragment : Fragment() {
     private var _binding: FragmentLogbookBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val logbookViewModel: LogbookViewModel by viewModels()
     private lateinit var ascentAdapter: AscentAdapter
 
@@ -64,7 +65,7 @@ class LogbookFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.rvAscents.apply {
-        ascentAdapter = AscentAdapter()
+        ascentAdapter = AscentAdapter(mainViewModel)
         adapter = ascentAdapter
         layoutManager = LinearLayoutManager(requireContext())
 
