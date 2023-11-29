@@ -165,6 +165,13 @@ class LogbookViewModel @Inject constructor(
         }
     }
 
+    fun search(query: String) {
+        sortAscents(sortType.value ?: SortType.DATE)
+        ascents.value?.filter { ascent ->
+            ascent.name.lowercase().contains(query.lowercase())
+        }.let { ascents.value = it }
+    }
+
     fun zeroMsg() {
         _msg.value = LogbookMsg.NONE
     }

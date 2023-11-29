@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -46,6 +48,17 @@ class LogbookFragment : Fragment() {
         binding.toolbar.title.text = getString(R.string.title_logbook)
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.navigation_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -213,6 +226,9 @@ class LogbookFragment : Fragment() {
             chipStyle.setOnClickListener {
                 logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.STYLE)
+            }
+            etSearchBar.addTextChangedListener {
+                logbookViewModel.search(binding.etSearchBar.text.toString())
             }
         }
     }
