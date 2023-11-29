@@ -2,7 +2,9 @@ package com.bf.climbinglogbook.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.text.capitalize
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -55,12 +57,12 @@ class AscentAdapter(
         holder.itemView.apply {
             val dateFormat = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
             val grade = grades[ascent.originalGradeSystem]?.get(ascent.originalGradeOrdinal)
-            var secondTitle = ascent.country ?: ""
+            var secondTitle = ascent.country?.capitalize(Locale.getDefault()) ?: ""
             if (!ascent.region.isNullOrEmpty()) {
-                secondTitle += "/${ascent.region}"
+                secondTitle += "/${ascent.region?.capitalize(Locale.getDefault())}"
             }
             if (!ascent.rock.isNullOrEmpty()) {
-                secondTitle += "/${ascent.rock}"
+                secondTitle += "/${ascent.rock?.capitalize(Locale.getDefault())}"
             }
             if (secondTitle.startsWith("/")) {
                 secondTitle = secondTitle.removeRange(0..0)
@@ -68,8 +70,11 @@ class AscentAdapter(
             val meters = "${ascent.meters}m"
 
             holder.binding.apply {
-                tvTitle.text = ascent.name
-                tvSecondTitle.text = secondTitle
+                tvTitle.text = ascent.name.capitalize(Locale.getDefault())
+                if (secondTitle.isNotEmpty()) {
+                    tvSecondTitle.visibility = View.VISIBLE
+                    tvSecondTitle.text = secondTitle
+                } else tvSecondTitle.visibility = View.GONE
                 tvDate.text = dateFormat.format(ascent.date)
                 tvGrade.text = grade.toString()
                 tvStyle.text = ascent.ascentStyle.getShortcut()

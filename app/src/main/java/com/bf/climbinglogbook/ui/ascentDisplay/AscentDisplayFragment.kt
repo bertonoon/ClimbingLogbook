@@ -72,21 +72,24 @@ class AscentDisplayFragment : Fragment() {
         val grade = grades[ascent.originalGradeSystem]?.get(ascent.originalGradeOrdinal)
         val meters = "${ascent.meters}m"
 
-        var secondTitle = ascent.country ?: ""
+        var secondTitle = ascent.country?.capitalize(Locale.getDefault())  ?: ""
         if (!ascent.region.isNullOrEmpty()) {
-            secondTitle += "/${ascent?.region}"
+            secondTitle += "/${ascent.region?.capitalize(Locale.getDefault())}"
         }
         if (!ascent.rock.isNullOrEmpty()) {
-            secondTitle += "/${ascent.rock}"
+            secondTitle += "/${ascent.rock?.capitalize(Locale.getDefault())}"
         }
         if (secondTitle.startsWith("/")) {
             secondTitle = secondTitle.removeRange(0..0)
         }
 
         binding.apply {
-            toolbar.title.text = ascent.name
-            tvTitle.text = ascent.name
-            tvSecondTitle.text = secondTitle
+            toolbar.title.text = ascent.name.capitalize(Locale.getDefault())
+            tvTitle.text = ascent.name.capitalize(Locale.getDefault())
+            if (secondTitle.isNotEmpty()) {
+                tvSecondTitle.visibility = View.VISIBLE
+                tvSecondTitle.text = secondTitle
+            }
             tvDate.text = ascent.date.let { dateFormat.format(it) }
             tvGrade.text = grade
             tvClimbingType.text = ascent.climbingType?.getLabel(requireContext()) ?: ""
