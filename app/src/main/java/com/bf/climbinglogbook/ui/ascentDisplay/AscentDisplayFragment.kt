@@ -1,5 +1,7 @@
 package com.bf.climbinglogbook.ui.ascentDisplay
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +25,7 @@ import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.repositories.GradesRepository
 import com.bf.climbinglogbook.ui.MainViewModel
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -62,7 +65,7 @@ class AscentDisplayFragment : Fragment() {
 
     private fun setAscentToDisplay(ascent: Ascent?) {
 
-        if(ascent == null) return
+        if (ascent == null) return
 
         val dateFormat = SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault())
         val grades = GradesRepository().getGradesMap()
@@ -93,7 +96,14 @@ class AscentDisplayFragment : Fragment() {
             tvBelayer.text = ascent.belayer?.capitalize(Locale.getDefault()) ?: ""
             if (!ascent.comment.isNullOrEmpty()) tvComment.text = ascent.comment
             else tvComment.visibility = View.INVISIBLE
+            if (ascent.img != null) setImageInView(ascent.img)
         }
+    }
+
+    private fun setImageInView(bitmap: Bitmap?) {
+        if (bitmap == null) return
+        binding.ivPhoto.visibility = View.VISIBLE
+        Glide.with(requireContext()).load(bitmap).centerCrop().into(binding.ivPhoto)
     }
 
     override fun onDestroyView() {
