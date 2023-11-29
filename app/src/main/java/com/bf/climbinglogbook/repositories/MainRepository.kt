@@ -84,6 +84,50 @@ class MainRepository @Inject constructor(
             null
         }
     }
+    fun getAllAscentsSortedByDateDesc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByDateDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun getAllAscentsSortedByNameDesc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByNameDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun getAllAscentsSortedByGradeDesc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByGradeDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun getAllAscentsSortedByStyleDesc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByAscentStyleDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun getAllAscentsSortedByMetersDesc(): LiveData<List<Ascent>>? {
+        return try {
+            ascentDao.getAllRoutesSortedByMetersDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
 
     fun insertAscent(ascent: Ascent): Boolean {
         return try {

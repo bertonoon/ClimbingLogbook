@@ -195,18 +195,23 @@ class LogbookFragment : Fragment() {
                 }
             }
             chipDate.setOnClickListener {
+                logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.DATE)
             }
             chipName.setOnClickListener {
+                logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.NAME)
             }
             chipGrade.setOnClickListener {
+                logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.GRADE)
             }
             chipMeters.setOnClickListener {
+                logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.METERS)
             }
             chipStyle.setOnClickListener {
+                logbookViewModel.changeSortDirection()
                 logbookViewModel.sortAscents(SortType.STYLE)
             }
         }

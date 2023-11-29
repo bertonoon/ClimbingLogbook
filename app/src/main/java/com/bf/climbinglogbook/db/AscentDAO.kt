@@ -32,6 +32,20 @@ interface AscentDAO {
     @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY meters ASC")
     fun getAllRoutesSortedByMetersAsc(): LiveData<List<Ascent>>
 
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY name DESC")
+    fun getAllRoutesSortedByNameDesc(): LiveData<List<Ascent>>
+
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY date DESC")
+    fun getAllRoutesSortedByDateDesc(): LiveData<List<Ascent>>
+
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY usaGradeNumber DESC")
+    fun getAllRoutesSortedByGradeDesc(): LiveData<List<Ascent>>
+
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY ascentStyle DESC")
+    fun getAllRoutesSortedByAscentStyleDesc(): LiveData<List<Ascent>>
+
+    @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY meters DESC")
+    fun getAllRoutesSortedByMetersDesc(): LiveData<List<Ascent>>
 
     @Query("SELECT * FROM $ROUTES_TABLE_NAME ORDER BY date DESC LIMIT :num")
     fun getLastAscents(num: Int): LiveData<List<Ascent>>
