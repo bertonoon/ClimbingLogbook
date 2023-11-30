@@ -75,5 +75,10 @@
     <string name="add_ascent_ascent_style_error_usa_conv">Fail with grade conversion. Try again.</string>
     <string name="logbook_ascent_deleted">Ascent deleted from your logbook.</string>
     <string name="ascent_display_image_desc">Ascent image</string>
+    <string name="logbook_filter_os">OS</string>
+    <string name="logbook_filter_rp">RP</string>
+    <string name="logbook_filter_flash">Flash</string>
+    <string name="logbook_filter_trad">Trad</string>
+    <string name="logbook_filter_sport">Sport</string>
 
 </resources>

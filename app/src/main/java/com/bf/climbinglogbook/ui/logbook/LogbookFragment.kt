@@ -193,6 +193,13 @@ class LogbookFragment : Fragment() {
 
     private fun initListeners() {
         binding.apply {
+            toolbar.ivFilter.setOnClickListener {
+                binding.hsvFilterOptions.visibility = when (binding.hsvFilterOptions.visibility) {
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
             toolbar.ivSort.setOnClickListener {
                 binding.hsvSortOptions.visibility = when (binding.hsvSortOptions.visibility) {
                     View.VISIBLE -> View.GONE

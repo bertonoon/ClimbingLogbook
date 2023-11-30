@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
-        android:id="@+id/hsvSortOptions"
+        android:id="@+id/hsvFilterOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -22,6 +22,91 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/llFilterOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipOS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:minHeight="@dimen/chip_min_height"
+                    android:text="@string/logbook_filter_os"
+                    android:textSize="@dimen/chip_text_size"
+                    app:checkedIconVisible="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipRP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:minHeight="@dimen/chip_min_height"
+                    android:text="@string/logbook_filter_rp"
+                    android:textSize="@dimen/chip_text_size"
+                    app:checkedIconVisible="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFlash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:minHeight="@dimen/chip_min_height"
+                    android:text="@string/logbook_filter_flash"
+                    android:textSize="@dimen/chip_text_size"
+                    app:checkedIconVisible="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTrad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:minHeight="@dimen/chip_min_height"
+                    android:text="@string/logbook_filter_trad"
+                    android:textSize="@dimen/chip_text_size"
+                    app:checkedIconVisible="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipSport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:minHeight="@dimen/chip_min_height"
+                    android:text="@string/logbook_filter_sport"
+                    android:textSize="@dimen/chip_text_size"
+                    app:checkedIconVisible="true" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/hsvSortOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hsvFilterOptions"
         tools:visibility="visible">
 
         <LinearLayout
@@ -77,6 +162,7 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+
     <EditText
         android:id="@+id/etSearchBar"
         android:layout_width="match_parent"
@@ -99,9 +185,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:text="@string/logbook_no_records_in_db"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:text="@string/logbook_no_records_in_db"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
