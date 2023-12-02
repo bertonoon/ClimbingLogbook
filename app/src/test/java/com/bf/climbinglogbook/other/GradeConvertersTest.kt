@@ -4,8 +4,8 @@ import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
 import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
-import org.junit.Assert.*
-
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GradeConvertersTest {
@@ -339,7 +339,8 @@ class GradeConvertersTest {
         val uiaaGrade = GradeConverters().frenchToUiaa(frenchGrade)
         assertEquals(UIAAGrade.ONE, uiaaGrade)
     }
-//----------------------------
+
+    //----------------------------
     @Test
     fun uiaaToUsa_correctValueWithHardParamTrue() {
         val uiaaGrade = UIAAGrade.NINE
@@ -409,7 +410,8 @@ class GradeConvertersTest {
         val kurtykaGrade = GradeConverters().uiaaToKurtyka(uiaaGrade)
         assertEquals(KurtykaGrade.ONE, kurtykaGrade)
     }
-//------------
+
+    //------------
     @Test
     fun uiaaToFrench_correctValueWithHardParamTrue() {
         val uiaaGrade = UIAAGrade.FOUR
@@ -444,7 +446,6 @@ class GradeConvertersTest {
         val frenchGrade = GradeConverters().uiaaToFrench(uiaaGrade)
         assertEquals(FrenchGrade.ONE, frenchGrade)
     }
-
 
 
 }

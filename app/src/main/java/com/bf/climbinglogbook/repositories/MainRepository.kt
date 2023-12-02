@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.db.AscentDAO
 import javax.inject.Inject
-import kotlin.Exception
 
 @Suppress("MemberVisibilityCanBePrivate")
 class MainRepository @Inject constructor(
@@ -84,6 +83,7 @@ class MainRepository @Inject constructor(
             null
         }
     }
+
     fun getAllAscentsSortedByDateDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByDateDesc()

@@ -2,23 +2,17 @@ package com.bf.climbinglogbook.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentHomeBinding
-import com.bf.climbinglogbook.databinding.ToolbarHomeBinding
 import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

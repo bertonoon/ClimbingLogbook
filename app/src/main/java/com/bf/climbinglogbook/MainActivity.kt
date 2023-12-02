@@ -2,13 +2,11 @@ package com.bf.climbinglogbook
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bf.climbinglogbook.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_grade_calc -> {
                     navView.visibility = View.GONE
                 }
+
                 else -> {
                     navView.visibility = View.VISIBLE
                 }

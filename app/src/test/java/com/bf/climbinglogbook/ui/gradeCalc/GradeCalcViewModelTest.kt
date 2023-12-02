@@ -6,11 +6,11 @@ import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
 import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
-import org.junit.Assert.*
+import com.bf.climbinglogbook.repositories.GradesRepository
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.IndexOutOfBoundsException
 
 
 class GradeCalcViewModelTest {
@@ -23,38 +23,41 @@ class GradeCalcViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = GradeCalcViewModel()
+        viewModel = GradeCalcViewModel(GradesRepository())
 
     }
 
     @Test
-    fun setBaseSystemToKurtyka(){
+    fun setBaseSystemToKurtyka() {
         viewModel.setBaseGradeSystem(GradeSystem.KURTYKA)
-        assertEquals(GradeSystem.KURTYKA,viewModel.selectedBaseGradeSystem.value)
+        assertEquals(GradeSystem.KURTYKA, viewModel.selectedBaseGradeSystem.value)
     }
+
     @Test
-    fun setBaseSystemToFrench(){
+    fun setBaseSystemToFrench() {
         viewModel.setBaseGradeSystem(GradeSystem.FRENCH)
-        assertEquals(GradeSystem.FRENCH,viewModel.selectedBaseGradeSystem.value)
+        assertEquals(GradeSystem.FRENCH, viewModel.selectedBaseGradeSystem.value)
     }
+
     @Test
-    fun setBaseSystemToUsa(){
+    fun setBaseSystemToUsa() {
         viewModel.setBaseGradeSystem(GradeSystem.USA)
-        assertEquals(GradeSystem.USA,viewModel.selectedBaseGradeSystem.value)
+        assertEquals(GradeSystem.USA, viewModel.selectedBaseGradeSystem.value)
     }
+
     @Test
-    fun setBaseSystemToUiaa(){
+    fun setBaseSystemToUiaa() {
         viewModel.setBaseGradeSystem(GradeSystem.UIAA)
-        assertEquals(GradeSystem.UIAA,viewModel.selectedBaseGradeSystem.value)
+        assertEquals(GradeSystem.UIAA, viewModel.selectedBaseGradeSystem.value)
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun setBaseSystemToOverRange(){
+    fun setBaseSystemToOverRange() {
         viewModel.setBaseGradeSystem(GradeSystem.values()[111])
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException::class)
-    fun setBaseSystemToUnderRange(){
+    fun setBaseSystemToUnderRange() {
         viewModel.setBaseGradeSystem(GradeSystem.values()[-1])
     }
 

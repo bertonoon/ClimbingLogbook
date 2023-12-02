@@ -23,7 +23,4 @@ enum class ClimbingType {
             ICE -> context.getString(R.string.climbing_style_ice)
         }
     }
-
-
-
 }

@@ -8,5 +8,4 @@
     android:layout_centerVertical="true"
     android:ellipsize="marquee"
     android:textAlignment="center"
-    android:textColor="@color/add_ascent_text_color"
-     />
+    android:textColor="@color/add_ascent_text_color" />

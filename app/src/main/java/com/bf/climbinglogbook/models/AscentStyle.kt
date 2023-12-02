@@ -10,9 +10,8 @@ enum class AscentStyle {
     PINKPOINT,
     GREENPOINT;
 
-
-    fun getLabel(context: Context) :String{
-        return when (this){
+    fun getLabel(context: Context): String {
+        return when (this) {
             AscentStyle.ON_SIGHT -> context.getString(R.string.ascent_style_onsight)
             AscentStyle.REDPOINT -> context.getString(R.string.ascent_style_redpoint)
             AscentStyle.FLASH -> context.getString(R.string.ascent_style_flash)
@@ -20,9 +19,9 @@ enum class AscentStyle {
             AscentStyle.GREENPOINT -> context.getString(R.string.ascent_style_greenpoint)
         }
     }
-    
-    fun getShortcut() : String{
-        return when(this){
+
+    fun getShortcut(): String {
+        return when (this) {
             ON_SIGHT -> "OS"
             REDPOINT -> "RP"
             FLASH -> "FL"
@@ -30,5 +29,4 @@ enum class AscentStyle {
             GREENPOINT -> "GP"
         }
     }
-
 }

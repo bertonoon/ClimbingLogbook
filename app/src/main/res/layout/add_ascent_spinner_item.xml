@@ -8,5 +8,4 @@
     android:textSize="@dimen/add_ascent_text_size"
     android:gravity="center"
     android:textColor="@color/add_ascent_text_color"
-    tools:text="Selected Option"
-    />
+    tools:text="Selected Option" />

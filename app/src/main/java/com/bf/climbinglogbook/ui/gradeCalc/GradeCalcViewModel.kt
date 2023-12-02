@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GradeCalcViewModel @Inject constructor(
-    private val gradeRepo : GradesRepository
+    private val gradeRepo: GradesRepository
 ) : ViewModel() {
 
     private val gradesLists = GradesRepository().getGradesMap()
@@ -28,13 +28,13 @@ class GradeCalcViewModel @Inject constructor(
     private val _hardGradeToggle = MutableLiveData<Boolean>().apply {
         value = false
     }
-    val hardGradeToggle : LiveData<Boolean> = _hardGradeToggle
+    val hardGradeToggle: LiveData<Boolean> = _hardGradeToggle
 
 
     private val _selectedBaseGradeSystem = MutableLiveData<GradeSystem>().apply {
         value = GradeSystem.KURTYKA
     }
-    val selectedBaseGradeSystem : LiveData<GradeSystem> = _selectedBaseGradeSystem
+    val selectedBaseGradeSystem: LiveData<GradeSystem> = _selectedBaseGradeSystem
 
     private val _grades = MutableLiveData<List<String>>().apply {
         value = when (selectedBaseGradeSystem.value) {

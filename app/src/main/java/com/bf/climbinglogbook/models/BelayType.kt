@@ -19,8 +19,9 @@ enum class BelayType {
             FREE_SOLO -> context.getString(R.string.belay_free_solo)
         }
     }
-    fun getShortcut() : String{
-        return when (this){
+
+    fun getShortcut(): String {
+        return when (this) {
             LEAD -> "L"
             TOP_ROPE -> "TR"
             SOLO_LEAD -> "SL"

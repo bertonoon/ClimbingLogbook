@@ -3,7 +3,6 @@ package com.bf.climbinglogbook.other
 import android.Manifest
 import android.content.Context
 import android.os.Build
-import androidx.annotation.RequiresApi
 import pub.devrel.easypermissions.EasyPermissions
 
 object Permissions {

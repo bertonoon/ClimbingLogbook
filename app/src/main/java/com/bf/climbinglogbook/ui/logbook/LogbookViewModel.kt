@@ -128,8 +128,6 @@ class LogbookViewModel @Inject constructor(
                 }
             }
         }
-
-
     }
 
     fun sortAscents(sortType: SortType) = when (sortType) {
@@ -180,7 +178,6 @@ class LogbookViewModel @Inject constructor(
         }
 
         _filterType.value = filter
-
     }
 
     fun deleteAscent(ascent: Ascent) {

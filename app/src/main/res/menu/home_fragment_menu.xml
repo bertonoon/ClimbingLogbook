@@ -6,6 +6,6 @@
         android:id="@+id/action_grade_converter"
         android:icon="@drawable/baseline_balance_24"
         android:title="@string/grade_conversion_icon_title"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

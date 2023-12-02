@@ -9,5 +9,4 @@
     android:ellipsize="marquee"
     android:textSize="25sp"
     android:textAlignment="center"
-    android:textColor="#808080"
-    />
+    android:textColor="#808080" />

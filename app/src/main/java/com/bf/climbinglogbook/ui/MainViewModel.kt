@@ -1,16 +1,11 @@
 package com.bf.climbinglogbook.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
-import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +20,7 @@ class MainViewModel @Inject constructor(
     private val _ascentToDisplay = MutableLiveData<Ascent>()
     val ascentToDisplay: LiveData<Ascent> = _ascentToDisplay
 
-    fun setAscentToDisplay(ascent: Ascent) : Boolean{
+    fun setAscentToDisplay(ascent: Ascent): Boolean {
         _ascentToDisplay.postValue(ascent)
         return true
     }

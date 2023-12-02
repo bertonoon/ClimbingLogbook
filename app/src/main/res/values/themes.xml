@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.ClimbingLogbook" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -13,17 +13,17 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-<!--        <style name="RobotoTextViewStyle" parent="android:Widget.TextView">-->
-<!--            <item name="android:fontFamily">sans-serif</item>-->
-<!--        </style>-->
+        <!--        <style name="RobotoTextViewStyle" parent="android:Widget.TextView">-->
+        <!--            <item name="android:fontFamily">sans-serif</item>-->
+        <!--        </style>-->
 
-<!--        <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">-->
-<!--            <item name="android:fontFamily">sans-serif</item>-->
-<!--        </style>-->
+        <!--        <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">-->
+        <!--            <item name="android:fontFamily">sans-serif</item>-->
+        <!--        </style>-->
 
-<!--        <style name="RobotoEditTextStyle" parent="android:Widget.EditText">-->
-<!--            <item name="android:fontFamily">sans-serif</item>-->
-<!--        </style>-->
+        <!--        <style name="RobotoEditTextStyle" parent="android:Widget.EditText">-->
+        <!--            <item name="android:fontFamily">sans-serif</item>-->
+        <!--        </style>-->
 
     </style>
 </resources>

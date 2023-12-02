@@ -27,7 +27,6 @@ import com.bf.climbinglogbook.ui.MainViewModel
 import com.bf.climbinglogbook.utils.SwipeToDeleteCallback
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 
@@ -282,7 +281,6 @@ class LogbookFragment : Fragment() {
         }
 
         logbookViewModel.filterAscent(newFilter)
-
     }
 
     private fun clearFilter() {
@@ -295,7 +293,6 @@ class LogbookFragment : Fragment() {
             chipSport.isChecked = false
         }
     }
-
 
     private fun showSnackBar(msg: String) {
         Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
@@ -311,6 +308,4 @@ class LogbookFragment : Fragment() {
             logbookViewModel.zeroMsg()
         }
     }
-
-
 }
