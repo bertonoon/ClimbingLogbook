@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
+import com.bf.climbinglogbook.models.AscentStyle
+import com.bf.climbinglogbook.models.ClimbingType
+import com.bf.climbinglogbook.models.FilterType
 import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.repositories.MainRepository
@@ -49,87 +52,83 @@ class LogbookViewModel @Inject constructor(
     }
     val sortDirectionDesc: LiveData<Boolean> = _sortDirectionDesc
 
+    private val _filterType = MutableLiveData<FilterType>().apply {
+        value = FilterType()
+    }
+    val filterType: LiveData<FilterType> = _filterType
+
     init {
-        if (ascentsSortedByDateAsc != null)
-            ascents.addSource(ascentsSortedByDateAsc) { result ->
-                if (sortType.value == SortType.DATE && sortDirectionDesc.value == false) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        if (ascentsSortedByDateAsc != null) ascents.addSource(ascentsSortedByDateAsc) { result ->
+            if (sortType.value == SortType.DATE && sortDirectionDesc.value == false) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByNameAsc != null)
-            ascents.addSource(ascentsSortedByNameAsc) { result ->
-                if (sortType.value == SortType.NAME && sortDirectionDesc.value == false) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByNameAsc != null) ascents.addSource(ascentsSortedByNameAsc) { result ->
+            if (sortType.value == SortType.NAME && sortDirectionDesc.value == false) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByGradeAsc != null)
-            ascents.addSource(ascentsSortedByGradeAsc) { result ->
-                if (sortType.value == SortType.GRADE && sortDirectionDesc.value == false) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByGradeAsc != null) ascents.addSource(ascentsSortedByGradeAsc) { result ->
+            if (sortType.value == SortType.GRADE && sortDirectionDesc.value == false) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByStyleAsc != null)
-            ascents.addSource(ascentsSortedByStyleAsc) { result ->
-                if (sortType.value == SortType.STYLE && sortDirectionDesc.value == false) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByStyleAsc != null) ascents.addSource(ascentsSortedByStyleAsc) { result ->
+            if (sortType.value == SortType.STYLE && sortDirectionDesc.value == false) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByMetersAsc != null)
-            ascents.addSource(ascentsSortedByMetersAsc) { result ->
-                if (sortType.value == SortType.METERS && sortDirectionDesc.value == false) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByMetersAsc != null) ascents.addSource(ascentsSortedByMetersAsc) { result ->
+            if (sortType.value == SortType.METERS && sortDirectionDesc.value == false) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByDateDesc != null)
-            ascents.addSource(ascentsSortedByDateDesc) { result ->
-                if (sortType.value == SortType.DATE && sortDirectionDesc.value == true) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByDateDesc != null) ascents.addSource(ascentsSortedByDateDesc) { result ->
+            if (sortType.value == SortType.DATE && sortDirectionDesc.value == true) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByNameDesc != null)
-            ascents.addSource(ascentsSortedByNameDesc) { result ->
-                if (sortType.value == SortType.NAME && sortDirectionDesc.value == true) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByNameDesc != null) ascents.addSource(ascentsSortedByNameDesc) { result ->
+            if (sortType.value == SortType.NAME && sortDirectionDesc.value == true) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByGradeDesc != null)
-            ascents.addSource(ascentsSortedByGradeDesc) { result ->
-                if (sortType.value == SortType.GRADE && sortDirectionDesc.value == true) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByGradeDesc != null) ascents.addSource(ascentsSortedByGradeDesc) { result ->
+            if (sortType.value == SortType.GRADE && sortDirectionDesc.value == true) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByStyleDesc != null)
-            ascents.addSource(ascentsSortedByStyleDesc) { result ->
-                if (sortType.value == SortType.STYLE && sortDirectionDesc.value == true) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByStyleDesc != null) ascents.addSource(ascentsSortedByStyleDesc) { result ->
+            if (sortType.value == SortType.STYLE && sortDirectionDesc.value == true) {
+                result?.let {
+                    ascents.value = it
                 }
             }
-        if (ascentsSortedByMetersDesc != null)
-            ascents.addSource(ascentsSortedByMetersDesc) { result ->
-                if (sortType.value == SortType.METERS && sortDirectionDesc.value == true) {
-                    result?.let {
-                        ascents.value = it
-                    }
+        }
+        if (ascentsSortedByMetersDesc != null) ascents.addSource(ascentsSortedByMetersDesc) { result ->
+            if (sortType.value == SortType.METERS && sortDirectionDesc.value == true) {
+                result?.let {
+                    ascents.value = it
                 }
             }
+        }
+
 
     }
 
@@ -156,6 +155,32 @@ class LogbookViewModel @Inject constructor(
 
     }.also {
         _sortType.value = sortType
+    }
+
+    fun filterAscent(filter: FilterType) {
+        sortAscents(sortType.value ?: SortType.DATE)
+        if (filter.none) {
+            _filterType.value = FilterType()
+            return
+        }
+
+        if (filter.isAscentTypeFilterActive()) {
+            ascents.value?.filter { ascent ->
+                (filter.os && ascent.ascentStyle == AscentStyle.ON_SIGHT) ||
+                        (filter.rp && ascent.ascentStyle == AscentStyle.REDPOINT) ||
+                        (filter.flash && ascent.ascentStyle == AscentStyle.FLASH)
+            }.let { ascents.value = it }
+        }
+
+        if (filter.isClimbingTypeFilterActive()) {
+            ascents.value?.filter { ascent ->
+                (filter.trad && ascent.climbingType == ClimbingType.TRAD) ||
+                        (filter.sport && ascent.climbingType == ClimbingType.SPORT)
+            }.let { ascents.value = it }
+        }
+
+        _filterType.value = filter
+
     }
 
     fun deleteAscent(ascent: Ascent) {

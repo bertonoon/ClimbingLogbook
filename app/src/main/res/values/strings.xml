@@ -80,5 +80,6 @@
     <string name="logbook_filter_flash">Flash</string>
     <string name="logbook_filter_trad">Trad</string>
     <string name="logbook_filter_sport">Sport</string>
+    <string name="logbook_filter_none">None</string>
 
 </resources>

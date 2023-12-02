@@ -20,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.adapters.AscentAdapter
 import com.bf.climbinglogbook.databinding.FragmentLogbookBinding
+import com.bf.climbinglogbook.models.FilterType
 import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.ui.MainViewModel
 import com.bf.climbinglogbook.utils.SwipeToDeleteCallback
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 
@@ -37,7 +39,7 @@ class LogbookFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val logbookViewModel: LogbookViewModel by viewModels()
     private lateinit var ascentAdapter: AscentAdapter
-
+    private var filterType = FilterType()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -113,6 +115,18 @@ class LogbookFragment : Fragment() {
         logbookViewModel.msg.observe(viewLifecycleOwner) {
             showMsg(it)
         }
+        logbookViewModel.filterType.observe(viewLifecycleOwner) {
+            filterType = it
+            binding.apply {
+                chipNone.isChecked = it.none
+                chipOS.isChecked = it.os
+                chipRP.isChecked = it.rp
+                chipFlash.isChecked = it.flash
+                chipTrad.isChecked = it.trad
+                chipSport.isChecked = it.sport
+            }
+        }
+
     }
 
     private fun setSuitableSortChipColor(sortType: SortType) {
@@ -237,8 +251,51 @@ class LogbookFragment : Fragment() {
             etSearchBar.addTextChangedListener {
                 logbookViewModel.search(binding.etSearchBar.text.toString())
             }
+            chipGroupFilter.setOnCheckedStateChangeListener { _, chipId ->
+                filterAscents()
+            }
         }
     }
+
+    private fun filterAscents() {
+        val newFilter = FilterType()
+        newFilter.none = binding.chipNone.isChecked
+
+        if (!filterType.none && newFilter.none) {
+            clearFilter()
+            logbookViewModel.filterAscent(newFilter)
+            return
+        }
+
+        newFilter.os = binding.chipOS.isChecked
+        newFilter.flash = binding.chipFlash.isChecked
+        newFilter.rp = binding.chipRP.isChecked
+        newFilter.trad = binding.chipTrad.isChecked
+        newFilter.sport = binding.chipSport.isChecked
+
+        if (newFilter.isFilterActive()) {
+            newFilter.none = false
+            binding.chipNone.isChecked = false
+        } else {
+            newFilter.none = true
+            binding.chipNone.isChecked = true
+        }
+
+        logbookViewModel.filterAscent(newFilter)
+
+    }
+
+    private fun clearFilter() {
+        binding.apply {
+            chipNone.isChecked = true
+            chipOS.isChecked = false
+            chipFlash.isChecked = false
+            chipRP.isChecked = false
+            chipTrad.isChecked = false
+            chipSport.isChecked = false
+        }
+    }
+
 
     private fun showSnackBar(msg: String) {
         Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show()
