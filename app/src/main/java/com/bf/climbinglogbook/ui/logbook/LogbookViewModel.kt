@@ -57,6 +57,11 @@ class LogbookViewModel @Inject constructor(
     }
     val filterType: LiveData<FilterType> = _filterType
 
+    private val _searchQuery = MutableLiveData<String>().apply {
+        value = ""
+    }
+    val searchQuery: LiveData<String> = _searchQuery
+
     init {
         if (ascentsSortedByDateAsc != null) ascents.addSource(ascentsSortedByDateAsc) { result ->
             if (sortType.value == SortType.DATE && sortDirectionDesc.value == false) {
@@ -153,12 +158,17 @@ class LogbookViewModel @Inject constructor(
 
     }.also {
         _sortType.value = sortType
+        if (filterType.value?.isFilterActive() == true) filterAscent(
+            filterType.value ?: FilterType()
+        )
+        if (searchQuery.value?.isNotEmpty() == true) search(searchQuery.value ?: "")
     }
 
     fun filterAscent(filter: FilterType) {
-        sortAscents(sortType.value ?: SortType.DATE)
+
         if (filter.none) {
             _filterType.value = FilterType()
+            sortAscents(sortType.value ?: SortType.DATE)
             return
         }
 
@@ -187,11 +197,18 @@ class LogbookViewModel @Inject constructor(
         }
     }
 
-    fun search(query: String) {
-        sortAscents(sortType.value ?: SortType.DATE)
+    fun search(newQuery: String) {
+        if (newQuery.length < (searchQuery.value?.length ?: 0)) {
+            _searchQuery.value = newQuery
+            sortAscents(sortType.value ?: SortType.DATE)
+        }
+
         ascents.value?.filter { ascent ->
-            ascent.name.lowercase().contains(query.lowercase())
-        }.let { ascents.value = it }
+            ascent.name.lowercase().contains(newQuery.lowercase())
+        }.let {
+            ascents.value = it
+            _searchQuery.value = newQuery
+        }
     }
 
     fun zeroMsg() {
