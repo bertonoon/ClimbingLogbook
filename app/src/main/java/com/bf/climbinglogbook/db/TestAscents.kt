@@ -13,7 +13,7 @@ class TestAscents {
         fun getList() = listOf(
             Ascent(
                 name = "Znikający Punk",
-                date = Date(),
+                date = Date(2023-1900,11,20),
                 originalGradeSystem = GradeSystem.KURTYKA,
                 originalGradeOrdinal = 16,
                 ascentStyle = AscentStyle.FLASH,
@@ -24,7 +24,7 @@ class TestAscents {
             ),
             Ascent(
                 name = "Krzyż",
-                date = Date(),
+                date = Date(2021-1900,11,20),
                 originalGradeSystem = GradeSystem.KURTYKA,
                 originalGradeOrdinal = 12,
                 ascentStyle = AscentStyle.REDPOINT,
@@ -35,7 +35,7 @@ class TestAscents {
             ),
             Ascent(
                 name = "Coś trudnego",
-                date = Date(),
+                date = Date(2023-1900,9,15),
                 originalGradeSystem = GradeSystem.KURTYKA,
                 originalGradeOrdinal = 21,
                 ascentStyle = AscentStyle.REDPOINT,
@@ -46,7 +46,7 @@ class TestAscents {
             ),
             Ascent(
                 name = "Łatwe",
-                date = Date(),
+                date = Date(2013-1900,1,23),
                 originalGradeSystem = GradeSystem.KURTYKA,
                 originalGradeOrdinal = 3,
                 ascentStyle = AscentStyle.ON_SIGHT,
@@ -57,7 +57,7 @@ class TestAscents {
             ),
             Ascent(
                 name = "Bez nazwy",
-                date = Date(),
+                date = Date(2023-1900,10,19),
                 originalGradeSystem = GradeSystem.KURTYKA,
                 originalGradeOrdinal = 10,
                 ascentStyle = AscentStyle.FLASH,
