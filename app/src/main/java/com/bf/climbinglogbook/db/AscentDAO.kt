@@ -58,7 +58,7 @@ interface AscentDAO {
     @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME WHERE ascentStyle LIKE :ascentStyle")
     fun numberOfOsAscentsByStyle(ascentStyle: AscentStyle): LiveData<Int>
 
-    @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME WHERE ascentStyle LIKE :climbingType")
+    @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME WHERE climbingType LIKE :climbingType")
     fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>
 
     @Query("SELECT * FROM $ROUTES_TABLE_NAME")
