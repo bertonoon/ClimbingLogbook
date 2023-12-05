@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
+import com.bf.climbinglogbook.db.TestAscents
 import com.bf.climbinglogbook.models.AddAscentErrors
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.BelayType
@@ -102,6 +103,19 @@ class AddNewAscentViewModel @Inject constructor(
         value = false
     }
     val successAdd: LiveData<Boolean> = _successAdd
+
+    // SAVE TEST VALUES
+    init {
+        Log.i("AddNewAscent","Init")
+        if ((mainRepo.numberOfItemsInDB()?.value ?: 0) < 1) {
+            Log.i("AddNewAscent", "getList")
+            val testAscents = TestAscents.getList()
+            for (ascent in testAscents) {
+                addNewAscentToDB(ascent)
+            }
+        }
+    }
+
 
     fun setGradeOrdinal(grade: Int) {
         if (grade == selectedGradeOrdinal.value) return
