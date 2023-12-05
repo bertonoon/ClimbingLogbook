@@ -6,6 +6,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.bf.climbinglogbook.models.AscentStyle
+import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.other.Constants.ROUTES_TABLE_NAME
 
 @Dao
@@ -52,6 +54,12 @@ interface AscentDAO {
 
     @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME")
     fun numberOfItemsInDB(): LiveData<Int>
+
+    @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME WHERE ascentStyle LIKE :ascentStyle")
+    fun numberOfOsAscentsByStyle(ascentStyle: AscentStyle): LiveData<Int>
+
+    @Query("SELECT count(id) FROM $ROUTES_TABLE_NAME WHERE ascentStyle LIKE :climbingType")
+    fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>
 
     @Query("SELECT * FROM $ROUTES_TABLE_NAME")
     fun getAllAscents(): LiveData<List<Ascent>>

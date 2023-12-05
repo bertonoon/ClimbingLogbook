@@ -94,7 +94,6 @@ class LogbookFragment : Fragment() {
         val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
         deleteItemTouchHelper.attachToRecyclerView(binding.rvAscents)
 
-
     }
 
     private fun initObservers() {

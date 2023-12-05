@@ -24,6 +24,8 @@
     <dimen name="home_text_size_main_stats_num">30sp</dimen>
     <dimen name="home_text_size_main_stats_desc">20sp</dimen>
     <dimen name="home_text_size_main_headers">30sp</dimen>
+    <dimen name="home_text_size_second_stats_desc">20sp</dimen>
+    <dimen name="home_text_size_second_stats_num">22sp</dimen>
     <item name="add_ascent_header_weight" type="dimen" format="float">0.3</item>
     <item name="add_ascent_edit_text_view_weight" type="dimen" format="float">0.7</item>
 </resources>

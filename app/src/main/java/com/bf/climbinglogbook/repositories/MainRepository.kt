@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.db.AscentDAO
+import com.bf.climbinglogbook.models.AscentStyle
+import com.bf.climbinglogbook.models.ClimbingType
 import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -123,6 +125,24 @@ class MainRepository @Inject constructor(
     fun getAllAscentsSortedByMetersDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByMetersDesc()
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun numberOfOsAscentsByAscentStyle(ascentStyle: AscentStyle): LiveData<Int>? {
+        return try {
+            ascentDao.numberOfOsAscentsByStyle(ascentStyle)
+        } catch (e: Exception) {
+            Log.e("RoomDb", e.toString())
+            null
+        }
+    }
+
+    fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>? {
+        return try {
+            ascentDao.numberOfOsAscentsByClimbingType(climbingType)
         } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null

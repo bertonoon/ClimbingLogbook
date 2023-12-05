@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private val homeViewModel: HomeViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private lateinit var ascentAdapter: AscentAdapter
@@ -30,9 +32,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,17 +60,31 @@ class HomeFragment : Fragment() {
         }
 
         setupRecyclerView()
+        initObservers()
+    }
+
+    private fun initObservers(){
         mainViewModel.lastThreeAscents?.observe(viewLifecycleOwner) {
             ascentAdapter.submitList(it)
         }
-
-        val numberOfAscents = mainViewModel.numberOfAscents
-        if (numberOfAscents != null) numberOfAscents.observe(viewLifecycleOwner)
-        {
-            binding.tvRoutesInDb.text = it.toString()
-        } else binding.tvRoutesInDb.text = "Fail"
-
-
+        homeViewModel.allOsAscents?.observe(viewLifecycleOwner){
+            binding.tvSecondStatsOnsightNum.text = it?.toString() ?: "0"
+        }
+        homeViewModel.allAscents?.observe(viewLifecycleOwner){
+            binding.tvRoutesInDb.text = it?.toString() ?: "0"
+        }
+        homeViewModel.allFlashAscents?.observe(viewLifecycleOwner){
+            binding.tvSecondStatsFlashNum.text = it?.toString() ?: "0"
+        }
+        homeViewModel.allRpAscents?.observe(viewLifecycleOwner){
+            binding.tvSecondStatsRedpointNum.text = it?.toString() ?: "0"
+        }
+        homeViewModel.allTradAscents?.observe(viewLifecycleOwner){
+            binding.tvTradRoutesInDb.text = it?.toString() ?: "0"
+        }
+        homeViewModel.allSportAscents?.observe(viewLifecycleOwner){
+            binding.tvSportRoutesInDb.text = it?.toString() ?: "0"
+        }
     }
 
     private fun setupRecyclerView() = binding.rvAscents.apply {

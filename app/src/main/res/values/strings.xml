@@ -85,5 +85,9 @@
     <string name="home_sport_routes">Sport</string>
     <string name="home_trad_routes">Trad</string>
     <string name="home_last_three_ascents">Last ascents</string>
+    <string name="home_main_stats_header">Your ascents</string>
+    <string name="home_second_stats_onsight_desc">On-sight</string>
+    <string name="home_second_stats_redpoint_desc">Redpoint</string>
+    <string name="home_second_stats_flash_desc">Flash</string>
 
 </resources>
