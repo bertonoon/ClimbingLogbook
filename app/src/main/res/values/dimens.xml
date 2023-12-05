@@ -21,6 +21,9 @@
     <dimen name="ascent_display_item_margin_horizontal">10dp</dimen>
     <dimen name="ascent_display_text_size_second">20sp</dimen>
     <dimen name="ascent_display_summary_margin_start">5dp</dimen>
+    <dimen name="home_text_size_main_stats_num">30sp</dimen>
+    <dimen name="home_text_size_main_stats_desc">20sp</dimen>
+    <dimen name="home_text_size_main_headers">30sp</dimen>
     <item name="add_ascent_header_weight" type="dimen" format="float">0.3</item>
     <item name="add_ascent_edit_text_view_weight" type="dimen" format="float">0.7</item>
 </resources>

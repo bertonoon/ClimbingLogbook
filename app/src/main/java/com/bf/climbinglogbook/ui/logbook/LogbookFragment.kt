@@ -125,7 +125,6 @@ class LogbookFragment : Fragment() {
                 chipSport.isChecked = it.sport
             }
         }
-
     }
 
     private fun setSuitableSortChipColor(sortType: SortType) {

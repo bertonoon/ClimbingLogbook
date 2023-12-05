@@ -68,8 +68,8 @@ class HomeFragment : Fragment() {
         val numberOfAscents = mainViewModel.numberOfAscents
         if (numberOfAscents != null) numberOfAscents.observe(viewLifecycleOwner)
         {
-            binding.textHome.text = it.toString()
-        } else binding.textHome.text = "Fail"
+            binding.tvRoutesInDb.text = it.toString()
+        } else binding.tvRoutesInDb.text = "Fail"
 
 
     }

@@ -81,5 +81,9 @@
     <string name="logbook_filter_trad">Trad</string>
     <string name="logbook_filter_sport">Sport</string>
     <string name="logbook_filter_none">None</string>
+    <string name="home_saved_routes">All</string>
+    <string name="home_sport_routes">Sport</string>
+    <string name="home_trad_routes">Trad</string>
+    <string name="home_last_three_ascents">Last ascents</string>
 
 </resources>
