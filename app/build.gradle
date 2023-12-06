@@ -48,9 +48,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
 
     // Tests
-    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -72,6 +73,7 @@ dependencies {
     testImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
     testImplementation "io.mockk:mockk:1.13.5"
     testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
 
 
     // Room
@@ -83,6 +85,8 @@ dependencies {
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+
 
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
