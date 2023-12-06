@@ -133,7 +133,7 @@ class MainRepository @Inject constructor(
 
     fun numberOfOsAscentsByAscentStyle(ascentStyle: AscentStyle): LiveData<Int>? {
         return try {
-            ascentDao.numberOfOsAscentsByStyle(ascentStyle)
+            ascentDao.numberOfAscentsByStyle(ascentStyle)
         } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null
@@ -142,7 +142,7 @@ class MainRepository @Inject constructor(
 
     fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>? {
         return try {
-            ascentDao.numberOfOsAscentsByClimbingType(climbingType)
+            ascentDao.numberOfAscentsByClimbingType(climbingType)
         } catch (e: Exception) {
             Log.e("RoomDb", e.toString())
             null

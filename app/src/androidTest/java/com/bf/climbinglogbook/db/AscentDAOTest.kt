@@ -16,8 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.internal.stubbing.answers.ThrowsException
-import java.lang.AssertionError
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -163,7 +161,7 @@ class AscentDAOTest {
     @Test
     fun numberOfAscentsByStyle() = runTest{
         insertAscents()
-        val numberOfItemsInDb = dao.numberOfOsAscentsByStyle(AscentStyle.REDPOINT).getOrAwaitValue()
+        val numberOfItemsInDb = dao.numberOfAscentsByStyle(AscentStyle.REDPOINT).getOrAwaitValue()
         val numOfRedpointAscents = ascents.count { it.ascentStyle == AscentStyle.REDPOINT }
         assertEquals(numberOfItemsInDb,numOfRedpointAscents)
     }
@@ -171,7 +169,7 @@ class AscentDAOTest {
     @Test
     fun numberOfAscentsByClimbingType() = runTest{
         insertAscents()
-        val numberOfItemsInDb = dao.numberOfOsAscentsByClimbingType(ClimbingType.SPORT).getOrAwaitValue()
+        val numberOfItemsInDb = dao.numberOfAscentsByClimbingType(ClimbingType.SPORT).getOrAwaitValue()
         val numOfSportAscents = ascents.count { it.climbingType == ClimbingType.SPORT }
         assertEquals(numberOfItemsInDb,numOfSportAscents)
     }
