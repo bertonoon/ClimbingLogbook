@@ -12,6 +12,7 @@ import com.bf.climbinglogbook.models.FilterType
 import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
 import com.bf.climbinglogbook.repositories.MainRepository
+import com.bf.climbinglogbook.repositories.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogbookViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepositoryInterface
 ) : ViewModel() {
 
 

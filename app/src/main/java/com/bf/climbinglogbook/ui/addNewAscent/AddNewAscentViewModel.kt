@@ -21,6 +21,7 @@ import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.GradeConverters
 import com.bf.climbinglogbook.repositories.GradesRepository
 import com.bf.climbinglogbook.repositories.MainRepository
+import com.bf.climbinglogbook.repositories.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddNewAscentViewModel @Inject constructor(
     gradeRepo: GradesRepository,
-    val mainRepo: MainRepository
+    val mainRepo: MainRepositoryInterface
 ) : ViewModel() {
 
     private val grades = gradeRepo.getGradesMap()

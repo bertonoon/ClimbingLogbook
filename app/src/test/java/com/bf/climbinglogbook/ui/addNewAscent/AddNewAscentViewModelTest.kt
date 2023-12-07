@@ -7,6 +7,7 @@ import androidx.test.core.content.pm.ApplicationInfoBuilder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bf.climbinglogbook.db.AscentDAO
 import com.bf.climbinglogbook.db.LogbookDatabase
+import com.bf.climbinglogbook.repositories.FakeMainRepository
 import com.bf.climbinglogbook.repositories.GradesRepository
 import com.bf.climbinglogbook.repositories.MainRepository
 import com.bf.climbinglogbook.ui.gradeCalc.GradeCalcViewModel
@@ -34,7 +35,7 @@ class AddNewAscentViewModelTest{
             LogbookDatabase::class.java
         ).allowMainThreadQueries().build()
         dao = database.getAscentDao()
-        viewModel = AddNewAscentViewModel(GradesRepository(), MainRepository(dao))
+        viewModel = AddNewAscentViewModel(GradesRepository(), FakeMainRepository())
     }
 
     @After
