@@ -11,10 +11,10 @@ import javax.inject.Inject
 @Suppress("MemberVisibilityCanBePrivate")
 class MainRepository @Inject constructor(
     val ascentDao: AscentDAO
-) {
+) : MainRepositoryInterface {
 
 
-    fun numberOfItemsInDB(): LiveData<Int>? {
+    override fun numberOfItemsInDB(): LiveData<Int>? {
         return try {
             ascentDao.numberOfItemsInDB()
         } catch (e: Exception) {
@@ -23,7 +23,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun lastAscent(num: Int): LiveData<List<Ascent>>? {
+    override fun lastAscent(num: Int): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getLastAscents(num)
         } catch (e: Exception) {
@@ -32,7 +32,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscents(): LiveData<List<Ascent>>? {
+    override fun getAllAscents(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllAscents()
         } catch (e: Exception) {
@@ -41,7 +41,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByDateAsc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByDateAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByDateAsc()
         } catch (e: Exception) {
@@ -50,7 +50,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByNameAsc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByNameAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByNameAsc()
         } catch (e: Exception) {
@@ -59,7 +59,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByGradeAsc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByGradeAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByGradeAsc()
         } catch (e: Exception) {
@@ -68,7 +68,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByStyleAsc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByStyleAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByAscentStyleAsc()
         } catch (e: Exception) {
@@ -77,7 +77,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByMetersAsc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByMetersAsc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByMetersAsc()
         } catch (e: Exception) {
@@ -86,7 +86,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByDateDesc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByDateDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByDateDesc()
         } catch (e: Exception) {
@@ -95,7 +95,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByNameDesc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByNameDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByNameDesc()
         } catch (e: Exception) {
@@ -104,7 +104,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByGradeDesc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByGradeDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByGradeDesc()
         } catch (e: Exception) {
@@ -113,7 +113,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByStyleDesc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByStyleDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByAscentStyleDesc()
         } catch (e: Exception) {
@@ -122,7 +122,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun getAllAscentsSortedByMetersDesc(): LiveData<List<Ascent>>? {
+    override fun getAllAscentsSortedByMetersDesc(): LiveData<List<Ascent>>? {
         return try {
             ascentDao.getAllRoutesSortedByMetersDesc()
         } catch (e: Exception) {
@@ -131,7 +131,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun numberOfOsAscentsByAscentStyle(ascentStyle: AscentStyle): LiveData<Int>? {
+    override fun numberOfOsAscentsByAscentStyle(ascentStyle: AscentStyle): LiveData<Int>? {
         return try {
             ascentDao.numberOfAscentsByStyle(ascentStyle)
         } catch (e: Exception) {
@@ -140,7 +140,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>? {
+    override fun numberOfOsAscentsByClimbingType(climbingType: ClimbingType): LiveData<Int>? {
         return try {
             ascentDao.numberOfAscentsByClimbingType(climbingType)
         } catch (e: Exception) {
@@ -149,7 +149,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun insertAscent(ascent: Ascent): Boolean {
+    override fun insertAscent(ascent: Ascent): Boolean {
         return try {
             ascentDao.insertAscent(ascent)
             true
@@ -159,7 +159,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    fun deleteAscent(ascent: Ascent): Boolean {
+    override fun deleteAscent(ascent: Ascent): Boolean {
         return try {
             ascentDao.deleteAscent(ascent)
             true
