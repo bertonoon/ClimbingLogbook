@@ -2,13 +2,11 @@ package com.bf.climbinglogbook.ui.addNewAscent
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bf.climbinglogbook.db.Ascent
-import com.bf.climbinglogbook.db.TestAscents
 import com.bf.climbinglogbook.models.AddAscentErrors
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.BelayType
@@ -20,7 +18,6 @@ import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
 import com.bf.climbinglogbook.other.GradeConverters
 import com.bf.climbinglogbook.repositories.GradesRepository
-import com.bf.climbinglogbook.repositories.MainRepository
 import com.bf.climbinglogbook.repositories.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -51,10 +48,14 @@ class AddNewAscentViewModel @Inject constructor(
     }
     val selectedGradesList: LiveData<List<String>> = _selectedGradesList
 
-    private val _routeName = MutableLiveData<String>()
+    private val _routeName = MutableLiveData<String>().apply {
+        value = ""
+    }
     val routeName: LiveData<String> = _routeName
 
-    private val _failMsg = MutableLiveData<AddAscentErrors>()
+    private val _failMsg = MutableLiveData<AddAscentErrors>().apply {
+        value = AddAscentErrors.NONE
+    }
     val failMsg: LiveData<AddAscentErrors> = _failMsg
 
     private val _date = MutableLiveData<Date>().apply {
@@ -76,13 +77,19 @@ class AddNewAscentViewModel @Inject constructor(
     private val _selectedAscentStyle = MutableLiveData<AscentStyle>()
     val selectedAscentStyle: LiveData<AscentStyle> = _selectedAscentStyle
 
-    private val _country = MutableLiveData<String>()
+    private val _country = MutableLiveData<String>().apply {
+        value = ""
+    }
     val country: LiveData<String> = _country
 
-    private val _region = MutableLiveData<String>()
+    private val _region = MutableLiveData<String>().apply {
+        value = ""
+    }
     val region: LiveData<String> = _region
 
-    private val _rockName = MutableLiveData<String>()
+    private val _rockName = MutableLiveData<String>().apply {
+        value = ""
+    }
     val rockName: LiveData<String> = _rockName
 
     private val _meters = MutableLiveData<Int>()
@@ -94,51 +101,60 @@ class AddNewAscentViewModel @Inject constructor(
     private val _selectedBelayType = MutableLiveData<BelayType>()
     val selectedBelayType: LiveData<BelayType> = _selectedBelayType
 
-    private val _numberOfPitches = MutableLiveData<Int>()
+    private val _numberOfPitches = MutableLiveData<Int>().apply {
+        value = 1
+    }
     val numberOfPitches: LiveData<Int> = _numberOfPitches
 
-    private val _belayer = MutableLiveData<String>()
+    private val _belayer = MutableLiveData<String>().apply {
+        value = ""
+    }
     val belayer: LiveData<String> = _belayer
 
-    private val _successAdd = MutableLiveData<Boolean>().apply {
-        value = false
-    }
+    private val _successAdd = MutableLiveData<Boolean>()
     val successAdd: LiveData<Boolean> = _successAdd
 
     // SAVE TEST VALUES
-    init {
-        Log.i("AddNewAscent","Init")
-        if ((mainRepo.numberOfItemsInDB()?.value ?: 0) < 1) {
-            Log.i("AddNewAscent", "getList")
-            val testAscents = TestAscents.getList()
-            for (ascent in testAscents) {
-                addNewAscentToDB(ascent)
-            }
-        }
-    }
+//    init {
+//        Log.i("AddNewAscent","Init")
+//        if ((mainRepo.numberOfItemsInDB()?.value ?: 0) < 1) {
+//            Log.i("AddNewAscent", "getList")
+//            val testAscents = TestAscents.getList()
+//            for (ascent in testAscents) {
+//                addNewAscentToDB(ascent)
+//            }
+//        }
+//    }
 
 
-    fun setGradeOrdinal(grade: Int) {
-        if (grade == selectedGradeOrdinal.value) return
-        if (grade < 0) return
-        if (grade > (selectedGradesList.value?.size?.minus(1) ?: return)) return
+    fun setGradeOrdinal(grade: Int): Boolean {
+        if (grade == selectedGradeOrdinal.value) return false
+        if (grade < 0) return false
+        if (grade > (selectedGradesList.value?.size?.minus(1) ?: return false)) return false
         _selectedGradeOrdinal.value = grade
+        return true
     }
 
-    fun setImage(uri: Uri) {
+    fun setImage(uri: Uri): Boolean {
         _image.value = uri
+        return true
     }
 
 
-    fun setBaseGradeSystem(newBaseGradeSystem: GradeSystem) {
-        if (newBaseGradeSystem == _selectedBaseGradeSystem.value) return
+    fun setBaseGradeSystem(newBaseGradeSystem: GradeSystem): Boolean {
+        if (newBaseGradeSystem == _selectedBaseGradeSystem.value) return false
         _selectedBaseGradeSystem.value = newBaseGradeSystem
         setGrades()
+        return true
     }
 
-    fun setDate(date: Date) {
+    fun setDate(date: Date?): Boolean {
+        if (date == null) return false
+        if (date.after(Date())) {
+            _failMsg.postValue(AddAscentErrors.DATE_FROM_FUTURE)
+        }
         _date.value = date
-        Log.i("setDate", this.date.toString())
+        return true
     }
 
     private fun validateName(): Boolean {
@@ -274,19 +290,29 @@ class AddNewAscentViewModel @Inject constructor(
     private fun addNewAscentToDB(ascent: Ascent) {
         viewModelScope.launch(Dispatchers.IO) {
             mainRepo.insertAscent(ascent)
-            _successAdd.postValue(true)
+            _successAdd.value = true
         }
     }
 
 
-    fun setRouteName(name: String) {
-        if (name.isEmpty()) return
-        _routeName.value = name
+    fun setRouteName(name: String): Boolean {
+        return if (validateStringField(name)) {
+            _routeName.value = name
+            true
+        } else {
+            false
+        }
     }
 
-    fun setHardGradeToggle(checked: Boolean) {
-        if (checked == hardGradeToggle.value) return
+    private fun validateStringField(str: String): Boolean {
+        if (str.isEmpty()) return false
+        return str.length <= 50
+    }
+
+    fun setHardGradeToggle(checked: Boolean): Boolean {
+        if (checked == hardGradeToggle.value) return false
         _hardGradeToggle.value = checked
+        return true
     }
 
     private fun setGrades() {
@@ -294,40 +320,68 @@ class AddNewAscentViewModel @Inject constructor(
             grades[selectedBaseGradeSystem.value] ?: grades[GradeSystem.KURTYKA]
     }
 
-    fun setAscentStyle(newAscentStyle: AscentStyle) {
+    fun setAscentStyle(newAscentStyle: AscentStyle): Boolean {
+        if (newAscentStyle == selectedAscentStyle.value) return false
         _selectedAscentStyle.value = newAscentStyle
+        return true
     }
 
-    fun setCountry(country: String) {
-        _country.value = country
+    fun setCountry(country: String): Boolean {
+        return if (validateStringField(country)) {
+            _country.value = country
+            true
+        } else {
+            false
+        }
     }
 
-    fun setRegion(region: String) {
-        _region.value = region
+    fun setRegion(region: String): Boolean {
+        return if (validateStringField(region)) {
+            _region.value = region
+            true
+        } else {
+            false
+        }
     }
 
-    fun setRockName(name: String) {
-        _rockName.value = name
+    fun setRockName(name: String): Boolean {
+        return if (validateStringField(name)) {
+            _rockName.value = name
+            true
+        } else {
+            false
+        }
     }
 
-    fun setMeters(length: Int) {
+    fun setMeters(length: Int): Boolean {
+        if (length < 0 || length > 99999) return false
         _meters.value = length
+        return true
     }
 
-    fun setClimbingType(type: ClimbingType) {
+    fun setClimbingType(type: ClimbingType): Boolean {
+        if (type == selectedClimbingType.value) return false
         _selectedClimbingType.value = type
+        return true
     }
 
-    fun setBelayType(type: BelayType) {
+    fun setBelayType(type: BelayType): Boolean {
+        if (type == selectedBelayType.value) return false
         _selectedBelayType.value = type
+        return true
     }
 
     fun setNumberOfPitches(number: Int) {
         _numberOfPitches.value = number
     }
 
-    fun setBelayer(name: String) {
-        _belayer.value = name
+    fun setBelayer(name: String): Boolean {
+        return if (validateStringField(name)) {
+            _belayer.value = name
+            true
+        } else {
+            false
+        }
     }
 
     fun setBitmap(bitmap: Bitmap) {

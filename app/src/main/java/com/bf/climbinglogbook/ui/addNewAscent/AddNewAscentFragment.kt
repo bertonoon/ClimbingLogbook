@@ -30,7 +30,6 @@ import com.bf.climbinglogbook.models.BelayType
 import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.GradeSystem
 import com.bf.climbinglogbook.other.Constants
-import com.bf.climbinglogbook.ui.MainViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +47,6 @@ class AddNewAscentFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navController: NavController
     private val addNewAscentViewModel: AddNewAscentViewModel by viewModels()
-    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
     private val cal = Calendar.getInstance()
     private var correctDataAndClickedSave = false
@@ -285,7 +283,7 @@ class AddNewAscentFragment : Fragment() {
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             //setDateInView(cal.time)
-            addNewAscentViewModel.setDate(cal.time)
+            if (!addNewAscentViewModel.setDate(cal.time)) showErrorMsg(AddAscentErrors.NULL_DATE)
 
         }
 
@@ -339,7 +337,7 @@ class AddNewAscentFragment : Fragment() {
             displayedValues = displayedValueArray
 
             setOnValueChangedListener { _, _, newVal ->
-                addNewAscentViewModel.setGradeOrdinal(newVal)
+                if (!addNewAscentViewModel.setGradeOrdinal(newVal)) showErrorMsg(AddAscentErrors.ERROR_GRADE_ORDINAL)
             }
         }
     }
@@ -359,6 +357,8 @@ class AddNewAscentFragment : Fragment() {
                 AddAscentErrors.NULL_GRADE_SYSTEM -> getString(R.string.add_ascent_grade_system_null_msg)
                 AddAscentErrors.NULL_ASCENT_STYLE -> getString(R.string.add_ascent_ascent_style_null_msg)
                 AddAscentErrors.ERROR_CONV_TO_USA -> getString(R.string.add_ascent_ascent_style_error_usa_conv)
+                AddAscentErrors.ERROR_GRADE_ORDINAL -> getString(R.string.add_ascent_ascent_style_error_grade_ordinal)
+                AddAscentErrors.TO_LONG_OR_EMPTY_TEXT -> getString(R.string.add_ascent_ascent_style_error_to_long_or_empty_text)
             }
         )
     }

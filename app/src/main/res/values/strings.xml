@@ -89,5 +89,7 @@
     <string name="home_second_stats_onsight_desc">On-sight</string>
     <string name="home_second_stats_redpoint_desc">Redpoint</string>
     <string name="home_second_stats_flash_desc">Flash</string>
+    <string name="add_ascent_ascent_style_error_grade_ordinal">Error with picking grade. Try again</string>
+    <string name="add_ascent_ascent_style_error_to_long_or_empty_text">To long or empty field</string>
 
 </resources>

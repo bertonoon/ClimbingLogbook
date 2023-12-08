@@ -6,14 +6,14 @@ import com.bf.climbinglogbook.db.Ascent
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.ClimbingType
 
-class FakeMainRepository : MainRepositoryInterface{
+class FakeMainRepository : MainRepositoryInterface {
 
     private val ascents = mutableListOf<Ascent>()
 
     private val observableAscents = MutableLiveData<List<Ascent>>(ascents)
     private val observableNumberOfAscents = MutableLiveData<Int>()
 
-    private fun refreshLiveData(){
+    private fun refreshLiveData() {
         observableAscents.postValue(ascents)
         observableNumberOfAscents.postValue(ascents.size)
     }
@@ -104,6 +104,7 @@ class FakeMainRepository : MainRepositoryInterface{
     override fun insertAscent(ascent: Ascent): Boolean {
         ascents.add(ascent)
         refreshLiveData()
+        println(ascents.toString())
         return ascents.contains(ascent)
     }
 
