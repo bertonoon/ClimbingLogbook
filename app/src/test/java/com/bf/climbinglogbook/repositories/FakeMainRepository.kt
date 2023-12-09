@@ -104,7 +104,6 @@ class FakeMainRepository : MainRepositoryInterface {
     override fun insertAscent(ascent: Ascent): Boolean {
         ascents.add(ascent)
         refreshLiveData()
-        println(ascents.toString())
         return ascents.contains(ascent)
     }
 

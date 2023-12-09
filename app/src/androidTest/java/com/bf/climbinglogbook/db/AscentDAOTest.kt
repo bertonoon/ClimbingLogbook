@@ -183,21 +183,21 @@ class AscentDAOTest {
     }
 
     @Test
-    fun getLastAscents_empty() = runTest {
+    fun getLastAscents_empty_expectEmptyList() = runTest {
         insertAscents()
         val ascentsInDb = dao.getLastAscents(0).getOrAwaitValue()
         assertEquals(ascentsInDb, listOf<Ascent>())
     }
 
     @Test
-    fun getLastAscents_minusOne() = runTest {
+    fun getLastAscents_minusOne_expectAllAscents() = runTest {
         insertAscents()
         val ascentsInDb = dao.getLastAscents(-1).getOrAwaitValue()
         assertEquals(ascentsInDb, ascents.sortedByDescending { it.date })
     }
 
     @Test
-    fun getLastAscents_overSize() = runTest {
+    fun getLastAscents_overSize_expectAllAscents() = runTest {
         insertAscents()
         val ascentsInDb = dao.getLastAscents(31).getOrAwaitValue()
         assertEquals(ascentsInDb, ascents.sortedByDescending { it.date })

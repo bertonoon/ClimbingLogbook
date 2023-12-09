@@ -8,7 +8,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bf.climbinglogbook.R
@@ -67,22 +66,22 @@ class HomeFragment : Fragment() {
         mainViewModel.lastThreeAscents?.observe(viewLifecycleOwner) {
             ascentAdapter.submitList(it)
         }
-        homeViewModel.allOsAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numOsAscents?.observe(viewLifecycleOwner){
             binding.tvSecondStatsOnsightNum.text = it?.toString() ?: "0"
         }
-        homeViewModel.allAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numAllAscents?.observe(viewLifecycleOwner){
             binding.tvRoutesInDb.text = it?.toString() ?: "0"
         }
-        homeViewModel.allFlashAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numFlashAscents?.observe(viewLifecycleOwner){
             binding.tvSecondStatsFlashNum.text = it?.toString() ?: "0"
         }
-        homeViewModel.allRpAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numRpAscents?.observe(viewLifecycleOwner){
             binding.tvSecondStatsRedpointNum.text = it?.toString() ?: "0"
         }
-        homeViewModel.allTradAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numTradAscents?.observe(viewLifecycleOwner){
             binding.tvTradRoutesInDb.text = it?.toString() ?: "0"
         }
-        homeViewModel.allSportAscents?.observe(viewLifecycleOwner){
+        homeViewModel.numSportAscents?.observe(viewLifecycleOwner){
             binding.tvSportRoutesInDb.text = it?.toString() ?: "0"
         }
     }
