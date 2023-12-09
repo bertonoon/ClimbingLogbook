@@ -1,13 +1,12 @@
 package com.bf.climbinglogbook.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.bf.climbinglogbook.getOrAwaitValue
 import com.bf.climbinglogbook.models.AscentStyle
 import com.bf.climbinglogbook.models.ClimbingType
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -15,26 +14,29 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
 @SmallTest
+@HiltAndroidTest
 class AscentDAOTest {
 
-    private lateinit var database: LogbookDatabase
+    @Inject
+    @Named("test_db")
+    lateinit var database: LogbookDatabase
     private lateinit var dao: AscentDAO
     private lateinit var ascents: List<Ascent>
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            LogbookDatabase::class.java
-        ).allowMainThreadQueries().build()
+        hiltRule.inject()
         dao = database.getAscentDao()
         ascents = TestAscents.getList()
     }
@@ -78,6 +80,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedBy { it.name }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByNameDesc() = runTest {
         insertAscents()
@@ -86,6 +89,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedByDescending { it.name }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByDateAsc() = runTest {
         insertAscents()
@@ -94,6 +98,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedBy { it.date }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByDateDesc() = runTest {
         insertAscents()
@@ -102,6 +107,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedByDescending { it.date }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByAscentStyleAsc() = runTest {
         insertAscents()
@@ -110,6 +116,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedBy { it.ascentStyle.name }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByAscentStyleDesc() = runTest {
         insertAscents()
@@ -118,6 +125,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedByDescending { it.ascentStyle.name }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByMetersAsc() = runTest {
         insertAscents()
@@ -126,6 +134,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedBy { it.meters }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByMetersDesc() = runTest {
         insertAscents()
@@ -134,6 +143,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedByDescending { it.meters }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByGradeAsc() = runTest {
         insertAscents()
@@ -142,6 +152,7 @@ class AscentDAOTest {
         val ascentsSorted = ascents.sortedBy { it.usaGradeNumber }
         assertEquals(ascentsSorted, ascentsFromDb)
     }
+
     @Test
     fun getAllRoutesSortedByGradeDesc() = runTest {
         insertAscents()
@@ -155,23 +166,24 @@ class AscentDAOTest {
     fun numberOfItemsInDb() = runTest {
         insertAscents()
         val numberOfItemsInDb = dao.numberOfItemsInDB().getOrAwaitValue()
-        assertEquals(numberOfItemsInDb,ascents.size)
+        assertEquals(numberOfItemsInDb, ascents.size)
     }
 
     @Test
-    fun numberOfAscentsByStyle() = runTest{
+    fun numberOfAscentsByStyle() = runTest {
         insertAscents()
         val numberOfItemsInDb = dao.numberOfAscentsByStyle(AscentStyle.REDPOINT).getOrAwaitValue()
         val numOfRedpointAscents = ascents.count { it.ascentStyle == AscentStyle.REDPOINT }
-        assertEquals(numberOfItemsInDb,numOfRedpointAscents)
+        assertEquals(numberOfItemsInDb, numOfRedpointAscents)
     }
 
     @Test
-    fun numberOfAscentsByClimbingType() = runTest{
+    fun numberOfAscentsByClimbingType() = runTest {
         insertAscents()
-        val numberOfItemsInDb = dao.numberOfAscentsByClimbingType(ClimbingType.SPORT).getOrAwaitValue()
+        val numberOfItemsInDb =
+            dao.numberOfAscentsByClimbingType(ClimbingType.SPORT).getOrAwaitValue()
         val numOfSportAscents = ascents.count { it.climbingType == ClimbingType.SPORT }
-        assertEquals(numberOfItemsInDb,numOfSportAscents)
+        assertEquals(numberOfItemsInDb, numOfSportAscents)
     }
 
     @Test
@@ -179,7 +191,7 @@ class AscentDAOTest {
         insertAscents()
         val ascentsInDb = dao.getLastAscents(3).getOrAwaitValue()
         val lastThreeAscents = ascents.sortedByDescending { it.date }.take(3)
-        assertEquals(ascentsInDb,lastThreeAscents)
+        assertEquals(ascentsInDb, lastThreeAscents)
     }
 
     @Test
@@ -202,7 +214,6 @@ class AscentDAOTest {
         val ascentsInDb = dao.getLastAscents(31).getOrAwaitValue()
         assertEquals(ascentsInDb, ascents.sortedByDescending { it.date })
     }
-
 
 
 }
