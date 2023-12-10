@@ -2,6 +2,8 @@ package com.bf.climbinglogbook.ui.addNewAscent
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +24,13 @@ import com.bf.climbinglogbook.repositories.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -223,7 +231,6 @@ class AddNewAscentViewModel @Inject constructor(
 
         _failMsg.value = AddAscentErrors.NONE
 
-
         val newAscent = Ascent(
             name = routeName.value!!,
             img = bitmap.value,
@@ -245,6 +252,8 @@ class AddNewAscentViewModel @Inject constructor(
             belayer = belayer.value,
             comment = "" // TODO Comment
         )
+
+        saveBitmapInStorage()
 
         addNewAscentToDB(newAscent)
         return true
@@ -290,7 +299,7 @@ class AddNewAscentViewModel @Inject constructor(
     private fun addNewAscentToDB(ascent: Ascent) {
         viewModelScope.launch(Dispatchers.IO) {
             mainRepo.insertAscent(ascent)
-            _successAdd.value = true
+            _successAdd.postValue(true)
         }
     }
 
@@ -386,6 +395,30 @@ class AddNewAscentViewModel @Inject constructor(
 
     fun setBitmap(bitmap: Bitmap) {
         _bitmap.value = bitmap
+    }
+
+    private fun saveBitmapInStorage() {
+        if (bitmap.value == null) return
+
+        try {
+            val sdf = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+            val dateString = sdf.format(date.value!!)
+
+            val fileName = dateString + "_" + routeName.value
+            val filePath =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                    .toString() + "/ClimbingLogbook"
+            File(filePath).mkdir()
+            val pictureFile = File(filePath, "$fileName.png")
+            val outputStream = FileOutputStream(pictureFile)
+            bitmap.value?.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+            outputStream.close()
+            Log.d("saveBitmap", "Saved: $filePath $fileName")
+        } catch (e: FileNotFoundException) {
+            Log.d("saveBitmap", "File not found: $e")
+        } catch (e: IOException) {
+            Log.d("saveBitmap", "Error accessing file: $e")
+        }
     }
 
 }
