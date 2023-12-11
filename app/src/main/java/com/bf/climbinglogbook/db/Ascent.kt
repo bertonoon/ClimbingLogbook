@@ -28,7 +28,7 @@ data class Ascent(
     var lat: Long = 0L,
     var lng: Long = 0L,
 
-    var img: Bitmap? = null,
+    var img: String? = null,
     var meters: Int = 0,
     var belayType: BelayType? = null,
     var climbingType: ClimbingType? = null,

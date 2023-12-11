@@ -7,7 +7,7 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [Ascent::class],
-    version = 5
+    version = 6
 )
 
 @TypeConverters(Converters::class)

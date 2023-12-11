@@ -18,6 +18,7 @@ import com.bf.climbinglogbook.models.gradeEnums.FrenchGrade
 import com.bf.climbinglogbook.models.gradeEnums.KurtykaGrade
 import com.bf.climbinglogbook.models.gradeEnums.UIAAGrade
 import com.bf.climbinglogbook.models.gradeEnums.USAGrade
+import com.bf.climbinglogbook.other.Constants
 import com.bf.climbinglogbook.other.GradeConverters
 import com.bf.climbinglogbook.repositories.GradesRepository
 import com.bf.climbinglogbook.repositories.MainRepositoryInterface
@@ -148,7 +149,6 @@ class AddNewAscentViewModel @Inject constructor(
         return true
     }
 
-
     fun setBaseGradeSystem(newBaseGradeSystem: GradeSystem): Boolean {
         if (newBaseGradeSystem == _selectedBaseGradeSystem.value) return false
         _selectedBaseGradeSystem.value = newBaseGradeSystem
@@ -231,9 +231,11 @@ class AddNewAscentViewModel @Inject constructor(
 
         _failMsg.value = AddAscentErrors.NONE
 
+        val imgPath = saveBitmapInStorage()
+
         val newAscent = Ascent(
             name = routeName.value!!,
-            img = bitmap.value,
+            img = imgPath,
             date = date.value!!,
             originalGradeSystem = selectedBaseGradeSystem.value!!,
             hard = hardGradeToggle.value ?: false,
@@ -253,7 +255,6 @@ class AddNewAscentViewModel @Inject constructor(
             comment = "" // TODO Comment
         )
 
-        saveBitmapInStorage()
 
         addNewAscentToDB(newAscent)
         return true
@@ -397,27 +398,33 @@ class AddNewAscentViewModel @Inject constructor(
         _bitmap.value = bitmap
     }
 
-    private fun saveBitmapInStorage() {
-        if (bitmap.value == null) return
+    private fun saveBitmapInStorage(): String? {
+        if (bitmap.value == null) return null
 
         try {
-            val sdf = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+            val sdf = SimpleDateFormat(Constants.IMG_KEY_FORMAT, Locale.getDefault())
             val dateString = sdf.format(date.value!!)
 
             val fileName = dateString + "_" + routeName.value
             val filePath =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-                    .toString() + "/ClimbingLogbook"
+                    .toString() + "/${Constants.DCIM_FOLDER_NAME}"
             File(filePath).mkdir()
-            val pictureFile = File(filePath, "$fileName.png")
+            val pictureFile = File(filePath, "$fileName.${Constants.IMG_EXTENSION}")
             val outputStream = FileOutputStream(pictureFile)
-            bitmap.value?.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+            bitmap.value?.compress(
+                Bitmap.CompressFormat.JPEG,
+                Constants.IMG_COMPRESS_QUALITY,
+                outputStream
+            )
             outputStream.close()
-            Log.d("saveBitmap", "Saved: $filePath $fileName")
+            return "$filePath/$fileName.${Constants.IMG_EXTENSION}"
         } catch (e: FileNotFoundException) {
             Log.d("saveBitmap", "File not found: $e")
+            return null
         } catch (e: IOException) {
             Log.d("saveBitmap", "Error accessing file: $e")
+            return null
         }
     }
 

@@ -50,6 +50,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.test.ext:junit-ktx:1.1.5'
+    implementation "androidx.activity:activity-ktx:1.8.1"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
+
 
     // Tests
     androidTestImplementation 'junit:junit:4.13.2'
@@ -116,8 +119,10 @@ dependencies {
 //    // MPAndroidChart
 //    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 //    implementation 'android.arch.lifecycle:extensions:1.1.1'
+
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    debugImplementation "androidx.fragment:fragment-testing:1.6.2"
 
 }
 

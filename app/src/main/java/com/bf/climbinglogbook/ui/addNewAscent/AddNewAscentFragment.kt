@@ -1,9 +1,7 @@
 package com.bf.climbinglogbook.ui.addNewAscent
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentResolver
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -16,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -166,7 +165,7 @@ class AddNewAscentFragment : Fragment() {
 
     private fun setImageInView(uri: Uri?) {
         if (uri != null) binding.ivPhoto.visibility = View.VISIBLE
-        Glide.with(requireContext()).load(uri).centerCrop().into(binding.ivPhoto)
+        Glide.with(requireContext()).load(uri).fitCenter().into(binding.ivPhoto)
     }
 
     private fun initListeners() {
@@ -284,7 +283,6 @@ class AddNewAscentFragment : Fragment() {
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             //setDateInView(cal.time)
             if (!addNewAscentViewModel.setDate(cal.time)) showErrorMsg(AddAscentErrors.NULL_DATE)
-
         }
 
         binding.etDate.setOnClickListener {
@@ -363,22 +361,18 @@ class AddNewAscentFragment : Fragment() {
         )
     }
 
-    private val resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val imageUri = data?.data
-                if (imageUri != null) {
-                    addNewAscentViewModel.setImage(imageUri)
-                    val bitmap = getBitmap(requireContext().contentResolver, imageUri)
-                    if (bitmap != null) addNewAscentViewModel.setBitmap(bitmap)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.add_ascent_failed_image_load),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { imageUri ->
+            if (imageUri != null) {
+                addNewAscentViewModel.setImage(imageUri)
+                val bitmap = getBitmap(requireContext().contentResolver, imageUri)
+                if (bitmap != null) addNewAscentViewModel.setBitmap(bitmap)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.add_ascent_failed_image_load),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -396,8 +390,7 @@ class AddNewAscentFragment : Fragment() {
 
 
     private fun choosePhotoFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        resultLauncher.launch(intent)
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     @Deprecated("Deprecated in Java")

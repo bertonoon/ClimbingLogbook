@@ -14,5 +14,11 @@ object Constants {
     const val REQUEST_CODE_READ_IMAGE_PERMISSION = 1
     const val REQUEST_CODE_READ_STORAGE_PERMISSION = 2
 
+    const val DCIM_FOLDER_NAME = "Climbing Logbook"
+    const val IMG_EXTENSION = "JPEG"
+    const val IMG_KEY_FORMAT = "yyyyMMdd_HHmmss"
+    const val IMG_COMPRESS_QUALITY = 80
+
+
 
 }
