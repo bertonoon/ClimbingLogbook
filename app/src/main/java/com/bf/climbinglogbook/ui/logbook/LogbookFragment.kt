@@ -227,28 +227,28 @@ class LogbookFragment : Fragment() {
             }
             chipDate.setOnClickListener {
                 logbookViewModel.changeSortDirection()
-                logbookViewModel.sortAscents(SortType.DATE)
+                logbookViewModel.sortAscentsWithFilterAndSearch(SortType.DATE)
             }
             chipName.setOnClickListener {
                 logbookViewModel.changeSortDirection()
-                logbookViewModel.sortAscents(SortType.NAME)
+                logbookViewModel.sortAscentsWithFilterAndSearch(SortType.NAME)
             }
             chipGrade.setOnClickListener {
                 logbookViewModel.changeSortDirection()
-                logbookViewModel.sortAscents(SortType.GRADE)
+                logbookViewModel.sortAscentsWithFilterAndSearch(SortType.GRADE)
             }
             chipMeters.setOnClickListener {
                 logbookViewModel.changeSortDirection()
-                logbookViewModel.sortAscents(SortType.METERS)
+                logbookViewModel.sortAscentsWithFilterAndSearch(SortType.METERS)
             }
             chipStyle.setOnClickListener {
                 logbookViewModel.changeSortDirection()
-                logbookViewModel.sortAscents(SortType.STYLE)
+                logbookViewModel.sortAscentsWithFilterAndSearch(SortType.STYLE)
             }
             etSearchBar.addTextChangedListener {
                 logbookViewModel.search(binding.etSearchBar.text.toString())
             }
-            chipGroupFilter.setOnCheckedStateChangeListener { _, chipId ->
+            chipGroupFilter.setOnCheckedStateChangeListener { _, _ ->
                 filterAscents()
             }
         }
@@ -279,6 +279,7 @@ class LogbookFragment : Fragment() {
         }
 
         logbookViewModel.filterAscent(newFilter)
+        //ascentAdapter.notifyDataSetChanged()
     }
 
     private fun clearFilter() {

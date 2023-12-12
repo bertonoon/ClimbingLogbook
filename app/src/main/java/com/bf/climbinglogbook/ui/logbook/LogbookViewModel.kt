@@ -11,7 +11,6 @@ import com.bf.climbinglogbook.models.ClimbingType
 import com.bf.climbinglogbook.models.FilterType
 import com.bf.climbinglogbook.models.LogbookMsg
 import com.bf.climbinglogbook.models.SortType
-import com.bf.climbinglogbook.repositories.MainRepository
 import com.bf.climbinglogbook.repositories.MainRepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -136,7 +135,14 @@ class LogbookViewModel @Inject constructor(
         }
     }
 
-    fun sortAscents(sortType: SortType) = when (sortType) {
+    fun sortAscentsWithFilterAndSearch(sortType: SortType) = sortAscents(sortType).also {
+        if (filterType.value?.isFilterActive() == true) filterAscent(
+            filterType.value ?: FilterType()
+        )
+        if (searchQuery.value?.isNotEmpty() == true) search(searchQuery.value ?: "")
+    }
+
+    private fun sortAscents(sortType: SortType) = when (sortType) {
         SortType.DATE -> if (sortDirectionDesc.value!!) {
             ascentsSortedByDateDesc?.value?.let { ascents.value = it }
         } else ascentsSortedByDateAsc?.value?.let { ascents.value = it }
@@ -159,19 +165,17 @@ class LogbookViewModel @Inject constructor(
 
     }.also {
         _sortType.value = sortType
-        if (filterType.value?.isFilterActive() == true) filterAscent(
-            filterType.value ?: FilterType()
-        )
-        if (searchQuery.value?.isNotEmpty() == true) search(searchQuery.value ?: "")
     }
 
     fun filterAscent(filter: FilterType) {
 
         if (filter.none) {
             _filterType.value = FilterType()
-            sortAscents(sortType.value ?: SortType.DATE)
+            sortAscentsWithFilterAndSearch(sortType.value ?: SortType.DATE)
             return
         }
+
+        sortAscents(sortType.value ?: SortType.DATE)
 
         if (filter.isAscentTypeFilterActive()) {
             ascents.value?.filter { ascent ->
@@ -187,7 +191,7 @@ class LogbookViewModel @Inject constructor(
                         (filter.sport && ascent.climbingType == ClimbingType.SPORT)
             }.let { ascents.value = it }
         }
-
+        containSearchQuery(searchQuery.value ?: "")
         _filterType.value = filter
     }
 
@@ -201,16 +205,20 @@ class LogbookViewModel @Inject constructor(
     fun search(newQuery: String) {
         if (newQuery.length < (searchQuery.value?.length ?: 0)) {
             _searchQuery.value = newQuery
-            sortAscents(sortType.value ?: SortType.DATE)
+            sortAscentsWithFilterAndSearch(sortType.value ?: SortType.DATE)
         }
+        containSearchQuery(newQuery)
+    }
 
+    private fun containSearchQuery(query: String) {
         ascents.value?.filter { ascent ->
-            ascent.name.lowercase().contains(newQuery.lowercase())
+            ascent.name.lowercase().contains(query.lowercase())
         }.let {
             ascents.value = it
-            _searchQuery.value = newQuery
+            _searchQuery.value = query
         }
     }
+
 
     fun zeroMsg() {
         _msg.value = LogbookMsg.NONE
