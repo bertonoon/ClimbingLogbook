@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_gradeCalcFragment"
             app:destination="@id/navigation_grade_calc" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_logbook"
+            app:destination="@id/navigation_logbook" />
     </fragment>
 
     <fragment
