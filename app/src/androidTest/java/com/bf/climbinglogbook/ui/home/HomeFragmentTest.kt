@@ -8,6 +8,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
 import com.bf.climbinglogbook.MainActivity
@@ -40,7 +41,7 @@ class HomeFragmentTest {
 
 
     @Test
-    fun testTest() {
+    fun navigationGoToGradeCalculatorFragment() {
         val navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         )
@@ -59,5 +60,4 @@ class HomeFragmentTest {
         onView(withId(R.id.ivGradeCalc)).perform(ViewActions.click())
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.navigation_grade_calc)
     }
-
 }

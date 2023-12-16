@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
-        <State />
-      </entry>
       <entry key="HomeFragmentTest">
         <State />
       </entry>
@@ -12,6 +9,9 @@
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="navigationGoToLogbookFragment()">
         <State />
       </entry>
       <entry key="testNavigation_fromHomeToLogbook()">
