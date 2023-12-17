@@ -34,7 +34,7 @@ class MainActivityTest {
     fun setup() {
         hiltRule.inject()
 
-        val navController = TestNavHostController(
+        navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         )
 
