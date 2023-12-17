@@ -3,6 +3,7 @@ package com.bf.climbinglogbook.ui.home
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,9 +12,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
+import androidx.test.internal.runner.junit4.statement.UiThreadStatement
 import com.bf.climbinglogbook.MainActivity
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.launchFragmentInHiltContainer
+import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -60,4 +63,5 @@ class HomeFragmentTest {
         onView(withId(R.id.ivGradeCalc)).perform(ViewActions.click())
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.navigation_grade_calc)
     }
+
 }

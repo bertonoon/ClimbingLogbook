@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="HomeFragmentTest">
-        <State />
-      </entry>
       <entry key="MainActivityTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
+      <entry key="navigationBottomNavBarIconLogbookIsDisplayed()">
+        <State />
+      </entry>
       <entry key="navigationGoToLogbookFragment()">
         <State />
       </entry>
-      <entry key="testNavigation_fromHomeToLogbook()">
+      <entry key="navigationGoToLogbookFragment() (1)">
         <State />
       </entry>
-      <entry key="testTest()">
+      <entry key="navigationGoToLogbookFragmentFromHome()">
         <State />
       </entry>
     </value>
