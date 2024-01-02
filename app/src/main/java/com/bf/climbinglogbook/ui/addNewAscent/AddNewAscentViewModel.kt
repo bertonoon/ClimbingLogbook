@@ -269,7 +269,8 @@ class AddNewAscentViewModel @Inject constructor(
 
     private fun usaGradeNumberFromKurtykaOrdinal(ordinal: Int, hard: Boolean): Int {
         val gradeNum = if (ordinal == 0) 1 else ordinal
-        val kurtykaGrade = KurtykaGrade.numberToGrade(gradeNum, hard) ?: return -1
+        //val kurtykaGrade = KurtykaGrade.numberToGrade(gradeNum, hard) ?: return -1
+        val kurtykaGrade = KurtykaGrade.entries[ordinal]
         val usaGrade = GradeConverters().kurtykaToUsa(kurtykaGrade, hard) ?: return -1
         return USAGrade.gradeToNumber(usaGrade, hard)
     }

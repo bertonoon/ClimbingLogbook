@@ -1,22 +1,21 @@
 package com.bf.climbinglogbook.ui.statistics
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.chart.common.listener.Event
-import com.anychart.chart.common.listener.ListenersInterface
 import com.anychart.enums.Align
 import com.anychart.enums.LegendLayout
 import com.bf.climbinglogbook.R
 import com.bf.climbinglogbook.databinding.FragmentStatisticsBinding
+import com.bf.climbinglogbook.models.PieChartGrade
 import com.bf.climbinglogbook.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,24 +36,36 @@ class StatisticsFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
         binding.toolbar.title.text = getString(R.string.title_statistics)
-        //initListeners()
-        setupBarChart()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initObservers()
+        //initListeners()
     }
 
     private fun initListeners() {
 
     }
 
-    private fun setupBarChart() {
-        val pieChart = AnyChart.pie()
+    private fun initObservers() {
+        statisticsViewModel.ascentsSortedByGradeAsc?.observe(viewLifecycleOwner) {
+            setupBarChart(statisticsViewModel.calculateAllAscentsToFrench(it))
+        }
+    }
 
-        val data: MutableList<DataEntry> = mutableListOf()
-        data.add(ValueDataEntry("Apples", 6371664))
-        data.add(ValueDataEntry("Pears", 789622))
-        data.add(ValueDataEntry("Bananas", 7216301))
-        data.add(ValueDataEntry("Grapes", 1486621))
-        data.add(ValueDataEntry("Oranges", 1200000))
+    private fun setupBarChart(frenchGradeCount: List<PieChartGrade>) {
+        val pieChart = AnyChart.pie()
+        val data: MutableList<DataEntry> = mutableListOf<DataEntry>().apply {
+            for (i in frenchGradeCount.indices) {
+                add(
+                    ValueDataEntry(
+                        frenchGradeCount[i].gradeName,
+                        frenchGradeCount[i].gradeCount
+                    )
+                )
+            }
+        }
 
         pieChart.data(data)
         pieChart.title("Test")
@@ -65,7 +76,6 @@ class StatisticsFragment : Fragment() {
             .align(Align.CENTER)
 
         binding.anyChartView.setChart(pieChart)
-
     }
 
     override fun onDestroyView() {
