@@ -19,6 +19,8 @@ object Constants {
     const val IMG_KEY_FORMAT = "yyyyMMdd_HHmmss"
     const val IMG_COMPRESS_QUALITY = 80
 
+    const val CHART_FONT_SIZE = 16
+
 
 
 }
